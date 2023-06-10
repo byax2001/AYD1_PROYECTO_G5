@@ -1,55 +1,82 @@
-import { Component, useEffect } from "react"
-import React,{useState,useRef} from 'react';
-import {Link,useFetcher,useNavigate} from 'react-router-dom'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../images/logo.png';
+import '../css/LandingPage.css'; 
 
-function LandingPage (props){
-    const [num1,setNum1] = useState(0);
-    const [num2,setNum2] = useState(0);
-    const [resultado, setResultado] =useState(0)
+function LandingPage(props) {
+  const [isLoginDropdownOpen, setIsLoginDropdownOpen] = useState(false);
+  const [isRegisterDropdownOpen, setIsRegisterDropdownOpen] = useState(false);
 
-    const suma=function(){
-        let ntotal = Number(num1)+Number(num2)
-        setResultado(ntotal)
-    }
+  const toggleLoginDropdown = () => {
+    setIsLoginDropdownOpen(!isLoginDropdownOpen);
+    setIsRegisterDropdownOpen(false);
+  };
 
-    const SumarServer=async()=>{
-        const url = `http://localhost:8080/sumar`;
-        let config = {
-            method: "POST", //ELEMENTOS A ENVIAR
-            body: JSON.stringify({ num1:Number(num1),num2:Number(num2) }),
-            headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-            },
-        };
-        try{
-          const res = await fetch(url, config);
-          const data_res = await res.json();
-          setResultado(data_res.r)
+  const toggleRegisterDropdown = () => {
+    setIsRegisterDropdownOpen(!isRegisterDropdownOpen);
+    setIsLoginDropdownOpen(false);
+  };
 
-          console.log(data_res)
-        }catch(e){
-          console.log(e)
-        }
-        
-    }
-    
-    return(
-        <React.Fragment>
-            <div className="d-flex justify-content-center align-items-center">
-                <div>
-                    <label className="text-light mt-5">Numero 1</label>
-                    <input type="number" onChange={(event) => setNum1(event.target.value)}/>
-                </div>
-                <div>
-                    <label className="text-light mt-5" >Numero 2</label>
-                    <input className="ml-5" type="number" onChange={(event) => setNum2(event.target.value)}/>
-                </div>
-                <button className="btn btn-secondary mt-5" onClick={()=>{SumarServer()}}>Realizar Suma</button>
-            </div>
-            <label className="text-light"> El total de esa suma es:{resultado} </label>
-        </React.Fragment> 
-    )
-
+  return (
+    <React.Fragment>
+      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+        <img id="logoLP" src={logo} alt="Logo" />
+        <a className="navbar-brand" href="/">AlChilazo</a>
+        <div className={`collapse navbar-collapse`}>
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+              <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+            </li>
+            {/* DROPDOWN DE INICIAR SESION */}
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" onClick={toggleLoginDropdown}>
+                Iniciar Sesion
+              </a>
+              <div className={`dropdown-menu ${isLoginDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
+                <a className="dropdown-item" href="#">Usuario</a>
+                <a className="dropdown-item" href="#">Repartidor</a>
+                <div className="dropdown-divider"></div>
+                <a className="dropdown-item" href="#">Empresa</a>
+                <a className="dropdown-item" href="#">Administrador</a>
+              </div>
+            </li>
+            {/* DROPDOWN DE REGISTRARSE*/}
+            <li className="nav-item dropdown">
+              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" onClick={toggleRegisterDropdown}>
+                Registrarse
+              </a>
+              <div className={`dropdown-menu ${isRegisterDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
+                <a className="dropdown-item" href="#">Usuario</a>
+                <a className="dropdown-item" href="#">Repartidor</a>
+                <div className="dropdown-divider"></div>
+                <a className="dropdown-item" href="#">Empresa</a>
+                <a className="dropdown-item" href="#">Administrador</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <div id="piepaginaLP" className="container-flexible bg-dark">
+        <div className="row">
+          <div className="col-2 h5 text-center">
+            <Link to="/quienes-somos" className="custom-link">Quienes Somos</Link>
+          </div>
+          <div className="col-2 h5 text-center">
+            <Link to="/equipo" className="custom-link">Equipo</Link>
+          </div>
+          <div className="col-2 h5 text-center">
+            <Link to="/preguntas-frecuentes" className="custom-link">Preguntas Frecuentes</Link>
+          </div>
+          <div className="col-3 h5 text-center">
+            <Link to="/terminos-condiciones" className="custom-link">Términos y condiciones</Link>
+          </div>
+          <div className="col-3 h5 text-center">
+            <Link to="/politicas-privacidad" className="custom-link">Políticas de Privacidad</Link>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
 }
+
 export default LandingPage;
