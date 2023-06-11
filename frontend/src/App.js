@@ -10,6 +10,10 @@ import RegistroEmpleado from './components/RegistroEmpleado'
 import RegistroEmpresa from './components/RegistroEmpresa'
 //INICIAR SESION
 import InitSesion from './components/InitSesion';
+//EMPLEADO
+import Perfil from './components/Empleado/Perfil';
+import InicioEmp from './components/Empleado/Inicio';
+
 function App() {
   return (
     //routes 
@@ -20,6 +24,8 @@ function App() {
         <Route path="/re" exact element={<RegistroEmpleado/>}/>
         <Route path="/rempresa" exact element={<RegistroEmpresa/>}/>
         <Route path="/isesion" exact element={<InitSesion/>}/>
+        <Route path="/emp/Miperfil" exact element={<Perfil/>}/>
+        <Route path="/emp" exact element={<InicioEmp/>}/>
       </Routes>
     </BrowserRouter>
   );
