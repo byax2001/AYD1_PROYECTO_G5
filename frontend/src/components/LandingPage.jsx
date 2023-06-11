@@ -25,20 +25,10 @@ function LandingPage(props) {
         <div className={`collapse navbar-collapse`}>
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+              <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
             </li>
-            {/* DROPDOWN DE INICIAR SESION */}
-            <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" onClick={toggleLoginDropdown}>
-                Iniciar Sesion
-              </a>
-              <div className={`dropdown-menu ${isLoginDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">Usuario</a>
-                <a className="dropdown-item" href="#">Repartidor</a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">Empresa</a>
-                <a className="dropdown-item" href="#">Administrador</a>
-              </div>
+            <li className="nav-item active">
+              <a className="nav-link" href="/isesion">Iniciar Sesión</a>
             </li>
             {/* DROPDOWN DE REGISTRARSE*/}
             <li className="nav-item dropdown">
@@ -46,11 +36,10 @@ function LandingPage(props) {
                 Registrarse
               </a>
               <div className={`dropdown-menu ${isRegisterDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
-                <a className="dropdown-item" href="#">Usuario</a>
-                <a className="dropdown-item" href="#">Repartidor</a>
+                <a className="dropdown-item" href="/ru">Usuario</a>
+                <a className="dropdown-item" href="/re">Repartidor</a>
                 <div className="dropdown-divider"></div>
-                <a className="dropdown-item" href="#">Empresa</a>
-                <a className="dropdown-item" href="#">Administrador</a>
+                <a className="dropdown-item" href="/rempresa">Empresa</a>
               </div>
             </li>
           </ul>

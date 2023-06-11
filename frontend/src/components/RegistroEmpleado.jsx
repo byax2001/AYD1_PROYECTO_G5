@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import logo from '../images/logo.png';
 
-function RegistrationForm() {
+function RegistroEmpleado() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -33,12 +34,14 @@ function RegistrationForm() {
 
   return (
     <React.Fragment>
-      <header className='bg-warning mb-2 p-2'>
+      <nav className="navbar navbar-expand-lg navbar-light bg-warning mb-3">
+        <img id="logoLP" src={logo} alt="Logo" />
+        <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Registro de Empleado</div>
-      </header>
+      </nav>
       <div className='container'>
         <div className='row'>
-          <div className='col-3'>
+          <div className='col-3 col-sm-0'>
 
           </div>
           <div className="col-6">
@@ -105,7 +108,7 @@ function RegistrationForm() {
               </Button>
             </Form>
           </div>
-          <div className="col-3">
+          <div className="col-3 col-sm-0">
             
           </div>
         </div>
@@ -116,4 +119,4 @@ function RegistrationForm() {
   );
 }
 
-export default RegistrationForm;
+export default RegistroEmpleado;

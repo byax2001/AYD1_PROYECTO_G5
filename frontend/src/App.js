@@ -8,7 +8,8 @@ import LandingPage from './components/LandingPage';
 import RegistroUsuario from './components/RegistroUsuario';
 import RegistroEmpleado from './components/RegistroEmpleado'
 import RegistroEmpresa from './components/RegistroEmpresa'
-
+//INICIAR SESION
+import InitSesion from './components/InitSesion';
 function App() {
   return (
     //routes 
@@ -18,6 +19,7 @@ function App() {
         <Route path="/ru" exact element={<RegistroUsuario/>}/>
         <Route path="/re" exact element={<RegistroEmpleado/>}/>
         <Route path="/rempresa" exact element={<RegistroEmpresa/>}/>
+        <Route path="/isesion" exact element={<InitSesion/>}/>
       </Routes>
     </BrowserRouter>
   );
