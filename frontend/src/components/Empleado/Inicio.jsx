@@ -62,8 +62,12 @@ const data = [
   },
   {
     producto: 'Producto 2',
-    fechaPedido: '2023-06-05',
+    fechaPedido: '2023-06-11',
   },
+  {
+    producto: 'Producto 3',
+    fechaPedido: '2023-06-12',
+  }
   // Agrega más filas según tus necesidades
 ];
 
@@ -82,7 +86,8 @@ const columns = [
 
 const Inicio = () => {
   const [filteredData, setFilteredData] = useState(data);
- 
+  const [pedidoActual, setPedidoActual]=useState([{ producto: 'Producto 1',
+  fechaPedido: '2023-06-01'}])
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
@@ -96,10 +101,11 @@ const Inicio = () => {
         </div>
       </nav>
       
-      <div className="container mt-4">
-        <div className="my-4">
+      <div className="container">
+        <div className="row">
+        <div className="my-4 col-7">
           <DataTable
-            title={"Pedidos Actuales"}
+            title={"Pedidos Pendientes"}
             columns={columns}
             data={filteredData}
             customStyles={customStyles}
@@ -109,7 +115,24 @@ const Inicio = () => {
             responsive
           />
         </div>
-        <button className="btn btn-secondary btnEffect">Solicitud de cambio zona departamental</button>
+        <div className='my-4 col-5'>
+        <DataTable
+            title={"Pedidos Actuales"}
+            columns={columns}
+            data={pedidoActual}
+            customStyles={customStyles}
+            highlightOnHover
+            striped
+            responsive
+          />
+          <div className="btn-group d-inline-flex" data-toggle="buttons">
+          <button className="btnEffect btn btn-secondary">Entregado</button>
+          <button className="btnEffect btn btn-secondary">Cancelado</button>
+        
+        </div>
+
+        </div>
+        </div>
       </div>
     </React.Fragment>
   );

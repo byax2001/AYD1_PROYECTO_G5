@@ -93,25 +93,33 @@ const Perfil = () => {
   const [puntuacion, setPuntuacion] = useState(5);
   return (
     <React.Fragment>
-      <Link to={"/emp"} className='btn btn-warning btnRT text-light'>Volver a Inicio</Link>
+      <Link to={"/emp"} className='btn btn-warning btnRT text-light btnEffect'>Volver a Inicio</Link>
       <nav className="navbar navbar-expand-lg navbar-light bg-warning">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
+        
         <div className="h2 text-light">MiPerfil</div>
       </nav>
       <div className="container mt-4">
         <div className='container bg-dark text-light'>
           <div className="row textForm">
-            <div className="col-3 h5 bg-secondary">Nombre del empleado:</div>
+            <div className="col-3 h5">Nombre del empleado:</div>
             <div className="col-9 h3">John Doe</div>
           </div>
           <div className="row textForm">
-            <div className="col-3 h4"> Puntuacion: </div>
+            <div className="col-3 h5"> Puntuacion: </div>
+            <div className="col-9 bg-secondary">
               <img id="logoStar" src={star} />
               <img id="logoStar" src={star} />
               <img id="logoStar" src={star} />
               <img id="logoStar" src={star} />
               <img id="logoStar" src={star} />
+            </div>
+             
+          </div>
+          <div className="row textForm">
+            <div className="col-3 h5">Comisiones:</div>
+            <div className="col-9"></div>
           </div>
         </div>
 
