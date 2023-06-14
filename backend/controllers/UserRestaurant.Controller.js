@@ -16,6 +16,7 @@ const s3 = new S3Client({
 exports.newrestaurant = async function (req,res){
     try{
 
+        
         var currentDate = new Date();
 
         var user = {
@@ -33,6 +34,8 @@ exports.newrestaurant = async function (req,res){
             tipo_licencia: req.body.tipo_licencia
         };
 
+        //Encripto la contraseña
+        let passwordEncrypt = crypto.createHash('md5').update(user.password).digest("hex");
         //Primero hago la validación que no exista el correo
         database.query(querysMySQL.list_users_byemail,[user.email],async function(err,result,fields){    
             if (err)throw err;
@@ -47,7 +50,7 @@ exports.newrestaurant = async function (req,res){
                         res.status(200).send({msg:"El usuario ya está asociado a una cuenta.", valid:false})
                         return;
                     }else{
-                        database.query(querysMySQL.ins_sol, [currentDate,user.nombre, user.apellido,user.email,user.nit,user.medio_transporte,user.userid,user.descripcion,user.username,user.password,user.tipo_empresa,user.municipio,user.tipo_licencia,0],async function(err,result,fields){
+                        database.query(querysMySQL.ins_sol, [currentDate,user.nombre, user.apellido,user.email,user.nit,user.medio_transporte,user.userid,user.descripcion,user.username,passwordEncrypt,user.tipo_empresa,user.municipio,user.tipo_licencia,0],async function(err,result,fields){
                             if(result.insertId){
                                 const params = {
                                     Bucket: process.env.BUCKET_NAME,

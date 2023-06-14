@@ -6,6 +6,7 @@ module.exports = {
 		list_all_users: "SELECT * FROM usuario",
 		list_all_empresas:"SELECT * FROM empresa",
 		list_users_byuser:"SELECT * FROM usuario WHERE username = ?",
+		list_users_byemail:"SELECT * FROM usuario WHERE email = ?",
 		list_user_byid:"SELECT * FROM usuario WHERE id_usuario = ?",
         
 		

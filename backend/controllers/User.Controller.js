@@ -1,6 +1,8 @@
 const database = require("../managers/databaseManager");
 const { enviarEmailUser } = require("../managers/emailManager");
 const querysMySQL = require("../querys/querysMySQL");
+const crypto = require('crypto');
+
 
 exports.newuser = async function (req,res){
     try{
@@ -15,7 +17,8 @@ exports.newuser = async function (req,res){
             tipo_licencia: req.body.tipo_licencia,
             nit: req.body.nit
         };
-
+        //Encripto la contraseña
+        let passwordEncrypt = crypto.createHash('md5').update(user.password).digest("hex");
         //Primero hago la validación que no exista el correo
         database.query(querysMySQL.list_users_byemail,[user.email],function(err,result,fields){    
             if (err)throw err;
@@ -30,7 +33,7 @@ exports.newuser = async function (req,res){
                         res.status(200).send({msg:"El usuario ya está asociado a una cuenta.", valid:false})
                         return;
                     }else{
-                        database.query(querysMySQL.ins_user,[user.nombre,user.apellido,user.email,user.username,user.password,user.rol,user.telefono,user.tipo_licencia,user.nit],function(err,result,fields){
+                        database.query(querysMySQL.ins_user,[user.nombre,user.apellido,user.email,user.username,passwordEncrypt,user.rol,user.telefono,user.tipo_licencia,user.nit],function(err,result,fields){
                             
                             //Si todo pasó correctamente, envio el correo
                             enviarEmailUser(user.email,"Bienvenido",user.username)
@@ -85,7 +88,10 @@ exports.updateuser = async function (req,res){
             nit: req.body.nit,
             iduser: req.body.iduser
         };
-        database.query(querysMySQL.update_datosuser,[user.nombre,user.apellido,user.password,user.rol,user.telefono,user.tipo_licencia,user.nit,user.iduser],function(err,result,fields){    
+
+        //Encripto la contraseña
+        let passwordEncrypt = crypto.createHash('md5').update(user.password).digest("hex");
+        database.query(querysMySQL.update_datosuser,[user.nombre,user.apellido,passwordEncrypt,user.rol,user.telefono,user.tipo_licencia,user.nit,user.iduser],function(err,result,fields){    
             if (err)throw err;
                 
             res.status(200).send({status: "success", message: "Usuario actualizado con exito"});
