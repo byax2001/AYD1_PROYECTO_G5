@@ -15,6 +15,8 @@ import InitSesion from './components/InitSesion';
 //EMPLEADO
 import Perfil from './components/Empleado/Perfil';
 import InicioEmp from './components/Empleado/Inicio';
+//ADMIN
+import InicioAdm from './components/Admin/Inicio';
 
 //Empresa:
 import InicioE from './components/Empresa/InicioE';
@@ -32,8 +34,8 @@ function App() {
         <Route path="/emp/Miperfil" exact element={<Perfil/>}/>
         <Route path="/emp" exact element={<InicioEmp/>}/>
         <Route path="/infoP" exact element={<MPiePagina/>}/>
+        <Route path="/adm" exact element={<InicioAdm/>}/>
         <Route path="/inicioe" exact element={<InicioE/>}/>
-       
       </Routes>
     </BrowserRouter>
   );
