@@ -16,6 +16,9 @@ import InitSesion from './components/InitSesion';
 import Perfil from './components/Empleado/Perfil';
 import InicioEmp from './components/Empleado/Inicio';
 
+//Empresa:
+import InicioE from './components/Empresa/InicioE';
+
 function App() {
   return (
     //routes 
@@ -29,6 +32,7 @@ function App() {
         <Route path="/emp/Miperfil" exact element={<Perfil/>}/>
         <Route path="/emp" exact element={<InicioEmp/>}/>
         <Route path="/infoP" exact element={<MPiePagina/>}/>
+        <Route path="/inicioe" exact element={<InicioE/>}/>
        
       </Routes>
     </BrowserRouter>
