@@ -1,3 +1,5 @@
+const { enviarEmailUser } = require("../managers/emailManager");
+
 exports.newuser = async function (req,res){
     try{
         console.log(req)
@@ -9,6 +11,8 @@ exports.newuser = async function (req,res){
             password: req.body.password
 
         };
+
+        enviarEmailUser("osmarsantizo@gmail.com","Bienvenido","osmarp12")
 
         //Aca irá la parte de guardar en la base de datos
         
