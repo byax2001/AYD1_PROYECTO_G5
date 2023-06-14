@@ -3,6 +3,7 @@
 var express = require('express');
 const config = require('./config/config');
 const routes = require('./routes/routes');
+const databasemysql = require('./managers/databaseManager');
 
 var app = express();
 app.disable('x-powered-by');    
@@ -20,11 +21,23 @@ app.use(express.json());
 app.use(routes);
 
 //Inicio de la aplicación
-var server = app.listen(port,f=>{
-    var host = server.address().address;    
-    var port = server.address().port;
-    var d = new Date();
-    var utc = d.getTime() + (d.getTimezoneOffset() * 60000);    
-    var date = new Date(utc + (3600000*5));
-    console.log(config.messageTerminal, 'host:'+host, 'port:'+port, 'date:'+date);
-});
+
+
+
+
+databasemysql.connect((err) => {
+    if (err) {
+      console.error('Error al conectar a la base de datos:', err);
+      return;
+    }
+    console.log('Conexión a la base de datos establecida')
+  
+    var server = app.listen(port, () => {
+      var host = server.address().address;
+      var port = server.address().port;
+      var d = new Date();
+      var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+      var date = new Date(utc + (3600000 * 5));
+      console.log(config.messageTerminal, 'host:' + host, 'port:' + port, 'date:' + date);
+    });
+  });
