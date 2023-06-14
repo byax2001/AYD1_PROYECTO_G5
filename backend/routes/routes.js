@@ -35,9 +35,9 @@ router.delete(baseurl + 'userdeliver',                            USERDELIVER.de
 
 // Restaurantes
 
-router.post(baseurl + 'restaurants',                              RESTAURANTS.newrestaurant)
+router.post(baseurl + 'restaurants',    upload.single('image'),   RESTAURANTS.newrestaurant)
 router.get(baseurl + 'restaurants',                               RESTAURANTS.getrestaurant)
-router.put(baseurl + 'restaurants',                               RESTAURANTS.updaterestaurant) 
+router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
 router.delete(baseurl + 'restaurants',                            RESTAURANTS.deleterestaurant)
 
 module.exports = router;
