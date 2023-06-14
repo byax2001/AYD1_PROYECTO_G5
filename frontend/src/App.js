@@ -1,9 +1,11 @@
 import './App.css';
-
+import React, { useEffect, useState } from 'react';
 import {Route,BrowserRouter,Routes} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 //LANDING PAGE
 import LandingPage from './components/LandingPage';
+import MPiePagina from './components/MPiePagina';
 // REGISTROS
 import RegistroUsuario from './components/RegistroUsuario';
 import RegistroEmpleado from './components/RegistroEmpleado'
@@ -26,6 +28,8 @@ function App() {
         <Route path="/isesion" exact element={<InitSesion/>}/>
         <Route path="/emp/Miperfil" exact element={<Perfil/>}/>
         <Route path="/emp" exact element={<InicioEmp/>}/>
+        <Route path="/infoP" exact element={<MPiePagina/>}/>
+       
       </Routes>
     </BrowserRouter>
   );

@@ -25,9 +25,6 @@ function LandingPage(props) {
         <div className={`collapse navbar-collapse`}>
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
-            </li>
-            <li className="nav-item active">
               <a className="nav-link" href="/isesion">Iniciar Sesión</a>
             </li>
             {/* DROPDOWN DE REGISTRARSE*/}
@@ -48,19 +45,19 @@ function LandingPage(props) {
       <div id="piepaginaLP" className="container-flexible bg-dark">
         <div className="row">
           <div className="col-2 h5 text-center">
-            <Link to="/quienes-somos" className="custom-link">Quienes Somos</Link>
+            <Link to="/infoP" state={{"tinfo":"q"}}  className="custom-link">Quienes Somos</Link>
           </div>
           <div className="col-2 h5 text-center">
-            <Link to="/equipo" className="custom-link">Equipo</Link>
+            <Link to="/infoP" state={{"tinfo":"e"}}  className="custom-link">Equipo</Link>
           </div>
           <div className="col-2 h5 text-center">
-            <Link to="/preguntas-frecuentes" className="custom-link">Preguntas Frecuentes</Link>
+            <Link to="/infoP" state={{"tinfo":"pf"}}  className="custom-link">Preguntas Frecuentes</Link>
           </div>
           <div className="col-3 h5 text-center">
-            <Link to="/terminos-condiciones" className="custom-link">Términos y condiciones</Link>
+            <Link to="/infoP" state={{"tinfo":"tc"}}  className="custom-link">Términos y condiciones</Link>
           </div>
           <div className="col-3 h5 text-center">
-            <Link to="/politicas-privacidad" className="custom-link">Políticas de Privacidad</Link>
+            <Link to="/infoP" state={{"tinfo":"pp"}} className="custom-link">Políticas de Privacidad</Link>
           </div>
         </div>
       </div>
