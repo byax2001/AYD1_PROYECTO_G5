@@ -1,0 +1,13 @@
+#Isesion{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: calc(100vh - 56px); /* Resta el alto de la barra de navegación (56px en este caso) para que el contenedor ocupe el espacio restante verticalmente */
+  padding-bottom: 20px; /**/
+
+}
+
+#conInit{
+	min-height: 100vh;
+}
