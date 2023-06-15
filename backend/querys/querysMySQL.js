@@ -9,7 +9,17 @@ module.exports = {
 		list_users_byemail:"SELECT * FROM usuario WHERE email = ?",
 		list_user_byid:"SELECT * FROM usuario WHERE id_usuario = ?",
         
-		
+		//Reports
+		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
+		total_users_byday: `SELECT AVG(tabla.cuenta) AS Promedio_Dia
+							FROM (SELECT DAY(fecha_registro) AS fecha , COUNT(*) AS cuenta  
+							FROM usuario GROUP BY fecha) tabla`,
+		total_users_bymonth: `SELECT AVG(tabla.cuenta) as Promedio_Mes
+							  FROM (SELECT MONTH(fecha_registro) AS fecha , COUNT(*) AS cuenta  
+							  FROM usuario GROUP BY fecha) tabla`,
+		total_users_byyear: `SELECT AVG(tabla.cuenta) AS Promedio_Year
+							 FROM (select YEAR(fecha_registro) AS fecha , COUNT(*) AS cuenta  
+							 FROM usuario GROUP BY fecha) tabla`,
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */
@@ -28,8 +38,8 @@ module.exports = {
 
 
 		ins_user:"INSERT INTO usuario "+ 
-					" (nombre, apellido, email, username, password,rol,telefono,tipo_licencia,nit) "+
-					" VALUES (?,?,?,?,?,?,?,?,?);",
+					" (nombre, apellido, email, username, password,rol,telefono,tipo_licencia,nit,fecha_registro) "+
+					" VALUES (?,?,?,?,?,?,?,?,?,?);",
 
 		ins_sol:"INSERT INTO solicitud_pendiente "+
 				   "(fecha_solicitud,nombre,apellido,email,nit,medio_transporte,usuario_id_usuario,descripcion_empresa,username,password,tipo_empresa,municipio_id_municipio,tipo_licencia,aprobada) "+
