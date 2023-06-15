@@ -5,6 +5,8 @@ import logo from '../images/logo.png';
 function RegistroEmpresa() {
   const [formData, setFormData] = useState({
     nombreEntidad: '',
+    nickName:'',
+    password:'',
     descripcion: '',
     categoria: '',
     correo: '',
@@ -57,9 +59,19 @@ function RegistroEmpresa() {
                 <Form.Control type="text" name="categoria" value={formData.categoria} onChange={handleChange} required />
               </Form.Group>
 
+              <Form.Group controlId="nickName">
+                <Form.Label className="textForm">NickName</Form.Label>
+                <Form.Control type="text" name="nickName" value={formData.nickName} onChange={handleChange} required />
+              </Form.Group>
+
               <Form.Group controlId="correo">
                 <Form.Label className="textForm">Correo Electrónico</Form.Label>
                 <Form.Control type="email" name="correo" value={formData.correo} onChange={handleChange} required />
+              </Form.Group>
+              
+              <Form.Group controlId="password">
+                <Form.Label className="textForm">Contraseña</Form.Label>
+                <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="departamento">

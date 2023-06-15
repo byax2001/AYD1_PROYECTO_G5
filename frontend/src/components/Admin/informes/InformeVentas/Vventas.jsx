@@ -2,8 +2,6 @@ import { Component, useEffect } from "react"
 import React,{useState,useRef} from 'react';
 import {Link,useNavigate} from 'react-router-dom'
 import DataTable from 'react-data-table-component'
-import logo from '../images/Logo.png';
-
 const datoprueba=[
 ]
 
@@ -84,10 +82,14 @@ const customStyles = {
     }}
   };
 
-function TopProductos (props){
+function Vventas (props){
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
     const [data,SetData] = useState([])
-    const datosdb=async()=>{
-        /*
+    const datosdb=async()=>{/*
       //console.log(process.env.REACT_APP_API_CONSUME)
       const url = `${process.env.REACT_APP_API_CONSUME}/api/get_votos`
       let config = {
@@ -105,40 +107,49 @@ function TopProductos (props){
        
       }catch(e){
         console.log(e)
-      }
-      */
+      }*/
+      
   }
 
-  useEffect(() => {
-   /* const interval = setInterval(() => {
+  useEffect(() => {/*
+    const interval = setInterval(() => {
       datosdb()
     }, 1000);
     return () => clearInterval(interval);*/
   }, []);
 
   
-    return(
-      <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
-        <img id="logoStar" src={logo} alt="Logo" />
-        <a className="navbar-brand" href="/">AlChilazo</a>
-        <div className="h2 text-light">Informe de Ventas</div>
-      </nav>
-      <Link to={"/adm"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
-      <div className='container mt-3'>
-      <DataTable 
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="col-5">
+          <input
+            type="date"
+            className="form-control"
+            value={selectedDate}
+            onChange={handleDateChange}
+          />
+        </div>
+        <div className="col-4">
+          <button className="btn btn-primary btnEffect" onClick={datosdb()}>
+            Enviar
+          </button>
+        </div>
+      </div>
+
+      <DataTable
         columns={columnas}
         data={data}
-        title="Usuarios de Plataforma"
+        title="Valor de Ventas"
         pagination
         fixedHeader
         fixedHeaderScrollHeight="600px"
         customStyles={customStyles}
         noDataComponent="No hay informacion en la base de datos"
-        /> 
-      </div>
-      </React.Fragment>
+      />
+    </React.Fragment >
+
     )
 
 }
-export default TopProductos
+export default Vventas;
