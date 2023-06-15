@@ -15,7 +15,8 @@ exports.newuser = async function (req,res){
             rol: req.body.rol, 
             telefono: req.body.telefono,
             tipo_licencia: req.body.tipo_licencia,
-            nit: req.body.nit
+            nit: req.body.nit,
+            fecha_registro: req.body.fecha_registro
         };
         //Encripto la contraseña
         let passwordEncrypt = crypto.createHash('md5').update(user.password).digest("hex");
@@ -33,7 +34,7 @@ exports.newuser = async function (req,res){
                         res.status(200).send({msg:"El usuario ya está asociado a una cuenta.", valid:false})
                         return;
                     }else{
-                        database.query(querysMySQL.ins_user,[user.nombre,user.apellido,user.email,user.username,passwordEncrypt,user.rol,user.telefono,user.tipo_licencia,user.nit],function(err,result,fields){
+                        database.query(querysMySQL.ins_user,[user.nombre,user.apellido,user.email,user.username,passwordEncrypt,user.rol,user.telefono,user.tipo_licencia,user.nit,user.fecha_registro],function(err,result,fields){
                             
                             //Si todo pasó correctamente, envio el correo
                             enviarEmailUser(user.email,"Bienvenido",user.username)
