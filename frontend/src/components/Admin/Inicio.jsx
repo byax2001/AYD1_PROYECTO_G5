@@ -60,35 +60,43 @@ const customStyles = {
 
 
 const Inicio = () => {
+  const [isReportesDropdownOpen, setIsReportesDropdownOpen] = useState(false);
 
-    return (
-        <React.Fragment>
-            <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
-                <img id="logoStar" src={logo} alt="Logo" />
-                <a className="navbar-brand" href="/">AlChilazo</a>
-                <div className="h2 text-light">Inicio</div>
-                <div className="btn-group d-inline-flex" data-toggle="buttons">
-                    <Link to="/emp/Miperfil" className="btn textForm text-light">Miperfil</Link>
-                    <Link to="/" className="btn textForm text-light">Cerrar Sesion</Link>
-                </div>
-            </nav>
-            <div className='d-inline-flex btnRT'>
-                <div className="btn-group">
-                    <Link className="btn btn-warning btnEffect">Cerrar Sesion</Link>
-                    <Link className="btn btn-warning btnEffect">Reportes</Link>
-                </div>
+  const toggleReportesDropdown = () => {
+    setIsReportesDropdownOpen(!isReportesDropdownOpen);
+  };
+  return (
+    <React.Fragment>
+      <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
+        <img id="logoStar" src={logo} alt="Logo" />
+        <a className="navbar-brand" href="/">AlChilazo</a>
+        <div className="h2 text-light">Inicio</div>
+      </nav>
+      <div className='d-inline-flex btnRT'>
+        <div className="btn-group">
+          <Link to={"/"} className="btn btn-warning btnEffect">Cerrar Sesion</Link>
+          {/* DROPDOWN DE REGISTRARSE*/}
+          <li className="nav-item dropdown btn btnEffect">
+            <button className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" onClick={toggleReportesDropdown}>Reportes</button>
+            <div className={`dropdown-menu ${isReportesDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
+              <Link to={"/infV"} className="dropdown-item">Ventas</Link>
+              <Link to={'/infR'} className="dropdown-item">Repartidores</Link>
+              <Link to={'/infU'} className="dropdown-item">Usuarios</Link>
             </div>
-            {/* TABLAS */}
-            <div className="container mt-4">
-                <div className="my-4">
-                    <SolicitudRepartidor />
-                </div>
-                <div className="my-4">
-                    <SolicitudEmpresa />
-                </div>
-            </div>
-        </React.Fragment>
-    );
+          </li>
+        </div>
+      </div>
+      {/* TABLAS */}
+      <div className="container mt-4">
+        <div className="my-4">
+          <SolicitudRepartidor />
+        </div>
+        <div className="my-4">
+          <SolicitudEmpresa />
+        </div>
+      </div>
+    </React.Fragment>
+  );
 };
 
 export default Inicio;
