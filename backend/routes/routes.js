@@ -5,7 +5,7 @@ var multer = require('multer');
 var USER = require('../controllers/User.Controller');
 var USERDELIVER = require('../controllers/UserDeliver.Controller')
 var RESTAURANTS = require('../controllers/UserRestaurant.Controller')
-
+var REPORTS = require('../controllers/Admin.Reports')
 
 var router = express.Router();
 var baseurl = '/api/';
@@ -39,5 +39,8 @@ router.post(baseurl + 'restaurants',    upload.single('image'),   RESTAURANTS.ne
 router.get(baseurl + 'restaurants',                               RESTAURANTS.getrestaurant)
 router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
 router.delete(baseurl + 'restaurants',                            RESTAURANTS.deleterestaurant)
+
+// Reportes
+router.get(baseurl + 'reports',                                   REPORTS.getInfoUser)
 
 module.exports = router;
