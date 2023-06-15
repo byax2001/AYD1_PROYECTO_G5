@@ -122,3 +122,12 @@ exports.getuser = async function (req,res){
     }
 }
 
+
+exports.login = async function (req,res){
+    try{
+        
+    }catch(e){
+
+    }
+
+}
