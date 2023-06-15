@@ -67,7 +67,7 @@ const data = [
     municipio: 'Municipio 1',
     tipolicencia: 'Tipo A',
     tp: 'Sí',
-    hojadevida: 'https://www.udlap.mx/centrodeescritura/files/curriculumVitae-Ejemplos.pdf',
+    hojadevida: 'https://ayd1-grupo5.s3.amazonaws.com/3e62c6d4688a8135cb32ad8ba96872eced3b9a77238afe5b1169a849617e8208',
   },
   {
     nombre: 'Jane',

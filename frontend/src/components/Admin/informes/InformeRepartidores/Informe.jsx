@@ -20,6 +20,7 @@ const Informe = () => {
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">Informe de Repartidores</div>
       </nav>
+      <Link to={"/adm"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
     </React.Fragment>
   );
 };
