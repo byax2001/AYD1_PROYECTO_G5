@@ -5,6 +5,7 @@ var multer = require('multer');
 var USER = require('../controllers/User.Controller');
 var USERDELIVER = require('../controllers/UserDeliver.Controller')
 var RESTAURANTS = require('../controllers/UserRestaurant.Controller')
+var OAUTH = require('../controllers/OauthController')
 var REPORTS = require('../controllers/Admin.Reports')
 
 var router = express.Router();
@@ -19,6 +20,10 @@ const upload = multer({ storage: storage })
 router.get('/', (req, res) => {
     res.status(200).send('exitoso');    
 });
+
+//Oauth
+router.post(baseurl + 'login',                                    OAUTH.login)
+
 
 // Usuarios
 router.post(baseurl + 'user',                                     USER.newuser)
