@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
 import { Link } from 'react-router-dom';
+import ReactTable from 'react-data-table-component';
 
 import Modal from 'react-modal';
+Modal.setAppElement('#root'); 
 
 
 // varaible de stilo
@@ -60,107 +62,120 @@ const customStyles = {
     }
 };
 
-//------------------------------------------------------------------------------
-
 //varaibles Necesarias para la Carga de Datos
 //Aqui mi filas
 const data = [
     {
-        producto: 'Quesoburguesa',
-        tipo: 'Individual',
-        descripcion: 'Simple pero sabroso',
-    },
-    {
-        producto: 'Combo Tradicional ',
-        tipo: 'Combo',
-        descripcion: 'nuestro combo mas popular',
-    },
-    {
-        producto: 'Combo Deluxe ',
-        tipo: 'Combo',
-        descripcion: 'nuestro combo mas completo',
-    },
-    {
-        producto: 'Bebida Natural ',
-        tipo: 'Individual',
-        descripcion: 'bebida 100% Natural',
+    
+      id:5,  
+      producto: 'Quesoburguesa',
+      tipo: 'Individual',
+      descripcion: 'Simple pero sabroso',
     }
-    // Agrega más filas según tus necesidades
-];
-//Aqui mis columnas
-const columns = [
+  ];
+
+
+const InicioE = () => {
+    const [filteredData, setFilteredData] = useState(data);
+    const [selectedRow, setSelectedRow] = useState(null);
+    const [modalIsOpen, setModalIsOpen] = useState(false);  
+
+    // Son lo valores que editare en ese momento:
+    const [prv, setProductoValue] = useState(null);
+    //const [tipoValue, setTipoValue] = useState(selectedRow.tipo);
+    //const [descripcionValue, setDescripcionValue] = useState(selectedRow.descripcion);
+
+
+    const openModal = () => {
+        setModalIsOpen(true);
+      };
+      
+    const closeModal = () => {
+    setModalIsOpen(false);
+    };
+
+      //Aqui mis columnas
+    const columns = [
     {
-        name: 'Nombre del producto',
-        selector: row => row.producto,
-        sortable: true,
+      name: 'Nombre del producto',
+      selector: row => row.producto,
+      sortable: true,
     },
     {
         name: 'Tipo',
         selector: row => row.tipo,
         sortable: true,
-    },
-    {
+      },
+      {
         name: 'Descripcion',
-        selector: row => row.descripcion,
-        sortable: true,
-    }
-];
+        cell: row => (
+            <button className='btn btn-secondary' onClick={() => {
+                handleActionClick(row,prv);
+                openModal();
+              }}>
+                {row.descripcion}
+              </button>
+          ),
+        ignoreRowClick: true,
+        allowOverflow: true,
+        button: true,
+      },
+     ];
 
-const InicioE = () => {
-    const [filteredData, setFilteredData] = useState(data);
-    const [selectedItem, setSelectedItem] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formValues, setFormValues] = useState({
-        producto: '',
-        tipo: '',
-        descripcion: '',
-    });
-    const handleTipoClick = (row) => {
-        setSelectedItem(row);
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-    };
-
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Aquí puedes agregar la lógica para guardar los cambios del formulario
-        // Puedes acceder a los valores actualizados de los campos a través del estado
-        //  // Por ejemplo, hacer una solicitud de API para actualizar los valores en la base de datos
-        // Ejemplo: selectedItem.producto, selectedItem.tipo, selectedItem.descripcion
-
-
-        const updatedData = filteredData.map((item) => {
-            if (item === selectedItem) {
-                return {
-                    producto: formValues.producto,
-                    tipo: formValues.tipo,
-                    descripcion: formValues.descripcion,
-                };
-            }
-            return item;
-        });
-
-        setFilteredData(updatedData);
-        closeModal();
-
+    // Esta funcion solo sirve para validar que los datos sean los correctos de cada fila
+     const handleActionClick = (row,prvdd) => {
+        setSelectedRow(row);
+      console.log('Fila seleccionada:', row);
+      console.log('Fila seleccionada:', row.id);
+      console.log('nasdda: ',prvdd);
     };
 
 
-    const handleInputChange = (event) => {
-        const { id, value } = event.target;
-        const updatedItem = {
-            producto: formValues.producto,
-            tipo: formValues.tipo,
-            descripcion: formValues.descripcion,
+        //VENTANA EMERGENTE PARA ACCIONAR 
+    const ActionModal = ({ isOpen, onRequestClose }) => {
+        return (
+            <Modal
+                isOpen={isOpen}Inicio
+                onRequestClose={onRequestClose}
+                contentLabel="Edicion de Producto"
+            >
+                <div className='container'>
+                <h2>Edicion de Producto</h2>
+                <p>Valores:</p>
+                {/* <pre>{JSON.stringify(selectedRow, null, 2)}</pre>*/}
+                
+                {/*Formulario: */}
+
+                <div className="mb-3">
+                <label htmlFor="exampleFormControlInput1" className="form-label">Producto: {selectedRow.producto}</label>
+                <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setProductoValue(e.target.value)}></input>
+                </div>
+                <div className="mb-3">
+                <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo}</label>
+                <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example"></input>
+                </div>
+                <div className="mb-3">
+                <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion}</label>
+                <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example"></input>
+                </div>
+                
+                <div className="row">
+                <div className="col-2"></div>
+                <button className='btn btn-primary col-2 btnEffect' onClick={()=>{onRequestClose(); handleActionClick(selectedRow,prv)}}>Guaradar</button>
+                <div className="col-4"></div>
+                <button className='btn btn-primary col-2 btnEffect' onClick={()=>{onRequestClose(); handleActionClick(selectedRow)}}>Cancelar</button>
+                <div className="col-2"></div>
+                </div>
+                
+                </div>
+                </Modal>
+            );
         };
-        setSelectedItem(updatedItem);
-    };
+
     return (
         <React.Fragment>
+            {/* Navbar*/}
+
             <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
                 <img id="logoStar" src={logo} alt="Logo" />
                 <a className="navbar-brand" href="/">AlChilazo</a>
@@ -173,52 +188,29 @@ const InicioE = () => {
                 </div>
             </nav>
 
+            {/* Aqui insertamos el model para abrir y cerrar */}
+            {selectedRow && (
+            <ActionModal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+            />
+            )}
+            {/* Aqui colocamos la tabla */}
+
             <div className="container mt-4">
                 <div className="my-4">
-                    <DataTable
-                        title={"Lista de productos"}
-                        columns={columns}
-                        data={filteredData}
-                        customStyles={customStyles}
-                        pagination
-                        highlightOnHover
-                        striped
-                        responsive
-                        onRowClicked={handleTipoClick} // Agregamos el evento onRowClicked
-                    />
+                <ReactTable
+                    title={"Lista Productos"}
+                    columns={columns}
+                    data={filteredData}
+                    customStyles={customStyles}
+                    pagination
+                    highlightOnHover
+                    striped
+                    responsive
+                />
                 </div>
-
             </div>
-
-            {/* Modal */}
-            <Modal
-                isOpen={isModalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Detalle del producto"
-            >
-                {selectedItem && (
-                    <div>
-                        <h2>Editar producto</h2>
-                        <form onSubmit={handleSubmit}>
-                            <div>
-                                <label htmlFor="nombre">Nombre:</label>
-                                <input type="text" id="nombre" value={selectedItem.producto} onChange={handleInputChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="tipo">Tipo:</label>
-                                <input type="text" id="tipo" value={selectedItem.tipo} onChange={handleInputChange} />
-                            </div>
-                            <div>
-                                <label htmlFor="descripcion">Descripción:</label>
-                                <textarea id="descripcion" value={selectedItem.descripcion} onChange={handleInputChange} />
-                            </div>
-                            <button type="submit">Guardar cambios</button>
-                            <button onClick={closeModal}>Cerrar</button>
-                        </form>
-                    </div>
-                )}
-            </Modal>
-
         </React.Fragment>
     );
 };
