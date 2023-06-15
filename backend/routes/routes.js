@@ -7,6 +7,7 @@ var USERDELIVER = require('../controllers/UserDeliver.Controller')
 var RESTAURANTS = require('../controllers/UserRestaurant.Controller')
 var OAUTH = require('../controllers/OauthController')
 var REPORTS = require('../controllers/Admin.Reports')
+var PRODUCTS = require('../controllers/Products.Controller')
 
 var router = express.Router();
 var baseurl = '/api/';
@@ -44,6 +45,12 @@ router.post(baseurl + 'restaurants',    upload.single('image'),   RESTAURANTS.ne
 router.get(baseurl + 'restaurants',                               RESTAURANTS.getrestaurant)
 router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
 router.delete(baseurl + 'restaurants',                            RESTAURANTS.deleterestaurant)
+
+//Productos
+router.post(baseurl + 'products',       upload.single('image'),   PRODUCTS.newproduct)
+router.get(baseurl + 'products',                                  PRODUCTS.getproducts)
+router.delete(baseurl + 'products',                               PRODUCTS.deleteProduct)
+
 
 // Reportes
 router.get(baseurl + 'reports',                                   REPORTS.getInfoUser)

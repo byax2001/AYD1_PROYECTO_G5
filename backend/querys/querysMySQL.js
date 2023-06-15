@@ -5,9 +5,15 @@ module.exports = {
 		//Users
 		list_all_users: "SELECT * FROM usuario",
 		list_all_empresas:"SELECT * FROM empresa",
+		list_all_products:"SELECT * FROM producto",
 		list_users_byuser:"SELECT * FROM usuario WHERE username = ?",
 		list_users_byemail:"SELECT * FROM usuario WHERE email = ?",
 		list_user_byid:"SELECT * FROM usuario WHERE id_usuario = ?",
+
+		//Products
+		list_all_products_by_type :"SELECT * FROM producto WHERE tipo_producto_id_tipo_producto = ?", 
+		list_all_products_by_rest :"SELECT * FROM producto WHERE empresa_id_empresa = ?", 
+		
         
 		//Reports
 		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
@@ -49,6 +55,10 @@ module.exports = {
 		" (descripcion, documento,solicitud_pendiente_id_solicitud_repartidor ) "+
 		" VALUES (?,?,?);",
 
+		ins_product: "INSERT INTO producto "+ 
+		" (nombre_producto, descripcion_producto,imagen_producto,precio_producto,tipo_producto_id_tipo_producto,empresa_id_empresa,combo)"+
+		" VALUES (?,?,?,?,?,?,?);",
+
 
 
 
@@ -58,6 +68,7 @@ module.exports = {
 	/* ----------------------------------------------------------------------- */
     	del_user: "DELETE FROM usuario WHERE id_usuario=?",
 		del_restaurant: "DELETE FROM empresa WHERE id_empresa=?",
+		del_product: "DELETE FROM producto WHERE id_producto=?",
 		
 
 }
