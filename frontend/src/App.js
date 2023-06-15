@@ -17,6 +17,10 @@ import Perfil from './components/Empleado/Perfil';
 import InicioEmp from './components/Empleado/Inicio';
 //ADMIN
 import InicioAdm from './components/Admin/Inicio';
+//INFORMES
+import InformeVentas from './components/Admin/informes/InformeVentas/Informe';
+import InformeRepartidores from './components/Admin/informes/InformeRepartidores/Informe';
+import InformeUsuarios from './components/Admin/informes/InformeUsuarios/Informe';
 
 function App() {
   return (
@@ -32,6 +36,9 @@ function App() {
         <Route path="/emp" exact element={<InicioEmp/>}/>
         <Route path="/infoP" exact element={<MPiePagina/>}/>
         <Route path="/adm" exact element={<InicioAdm/>}/>
+        <Route path="/infV" exact element={<InformeVentas/>}/>
+        <Route path="/infU" exact element={<InformeUsuarios/>}/>
+        <Route path="/infR" exact element={<InformeRepartidores/>}/>
       </Routes>
     </BrowserRouter>
   );
