@@ -33,7 +33,7 @@ exports.login = async function(req, res) {
             });
             datausesr.idempresa = result2[0].id_empresa;
           }
-  
+          datausesr.iduser = result[0].id_usuario;
           datausesr.nombre = result[0].nombre;
           datausesr.apellido = result[0].apellido;
           datausesr.email = result[0].email;
