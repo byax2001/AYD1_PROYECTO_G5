@@ -1,13 +1,12 @@
+
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
 import { Link } from 'react-router-dom';
+import Form from './FormE';
 import ReactTable from 'react-data-table-component';
-
-import Modal from 'react-modal';
-Modal.setAppElement('#root'); 
-
-
+import ReactModal from 'react-modal';
+ReactModal.setAppElement('#root'); // Establece el elemento de la aplicación principal
 // varaible de stilo
 const customStyles = {
     noData: {
@@ -78,21 +77,8 @@ const data = [
 const InicioE = () => {
     const [filteredData, setFilteredData] = useState(data);
     const [selectedRow, setSelectedRow] = useState(null);
-    const [modalIsOpen, setModalIsOpen] = useState(false);  
+    const [showModal, setShowModal] = useState(false);
 
-    // Son lo valores que editare en ese momento:
-    const [prv, setProductoValue] = useState(null);
-    //const [tipoValue, setTipoValue] = useState(selectedRow.tipo);
-    //const [descripcionValue, setDescripcionValue] = useState(selectedRow.descripcion);
-
-
-    const openModal = () => {
-        setModalIsOpen(true);
-      };
-      
-    const closeModal = () => {
-    setModalIsOpen(false);
-    };
 
       //Aqui mis columnas
     const columns = [
@@ -108,70 +94,22 @@ const InicioE = () => {
       },
       {
         name: 'Descripcion',
-        cell: row => (
-            <button className='btn btn-secondary' onClick={() => {
-                handleActionClick(row,prv);
-                openModal();
-              }}>
-                {row.descripcion}
-              </button>
+        cell: (row) => (
+            <button  className='btn btn-secondary' onClick={() => handleClick(row)}>
+              {row.descripcion}
+            </button>
           ),
-        ignoreRowClick: true,
-        allowOverflow: true,
-        button: true,
+        sortable: true,
       },
      ];
 
-    // Esta funcion solo sirve para validar que los datos sean los correctos de cada fila
-     const handleActionClick = (row,prvdd) => {
+     const handleClick = (row) => {
         setSelectedRow(row);
-      console.log('Fila seleccionada:', row);
-      console.log('Fila seleccionada:', row.id);
-      console.log('nasdda: ',prvdd);
-    };
+        setShowModal(true);
 
-
-        //VENTANA EMERGENTE PARA ACCIONAR 
-    const ActionModal = ({ isOpen, onRequestClose }) => {
-        return (
-            <Modal
-                isOpen={isOpen}Inicio
-                onRequestClose={onRequestClose}
-                contentLabel="Edicion de Producto"
-            >
-                <div className='container'>
-                <h2>Edicion de Producto</h2>
-                <p>Valores:</p>
-                {/* <pre>{JSON.stringify(selectedRow, null, 2)}</pre>*/}
-                
-                {/*Formulario: */}
-
-                <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Producto: {selectedRow.producto}</label>
-                <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setProductoValue(e.target.value)}></input>
-                </div>
-                <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo}</label>
-                <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example"></input>
-                </div>
-                <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion}</label>
-                <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example"></input>
-                </div>
-                
-                <div className="row">
-                <div className="col-2"></div>
-                <button className='btn btn-primary col-2 btnEffect' onClick={()=>{onRequestClose(); handleActionClick(selectedRow,prv)}}>Guaradar</button>
-                <div className="col-4"></div>
-                <button className='btn btn-primary col-2 btnEffect' onClick={()=>{onRequestClose(); handleActionClick(selectedRow)}}>Cancelar</button>
-                <div className="col-2"></div>
-                </div>
-                
-                </div>
-                </Modal>
-            );
-        };
-
+      };
+      
+     
     return (
         <React.Fragment>
             {/* Navbar*/}
@@ -188,13 +126,7 @@ const InicioE = () => {
                 </div>
             </nav>
 
-            {/* Aqui insertamos el model para abrir y cerrar */}
-            {selectedRow && (
-            <ActionModal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-            />
-            )}
+            
             {/* Aqui colocamos la tabla */}
 
             <div className="container mt-4">
@@ -211,8 +143,48 @@ const InicioE = () => {
                 />
                 </div>
             </div>
+
+            <ReactModal
+                isOpen={showModal}
+                onRequestClose={() => setShowModal(false)}
+                contentLabel="Formulario"
+            >
+                <Form selectedRow={selectedRow} />
+            </ReactModal>
         </React.Fragment>
     );
 };
 
 export default InicioE;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
