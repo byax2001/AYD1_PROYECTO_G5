@@ -40,6 +40,7 @@ const customStyles = {
       alignItems: 'center',
       justifyContent: 'center',
       backgroundColor: '#a2a2a2',
+      color:'white'
     },
   },
     header: {
@@ -83,8 +84,18 @@ const customStyles = {
       borderTopColor: 'd2d2d2',
     }}
   };
+/*2.Total de Usuarios Registrados
 
+3.
+Promedio de usuarios registrados por dias
+4. 
+Promedio de usuarios registrados por mes
+5. 
+Promedio de usuarios registrados por año */
 function TopProductos (props){
+    const [usersAcep,setUsersAcep] = useState(0)
+    const [usersRec,setUsersRec] = useState(0)
+
     const [data,SetData] = useState([])
     const datosdb=async()=>{
         /*
@@ -117,8 +128,8 @@ function TopProductos (props){
   }, []);
 
   
-    return(
-      <React.Fragment>
+  return (
+    <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
@@ -126,19 +137,29 @@ function TopProductos (props){
       </nav>
       <Link to={"/adm"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
       <div className='container mt-3'>
-      <DataTable 
-        columns={columnas}
-        data={data}
-        title="Usuarios de Plataforma"
-        pagination
-        fixedHeader
-        fixedHeaderScrollHeight="600px"
-        customStyles={customStyles}
-        noDataComponent="No hay informacion en la base de datos"
-        /> 
+        <div className="row text-light bg-dark rounded mb-2 pt-3">
+          <div className="col-6 text-center">
+            <div className="row"><h6>Total de Usuarios Aceptados</h6></div>
+            <div className="row text-center h4"><div>{usersAcep}</div></div>
+          </div>
+          <div className="col-6 text-center">
+            <div className="row"><h6>Total de Usuarios Rechazados</h6></div>
+            <div className="row text-center h4"><div>{usersRec}</div></div>
+          </div>
+        </div>
+        <DataTable
+          columns={columnas}
+          data={data}
+          title="Usuarios de Plataforma"
+          pagination
+          fixedHeader
+          fixedHeaderScrollHeight="600px"
+          customStyles={customStyles}
+          noDataComponent="No hay informacion en la base de datos"
+        />
       </div>
-      </React.Fragment>
-    )
+    </React.Fragment>
+  )
 
 }
 export default TopProductos

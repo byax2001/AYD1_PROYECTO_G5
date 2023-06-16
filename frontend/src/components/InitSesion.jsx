@@ -41,7 +41,7 @@ function InitSesion() {
             <Form onSubmit={handleSubmit} className='text-white bg-dark mt-5' >
               <Form.Group controlId="firstName">
                 <Form.Label className="textForm">Email:</Form.Label>
-                <Form.Control type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                <Form.Control type="email" name="firstName" value={formData.firstName} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="lastName">
