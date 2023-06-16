@@ -10,6 +10,8 @@ module.exports = {
 		list_users_byemail:"SELECT * FROM usuario WHERE email = ?",
 		list_user_byid:"SELECT * FROM usuario WHERE id_usuario = ?",
 
+		list_emp_request: "SELECT * FROM solicitud_pendiente WHERE id_solicitud_repartidor = ?",
+
 		//Products
 		list_all_products_by_type :"SELECT * FROM producto WHERE tipo_producto_id_tipo_producto = ?", 
 		list_all_products_by_rest :"SELECT * FROM producto WHERE empresa_id_empresa = ?", 
@@ -37,7 +39,7 @@ module.exports = {
 		update_restaurante: "UPDATE usuario SET nombre=?,descripcion_empresa=?, tipo_empresa_id_tipo=?, telefono=?, WHERE id_empresa=?",
 		update_product: "UPDATE producto SET nombre_producto=?,descripcion_producto=?, imagen_producto=?, precio_producto=?,tipo_producto_id_tipo_producto=?,combo=? WHERE id_producto=?",
 		
-
+		update_pending_request: "UPDATE solicitud_pendiente SET aprobada=? WHERE id_solicitud_repartidor= ?",
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ INSERTS -------------------------------- */
@@ -64,7 +66,9 @@ module.exports = {
 		" VALUES (?,?,?,?,?,?,?);",
 
 
-
+		ins_empre: "INSERT INTO empresa "+ 
+		" (nombre, descripcion_empresa,email,tipo_empresa_id_tipo,telefono)"+
+		" VALUES (?,?,?,?,?);",
 
 
     /* ----------------------------------------------------------------------- */
