@@ -1,5 +1,7 @@
+require('dotenv').config();
+
 module.exports = {  
-    nodePort: 3000,
+    nodePort: process.env.PORT_BACK,
     messageTerminal: 'Backend for AlChilazo up',
 
 
