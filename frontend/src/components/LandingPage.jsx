@@ -29,13 +29,12 @@ function LandingPage(props) {
             </li>
             {/* DROPDOWN DE REGISTRARSE*/}
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" onClick={toggleRegisterDropdown}>
+              <button className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" onClick={toggleRegisterDropdown}>
                 Registrarse
-              </a>
+              </button>
               <div className={`dropdown-menu ${isRegisterDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
                 <a className="dropdown-item" href="/ru">Usuario</a>
                 <a className="dropdown-item" href="/re">Repartidor</a>
-                <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href="/rempresa">Empresa</a>
               </div>
             </li>
