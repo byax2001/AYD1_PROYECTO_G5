@@ -9,13 +9,9 @@ function RegistroUsuario() {
     nickName:'',
     password:'',
     email: '',
-    phoneNumber: '',
-    department: '',
-    municipality: '',
-    hasLicense: false,
-    licenseType: '',
-    hasMotorcycle: false,
-    resume: null,
+    celular: '',
+    departamento: '',
+    municipio: '',
   });
 
   const handleChange = (event) => {
@@ -73,26 +69,26 @@ function RegistroUsuario() {
                 <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="phoneNumber">
+              <Form.Group controlId="celular">
                 <Form.Label className="textForm">Número de Celular</Form.Label>
                 <Form.Control
                   type="number"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
+                  name="celular"
+                  value={formData.celular}
                   onChange={handleChange}
                   maxLength={8}
                   required
                 />
               </Form.Group>
 
-              <Form.Group controlId="department">
+              <Form.Group controlId="departamento">
                 <Form.Label className="textForm">Departamento</Form.Label>
-                <Form.Control type="text" name="department" value={formData.department} onChange={handleChange} required />
+                <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="municipality">
+              <Form.Group controlId="municipio">
                 <Form.Label className="textForm">Municipio</Form.Label>
-                <Form.Control type="text" name="municipality" value={formData.municipality} onChange={handleChange} required />
+                <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
               </Form.Group>
              
 

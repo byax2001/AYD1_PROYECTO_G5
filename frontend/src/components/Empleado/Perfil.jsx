@@ -100,18 +100,18 @@ const Perfil = () => {
         <div className="h2 text-light">MiPerfil</div>
       </nav>
       <div className="container mt-4">
-        <div className='container bg-dark text-light'>
+        <div className='container bg-dark text-light rounded'>
           <div className="row textForm">
             <div className="col-3 h5 bg-secondary">Nombre del empleado:</div>
             <div className="col-9 h3">John Doe</div>
           </div>
           <div className="row textForm">
             <div className="col-3 h4"> Puntuacion: </div>
-              <img id="logoStar" src={star} />
-              <img id="logoStar" src={star} />
-              <img id="logoStar" src={star} />
-              <img id="logoStar" src={star} />
-              <img id="logoStar" src={star} />
+              <img id="logoStar" className='img-thumbnail' src={star} />
+              <img id="logoStar" className='img-thumbnail' src={star} />
+              <img id="logoStar" className='img-thumbnail' src={star} />
+              <img id="logoStar" className='img-thumbnail' src={star} />
+              <img id="logoStar" className='img-thumbnail' src={star} />
           </div>
         </div>
 

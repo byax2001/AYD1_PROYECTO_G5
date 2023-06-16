@@ -213,6 +213,7 @@ const closeModal = () => {
             data={filteredData}
             customStyles={customStyles}
             pagination
+            paginationPerPage={10}
             highlightOnHover
             striped
             responsive

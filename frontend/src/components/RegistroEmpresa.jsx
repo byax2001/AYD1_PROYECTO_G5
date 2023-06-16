@@ -91,7 +91,7 @@ function RegistroEmpresa() {
 
               <Form.Group controlId="documentos">
                 <Form.Label className="textForm">Documentos</Form.Label>
-                <Form.Control type="file" name="documentos" onChange={handleChange} />
+                <Form.Control type="file" name="documentos" onChange={handleChange} accept="application/pdf" />
               </Form.Group>
 
               <Button className='bg-secondary mt-2 btnEffect' variant="primary" type="submit">
