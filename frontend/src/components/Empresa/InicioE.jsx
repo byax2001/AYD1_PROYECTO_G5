@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
+import Amb from '../../images/quesoB.png';
 import { Link } from 'react-router-dom';
 import Form from './FormE';
 import ReactTable from 'react-data-table-component';
@@ -65,12 +66,32 @@ const customStyles = {
 //Aqui mi filas
 const data = [
     {
-    
-      id:5,  
-      producto: 'Quesoburguesa',
-      tipo: 'Individual',
-      descripcion: 'Simple pero sabroso',
-    }
+        nombre: 'Chorizo Argentino',   
+        descripcion: 'Completo',
+        precio: 30,
+        tipo: 'Combo',
+        empresa: 2,
+        imagen: Amb,//sera de validar si me mandaria algun Link
+        id:17,
+    },
+    {
+        nombre: 'Queso Doble',   
+        descripcion: 'Completo',
+        precio: 40,
+        tipo: 'Simple',
+        empresa: 2,
+        imagen: Amb,//sera de validar si me mandaria algun Link
+        id:7,
+    },
+    {
+        nombre: 'Bacon',   
+        descripcion: 'Completo',
+        precio: 80,
+        tipo: 'Entrada',
+        empresa: 2,
+        imagen: Amb,//sera de validar si me mandaria algun Link
+        id:1,
+    },
   ];
 
 
@@ -82,22 +103,47 @@ const InicioE = () => {
 
       //Aqui mis columnas
     const columns = [
-    {
-      name: 'Nombre del producto',
-      selector: row => row.producto,
-      sortable: true,
-    },
-    {
-        name: 'Tipo',
-        selector: row => row.tipo,
+        
+      {
+        name: 'ID',
+        selector: row => row.id,
         sortable: true,
       },
+    {
+      name: 'Nombre del producto',
+      selector: row => row.nombre,
+      sortable: true,
+    },
       {
         name: 'Descripcion',
         cell: (row) => (
             <button  className='btn btn-secondary' onClick={() => handleClick(row)}>
               {row.descripcion}
             </button>
+          ),
+        sortable: true,
+      },
+      {
+        name: 'Precio',
+        selector: row => row.precio,
+        sortable: true,
+      },
+      {
+        name: 'Tipo',
+        selector: row => row.tipo,
+        sortable: true,
+      },
+      {
+        name: 'Imagen',
+        selector: row=> row.imagen,
+        cell: (row) => (
+            <a href={row.documento} target="_blank" rel="noopener noreferrer">
+                <img
+                    src={row.imagen}
+                    alt="Fotografia"
+                    style={{ width: '35px', cursor: 'pointer' }}
+                />
+            </a>
           ),
         sortable: true,
       },
@@ -109,7 +155,10 @@ const InicioE = () => {
 
       };
       
-     
+      const closeModal = () => {
+        setShowModal(false);
+      };
+
     return (
         <React.Fragment>
             {/* Navbar*/}
@@ -149,7 +198,7 @@ const InicioE = () => {
                 onRequestClose={() => setShowModal(false)}
                 contentLabel="Formulario"
             >
-                <Form selectedRow={selectedRow} />
+                <Form selectedRow={selectedRow} closeModal={closeModal} />
             </ReactModal>
         </React.Fragment>
     );

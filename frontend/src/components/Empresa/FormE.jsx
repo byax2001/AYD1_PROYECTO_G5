@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const Form = ({ selectedRow }) => {
+const Form = ({ selectedRow, closeModal  }) => {
 
 
     const [nameR, setNameR] = useState('');
     const [tipoR, setTipoR] = useState('');
     const [descR, setDescR] = useState('');
+    const [image, setImage] = useState(null);
+    const [precio, setPrecio] = useState(null);
+    
 
    
     /*console.log("pru",tipoR)
@@ -17,16 +20,36 @@ const Form = ({ selectedRow }) => {
     
 
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-
+    
 
     const handleClick = () => {
-        console.log('fila a modificar: ',data)
-        console.log('Datos a Almacenar: ',nameR, ' ',tipoR,' ',descR)
-        alert('Se guardaran los datos: ',nameR, ' ',tipoR,' ',descR, ' Estos Datos corresponde a la Fila: ',data);
+
+       
+      if (nameR.trim() === '' || tipoR.trim() === ''|| tipoR.trim() === ''|| descR.trim() === ''|| precio.trim() === '') {
+        alert('Por favor, complete todos los campos');
+        
+        return;
+      }
+        console.log('fila a modificar: ',data, data.id)
+        console.log('Datos a Almacenar: ',nameR, ' Tipo',tipoR ,' Descp',descR, ' Precio: ', precio)
+        console.log('Imagen:', image);
+
+        alert('Se guardaran los datos: '+ nameR + ' '+ tipoR +' '+descR+ ' '+ precio + ' '+ ' Estos Datos corresponde a la Fila: '+ data.id);
+
+        setNameR('');
+        setTipoR('');
+        setDescR('');
+        setPrecio('');
+        setImage(null);
+        closeModal();
 
       };
+
+      const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+      };
+    
       
 
   return (
@@ -40,20 +63,42 @@ const Form = ({ selectedRow }) => {
             {/*Formulario: */}
 
             <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">Producto: {selectedRow.producto}</label>
-            <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setNameR(e.target.value)}></input>
+              <label htmlFor="exampleFormControlInput1" className="form-label">Producto: {selectedRow.nombre}</label>
+              <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setNameR(e.target.value)}></input>
             </div>
             <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo}</label>
-            <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setTipoR(e.target.value)}></input>
+              <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo}</label>
+              <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setTipoR(e.target.value)}></input>
             </div>
             <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion}</label>
-            <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setDescR(e.target.value)}></input>
+              <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion}</label>
+              <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setDescR(e.target.value)}></input>
             </div>
-            <button  className='btn btn-secondary' onClick={() => handleClick()}>
-              Guardar
-            </button>
+
+            <div className="mb-3">
+              <label htmlFor="image" className="form-label">
+                Imagen:
+              </label>
+              <input id="image" className="form-control" type="file" accept="image/*" onChange={handleImageChange} />
+            </div>
+            <div className="mb-3">
+               <label htmlFor="exampleFormControlInput1" className="form-label">Precio: {selectedRow.precio}</label>
+              <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setPrecio(e.target.value)}></input>
+            </div>
+
+            <div className="mb-3">
+              <button  className='btn btn-secondary' onClick={() => handleClick()}>
+                Guardar
+              </button>
+            </div>
+            <div className="mb-3">
+              <button  className='btn btn-secondary' onClick={() => closeModal()}>
+                Cancelar
+              </button>
+            </div>
+            
+
+            
         
         </div>
     </div>
