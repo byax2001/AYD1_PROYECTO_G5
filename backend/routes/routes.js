@@ -49,8 +49,10 @@ router.delete(baseurl + 'restaurants',                            RESTAURANTS.de
 //Productos
 router.post(baseurl + 'products',       upload.single('image'),   PRODUCTS.newproduct)
 router.get(baseurl + 'products',                                  PRODUCTS.getproducts)
-router.delete(baseurl + 'products',                               PRODUCTS.deleteProduct)
-
+router.put(baseurl + 'products',        upload.single('image'),   PRODUCTS.updateproduct)
+router.delete(baseurl + 'products',                               PRODUCTS.deleteproduct)
+router.get(baseurl + 'products/type/:id',                         PRODUCTS.getproductsbytype)
+router.get(baseurl + 'products/rest/:id',                         PRODUCTS.getproductsbyrestaurant)
 
 // Reportes
 router.get(baseurl + 'reports',                                   REPORTS.getInfoUser)

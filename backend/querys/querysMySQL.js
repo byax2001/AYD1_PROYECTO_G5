@@ -13,7 +13,10 @@ module.exports = {
 		//Products
 		list_all_products_by_type :"SELECT * FROM producto WHERE tipo_producto_id_tipo_producto = ?", 
 		list_all_products_by_rest :"SELECT * FROM producto WHERE empresa_id_empresa = ?", 
+
 		
+		//Restaurant
+		list_restaurant_byemail:"SELECT * FROM empresa WHERE email = ?",
         
 		//Reports
 		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
@@ -32,6 +35,7 @@ module.exports = {
 	/* ----------------------------------------------------------------------- */
 		update_datosuser: "UPDATE usuario SET nombre=?,apellido=?, password=?, rol=?, telefono=?, tipo_licencia=?, nit=? WHERE id_usuario=?",
 		update_restaurante: "UPDATE usuario SET nombre=?,descripcion_empresa=?, tipo_empresa_id_tipo=?, telefono=?, WHERE id_empresa=?",
+		update_product: "UPDATE producto SET nombre_producto=?,descripcion_producto=?, imagen_producto=?, precio_producto=?,tipo_producto_id_tipo_producto=?,combo=? WHERE id_producto=?",
 		
 
 
