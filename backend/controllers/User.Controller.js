@@ -16,12 +16,16 @@ exports.newuser = async function (req,res){
             telefono: req.body.telefono,
             tipo_licencia: req.body.tipo_licencia,
             nit: req.body.nit,
-            fecha_registro: req.body.fecha_registro
+            fecha_registro: req.body.fecha_registro, 
+            direccion: req.body.direccion,        
+            municipio: req.body.municipio,        
+
         };
         //Encripto la contraseña
-        let passwordEncrypt = crypto.createHash('md5').update(user.password).digest("hex");
+ 
         //Primero hago la validación que no exista el correo
         database.query(querysMySQL.list_users_byemail,[user.email],function(err,result,fields){    
+            var currentDate = new Date();
             if (err)throw err;
                 if (result.length>0){
                 res.status(200).send({msg:"El correo ya está asociado a una cuenta.", valid:false})
@@ -34,10 +38,16 @@ exports.newuser = async function (req,res){
                         res.status(200).send({msg:"El usuario ya está asociado a una cuenta.", valid:false})
                         return;
                     }else{
-                        database.query(querysMySQL.ins_user,[user.nombre,user.apellido,user.email,user.username,passwordEncrypt,user.rol,user.telefono,user.tipo_licencia,user.nit,user.fecha_registro],function(err,result,fields){
+                        database.query(querysMySQL.ins_user,[user.nombre,user.apellido,user.email,user.username,user.password,user.rol,user.telefono,user.tipo_licencia,user.nit,currentDate],function(err,result,fields){
                             
                             //Si todo pasó correctamente, envio el correo
-                            enviarEmailUser(user.email,"Bienvenido",user.username)
+
+                            database.query(querysMySQL.ins_address,[user.direccion,"",result.insertId,user.municipio],function(err,result,fields){
+                                if (err)throw err;
+                                enviarEmailUser(user.email,"Bienvenido",user.username)
+                            });
+
+                            
                             res.status(200).send({status: "success", message: "Usuario creado con exito"});
                         });        
                         

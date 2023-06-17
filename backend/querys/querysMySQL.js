@@ -11,6 +11,7 @@ module.exports = {
 		list_user_byid:"SELECT * FROM usuario WHERE id_usuario = ?",
 
 		list_emp_request: "SELECT * FROM solicitud_pendiente WHERE id_solicitud_repartidor = ?",
+		list_tipoprod: "SELECT * FROM tipo_producto",
 
 		//Products
 		list_all_products_by_type :"SELECT * FROM producto WHERE tipo_producto_id_tipo_producto = ?", 
@@ -54,8 +55,8 @@ module.exports = {
 					" VALUES (?,?,?,?,?,?,?,?,?,?);",
 
 		ins_sol:"INSERT INTO solicitud_pendiente "+
-				   "(fecha_solicitud,nombre,apellido,email,nit,medio_transporte,usuario_id_usuario,descripcion_empresa,username,password,tipo_empresa,municipio_id_municipio,tipo_licencia,aprobada) "+
-				   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+				   "(fecha_solicitud,nombre,apellido,email,nit,medio_transporte,usuario_id_usuario,descripcion_empresa,username,password,tipo_empresa,municipio_id_municipio,tipo_licencia,aprobada,telefono,direccion) "+
+				   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
 				   
 		ins_sol_image: "INSERT INTO documento_solicitud "+ 
 		" (descripcion, documento,solicitud_pendiente_id_solicitud_repartidor ) "+
@@ -70,6 +71,9 @@ module.exports = {
 		" (nombre, descripcion_empresa,email,tipo_empresa_id_tipo,telefono)"+
 		" VALUES (?,?,?,?,?);",
 
+		ins_address: "INSERT INTO direccion "+
+		" (direccion, descripcion_direccion, usuario_id_usuario,municipio_id_municipio)"+
+		" VALUES (?,?,?,?);",
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ DELETE  -------------------------------- */

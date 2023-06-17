@@ -200,3 +200,26 @@ exports.getproductsbyrestaurant = async function(req,res){
     }
 
 }
+
+
+//Obtener tipos producto
+exports.getproductsbytype = async function(req,res){
+    try{
+        database.query(querysMySQL.list_tipoprod,[],async function(err,result,fields){    
+            if (result){
+                
+                res.status(200).send({status: "success", message: "Estos son los tipos de producto:", data: result});
+            }else{
+                res.status(200).send({msg:"Se produjo un error al obtener los productos de esa categoria.", valid:false})
+                return;
+    
+            }
+        }); 
+
+    }catch(e){
+        res.status(400).send({status: "error", message: "Error al obtener productos por categoria", data: e});
+    }
+
+}
+
+
