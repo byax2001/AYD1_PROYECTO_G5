@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect} from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
@@ -107,12 +107,12 @@ const closeModal = () => {
     },
     {
       name: 'Correo Electronico',
-      selector: row => row.correo,
+      selector: row => row.email,
       sortable: true,
     },
     {
-      name: 'Celular',
-      selector: row => row.celular,
+      name: 'Telefono',
+      selector: row => row.telefono,
       sortable: true,
     },
     {
@@ -122,24 +122,24 @@ const closeModal = () => {
     },
     {
       name: 'Municipio',
-      selector: row => row.municipio,
+      selector: row => row.nombre_municipio,
       sortable: true,
     },
     {
-      name: 'TipoLicencia',
-      selector: row => row.tipolicencia,
+      name: 'Licencia',
+      selector: row => row.tipo_licencia,
       sortable: true,
     },
     {
       name: 'Transporte Propio',
-      selector: row => row.tp,
+      selector: row => row.medio_transporte,
       sortable: true,
     },
     {
       name: 'Hoja de Vida',
-      selector: row=> row.hojadevida,
+      selector: row=> row.documento,
       cell: row => (
-        <a href={row.hojadevida} target="_blank" rel="noopener noreferrer">
+        <a href={row.documento} target="_blank" rel="noopener noreferrer">
           <img
             src={cv}
             alt="Hoja de Vida"
@@ -194,7 +194,36 @@ const closeModal = () => {
           </Modal>
     );
   };
- 
+  
+  const getSolicitudes = async () => {
+    const url = `http://localhost:4000/api/reqPendingDelivers`;
+    let config = {
+      method: "GET", //ELEMENTOS A ENVIAR
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+
+      const data_res = await res.json();
+      setFilteredData(data_res.data)
+      console.log(data_res)
+    
+
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  useEffect(() => {
+    getSolicitudes();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+},[]);
   return (
     <React.Fragment>
         {/* PARA MOSTRAR LA VENTANA EMERGENTE */}

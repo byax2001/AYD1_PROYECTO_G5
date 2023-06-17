@@ -4,7 +4,7 @@ import logo from '../images/logo.png';
 import '../css/Isesion.css'; 
 import md5 from 'md5';
 import {Link,useNavigate} from 'react-router-dom'
-import MyContext from '../context'
+import MyContext from '../context';
 
 
 function InitSesion() {

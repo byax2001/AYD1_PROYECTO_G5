@@ -101,7 +101,7 @@ const openModal = () => {
 const closeModal = () => {
   setModalIsOpen(false);
 };
-const colsUsuarios = [
+const columnas = [
     {
       name: 'Nombre',
       selector: row => row.nombre,
@@ -119,23 +119,35 @@ const colsUsuarios = [
     },
     {
       name: 'Correo Electronico',
-      selector: row => row.correo,
+      selector: row => row.email,
       sortable: true,
     },
     {
       name: 'Departamento',
       selector: row => row.departamento,
       sortable: true,
-    },{
+    },
+    {
         name: 'Zona',
         selector: row => row.zona,
         sortable: true,
       },
     {
       name: 'Municipio',
-      selector: row => row.municipio,
+      selector: row => row.nombre_municipio,
       sortable: true,
     },
+    {
+      name: 'Trasporte Propio',
+      selector: row => row.medio_transporte,
+      sortable: true,
+    },
+    {
+      name: 'Fecha Solicitud',
+      selector: row => row.fecha_solicitud,
+      sortable: true,
+    },
+    
     {
       name: 'DocumentoPdf',
       selector: row=> row.documento,
@@ -197,7 +209,7 @@ const colsUsuarios = [
   };
  
   const getSolicitudes = async () => {
-    const url = `http://localhost:4000/api/reqPending`;
+    const url = `http://localhost:4000/api/reqPendingRestaurant`;
     let config = {
       method: "GET", //ELEMENTOS A ENVIAR
       headers: {
@@ -240,7 +252,7 @@ const colsUsuarios = [
         <div className="my-4">
           <ReactTable
             title={"Solicitud de Empresas"}
-            columns={colsUsuarios}
+            columns={columnas}
             data={filteredData}
             customStyles={customStyles}
             pagination
