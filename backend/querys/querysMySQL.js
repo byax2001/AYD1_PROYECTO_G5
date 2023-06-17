@@ -20,6 +20,7 @@ module.exports = {
 		
 		//Restaurant
 		list_restaurant_byemail:"SELECT * FROM empresa WHERE email = ?",
+		list_tipoempresa: "SELECT * FROM tipo_empresa",
         
 		//Reports
 		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
@@ -32,6 +33,13 @@ module.exports = {
 		total_users_byyear: `SELECT AVG(tabla.cuenta) AS Promedio_Year
 							 FROM (select YEAR(fecha_registro) AS fecha , COUNT(*) AS cuenta  
 							 FROM usuario GROUP BY fecha) tabla`,
+
+		//Solicitudes pendientes
+		req_pending:"SELECT * FROM solicitud_pendiente" ,
+
+		//Municipios
+		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento",
+		list_dep: "SELECT * FROM departamento",
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */
