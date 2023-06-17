@@ -130,7 +130,7 @@ const PrivacyPolicy = () => {
 
 const QuienesSomos =()=>{
   return(
-    <div className='text-justify textForm'>
+    <div className='text-justify textForm rounded'>
       <h1>Bienvenidos a AlChilazo</h1>
       <p ><em>La plataforma líder en Guatemala para el envío de comida a domicilio.</em></p>
       <p>En AlChilazo, nos enorgullece ser el nexo entre los mejores restaurantes de Guatemala y los comensales hambrientos que desean disfrutar de una deliciosa comida en la comodidad de sus hogares. Nuestro principal objetivo es satisfacer tus antojos con una amplia variedad de opciones gastronómicas, ofreciendo un servicio de entrega rápido y confiable.</p>
@@ -259,7 +259,7 @@ function MPiePagina(props) {
     (
       <React.Fragment>
         <div className="col-3"></div>
-        <div className="col-6 bg-dark"> 
+        <div className="col-6 bg-dark bg-transparent"> 
           <QuienesSomos/>
         </div>
         <div className="col-3"></div>

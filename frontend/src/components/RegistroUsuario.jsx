@@ -35,9 +35,13 @@ function RegistroUsuario() {
   //POST
   const Registro = async () => {
     const url = `http://localhost:4000/api/user`;
+    const cFormData = { ...formData };
+    cFormData["password"]=md5(cFormData["password"])
+    
+    console.log(cFormData);
     let config = {
       method: "POST", //ELEMENTOS A ENVIAR
-      body: JSON.stringify(formData),
+      body: JSON.stringify(cFormData),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
@@ -62,10 +66,7 @@ function RegistroUsuario() {
     event.preventDefault();
     // Aquí puedes enviar los datos del formulario a través de una API o realizar otras acciones con ellos
     // Aquí puedes enviar los datos del formulario a través de una API o realizar otras acciones con ellos
-    const cFormData = { ...formData };
-    cFormData["password"]=md5(cFormData["password"])
     
-    console.log(cFormData);
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if(!regex.test(formData.email)){
       setShowAlert(true);

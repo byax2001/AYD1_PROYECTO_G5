@@ -2,12 +2,21 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
 import '../css/Isesion.css'; 
+import md5 from 'md5';
 
 function InitSesion() {
   const [formData, setFormData] = useState({
-    Name: '',
-    Password: '',
+    username: '',
+    password: '',
   });
+
+  const [infoUser, setInfoUser] = useState({
+    iduser:'',
+    token:'',
+    idempresa:''
+  })
+  const [id, setID] = useState("")
+  const [token,setToken] = useState("")
 
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;
@@ -23,7 +32,35 @@ function InitSesion() {
     event.preventDefault();
     // Aquí puedes enviar los datos del formulario a través de una API o realizar otras acciones con ellos
     console.log(formData);
+
+    //INICIAR SESION
   };
+
+  const iSesion = async () => {
+    const url = `http://localhost:4000/api/userdeliver`;
+    const cFormData = { ...formData };
+    cFormData["password"] = md5(cFormData["password"])
+    let config = {
+      method: "POST", //ELEMENTOS A ENVIAR
+      body: JSON.stringify(cFormData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+
+      const data_res = await res.json();
+
+      console.log(data_res)
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
 
   return (
     <React.Fragment>
@@ -41,12 +78,12 @@ function InitSesion() {
             <Form onSubmit={handleSubmit} className='text-white bg-dark mt-5' >
               <Form.Group controlId="firstName">
                 <Form.Label className="textForm">Email:</Form.Label>
-                <Form.Control type="email" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                <Form.Control type="email" name="firstName" value={formData.username} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="lastName">
                 <Form.Label className="textForm">Contraseña</Form.Label>
-                <Form.Control type="password" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                <Form.Control type="password" name="lastName" value={formData.password} onChange={handleChange} required />
               </Form.Group>
               <Button className='bg-secondary mt-2 btnEffect' variant="primary" type="submit">
                 Enviar

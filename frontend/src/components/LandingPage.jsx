@@ -19,44 +19,46 @@ function LandingPage(props) {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
-        <img id="logoLP" src={logo} alt="Logo" />
-        <a className="navbar-brand" href="/">AlChilazo</a>
-        <div className={`collapse navbar-collapse`}>
-          <ul className="navbar-nav">
-            <li className="nav-item active">
-              <a className="nav-link" href="/isesion">Iniciar Sesión</a>
-            </li>
-            {/* DROPDOWN DE REGISTRARSE*/}
-            <li className="nav-item dropdown">
-              <button className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" onClick={toggleRegisterDropdown}>
-                Registrarse
-              </button>
-              <div className={`dropdown-menu ${isRegisterDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
-                <a className="dropdown-item" href="/ru">Usuario</a>
-                <a className="dropdown-item" href="/re">Repartidor</a>
-                <a className="dropdown-item" href="/rempresa">Empresa</a>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </nav>
-      <div id="piepaginaLP" className="container-flexible bg-dark">
-        <div className="row">
-          <div className="col-2 h5 text-center">
-            <Link to="/infoP" state={{"tinfo":"q"}}  className="custom-link">Quienes Somos</Link>
+      <div id="bgLP">
+        <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+          <img id="logoLP" src={logo} alt="Logo" />
+          <a className="navbar-brand" href="/">AlChilazo</a>
+          <div className={`collapse navbar-collapse`}>
+            <ul className="navbar-nav">
+              <li className="nav-item active">
+                <a className="nav-link" href="/isesion">Iniciar Sesión</a>
+              </li>
+              {/* DROPDOWN DE REGISTRARSE*/}
+              <li className="nav-item dropdown">
+                <button className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" onClick={toggleRegisterDropdown}>
+                  Registrarse
+                </button>
+                <div className={`dropdown-menu ${isRegisterDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
+                  <a className="dropdown-item" href="/ru">Usuario</a>
+                  <a className="dropdown-item" href="/re">Repartidor</a>
+                  <a className="dropdown-item" href="/rempresa">Empresa</a>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div className="col-2 h5 text-center">
-            <Link to="/infoP" state={{"tinfo":"e"}}  className="custom-link">Equipo</Link>
-          </div>
-          <div className="col-2 h5 text-center">
-            <Link to="/infoP" state={{"tinfo":"pf"}}  className="custom-link">Preguntas Frecuentes</Link>
-          </div>
-          <div className="col-3 h5 text-center">
-            <Link to="/infoP" state={{"tinfo":"tc"}}  className="custom-link">Términos y condiciones</Link>
-          </div>
-          <div className="col-3 h5 text-center">
-            <Link to="/infoP" state={{"tinfo":"pp"}} className="custom-link">Políticas de Privacidad</Link>
+        </nav>
+        <div id="piepaginaLP" className="container-flexible bg-dark">
+          <div className="row">
+            <div className="col-2 h5 text-center">
+              <Link to="/infoP" state={{ "tinfo": "q" }} className="custom-link">Quienes Somos</Link>
+            </div>
+            <div className="col-2 h5 text-center">
+              <Link to="/infoP" state={{ "tinfo": "e" }} className="custom-link">Equipo</Link>
+            </div>
+            <div className="col-2 h5 text-center">
+              <Link to="/infoP" state={{ "tinfo": "pf" }} className="custom-link">Preguntas Frecuentes</Link>
+            </div>
+            <div className="col-3 h5 text-center">
+              <Link to="/infoP" state={{ "tinfo": "tc" }} className="custom-link">Términos y condiciones</Link>
+            </div>
+            <div className="col-3 h5 text-center">
+              <Link to="/infoP" state={{ "tinfo": "pp" }} className="custom-link">Políticas de Privacidad</Link>
+            </div>
           </div>
         </div>
       </div>

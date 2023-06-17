@@ -7,6 +7,9 @@
 .navbar{
   position: relative;
 }
+body{
+  background-color: #1C1716 !important;
+}
 /*EFECTOS DE BOTONES*/
 .btnEffect{
   padding: 5px 10px;
