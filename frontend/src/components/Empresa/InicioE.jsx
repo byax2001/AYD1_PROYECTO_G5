@@ -107,7 +107,7 @@ const InicioE = () => {
   
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/cargaP'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const response = await axios.get('http://localhost:4000/api/products/rest/1'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
@@ -122,7 +122,7 @@ const InicioE = () => {
         
       {
         name: 'ID',
-        selector: row => row.id,
+        selector: row => row.id_producto,
         sortable: true,
       },
     {
