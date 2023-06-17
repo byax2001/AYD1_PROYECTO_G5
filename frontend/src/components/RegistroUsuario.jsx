@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useRef  } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
+import md5 from 'md5';
+import Alert from 'react-bootstrap/Alert';
 
 function RegistroUsuario() {
+  const [message,setMessage] = useState("")
+  const [showAlert, setShowAlert] = useState(false);
+  const [showSucess, setShowSucess] = useState(false);
+  const screenRef = useRef(null);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    nickName:'',
+    nombre: '',
+    apellido: '',
+    username:'',
     password:'',
     email: '',
-    celular: '',
+    telefono: '',
+    rol:1,
     departamento: '',
-    municipio: '',
+    municipio: ''
   });
 
+  //CAMBIA EL VALOR DE LAS VARIABLES EN EL STRUCT FORMDATA
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;
     const fieldValue = type === 'checkbox' ? checked : type === 'file' ? files[0] : value;
@@ -24,19 +32,102 @@ function RegistroUsuario() {
     }));
   };
 
+  //POST
+  const Registro = async () => {
+    const url = `http://localhost:4000/api/user`;
+    let config = {
+      method: "POST", //ELEMENTOS A ENVIAR
+      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+
+      const data_res = await res.json();
+
+      console.log(data_res)
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  //ACCION QUE REALIZA EL FORMULARIO LUEGO DE HACER CLICK A ALGUN BOTON
   const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí puedes enviar los datos del formulario a través de una API o realizar otras acciones con ellos
-    console.log(formData);
+    // Aquí puedes enviar los datos del formulario a través de una API o realizar otras acciones con ellos
+    const cFormData = { ...formData };
+    cFormData["password"]=md5(cFormData["password"])
+    
+    console.log(cFormData);
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if(!regex.test(formData.email)){
+      setShowAlert(true);
+      setMessage("Correo Invalido")
+      screenRef.current.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (formData.telefono.length !== 8) {
+      setShowAlert(true);
+      setMessage("Numero de telefono invalido")
+      screenRef.current.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    Registro();
+    setMessage("Registro Realizado")
+    setShowSucess(true);
+    //INVOCAR POST
+    screenRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  //COMPONENTE DE ALERTA WARNING
+  const Alerta = ()=> {
+    //DANGER = COLOR ROJO
+    // sucess = COLOR VERDE
+    return (
+    
+      <Alert variant="danger" onClose={handleAlertClose} dismissible>
+        ¡Error! {message}
+      </Alert>
+    );
+  }
+
+  //COMPONENTE DE ALERTA SUCCESS
+  const AlertSuccess = ()=> {
+    //DANGER = COLOR ROJO
+    // sucess = COLOR VERDE
+    return (
+    
+      <Alert variant="success" onClose={()=>{setShowSucess(false)}} dismissible>
+        ¡Éxito! {message}
+      </Alert>
+    );
+  }
+
+  //FUNCION PARA CERRAR LOS AVISOS  
+  const handleAlertClose = () => {
+    setShowAlert(false);
   };
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning mb-3">
+      <nav className="navbar navbar-expand-lg navbar-light bg-warning mb-3" ref={screenRef}>
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Registro de Usuario</div>
       </nav>
+      {showAlert && (
+        <Alerta />
+      )}
+      {showSucess && (
+        <AlertSuccess />
+      )}
       <div className='container'>
         <div className='row'>
           <div className='col-3 col-sm-0'>
@@ -44,19 +135,19 @@ function RegistroUsuario() {
           </div>
           <div className="col-6">
             <Form onSubmit={handleSubmit} className='text-white bg-dark'>
-              <Form.Group controlId="firstName">
+              <Form.Group controlId="nombre">
                 <Form.Label className="textForm">Nombre</Form.Label>
-                <Form.Control type="text" name="firstName" value={formData.firstName} onChange={handleChange} required />
+                <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="lastName">
+              <Form.Group controlId="apellido">
                 <Form.Label className="textForm">Apellidos</Form.Label>
-                <Form.Control type="text" name="lastName" value={formData.lastName} onChange={handleChange} required />
+                <Form.Control type="text" name="apellido" value={formData.apellido} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="nickName">
-                <Form.Label className="textForm">NickName</Form.Label>
-                <Form.Control type="text" name="nickName" value={formData.nickName} onChange={handleChange} required />
+              <Form.Group controlId="username">
+                <Form.Label className="textForm">username</Form.Label>
+                <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="email">
@@ -69,12 +160,12 @@ function RegistroUsuario() {
                 <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="celular">
-                <Form.Label className="textForm">Número de Celular</Form.Label>
+              <Form.Group controlId="telefono">
+                <Form.Label className="textForm">Número de Telefono</Form.Label>
                 <Form.Control
                   type="number"
-                  name="celular"
-                  value={formData.celular}
+                  name="telefono"
+                  value={String(formData.telefono)}
                   onChange={handleChange}
                   maxLength={8}
                   required
