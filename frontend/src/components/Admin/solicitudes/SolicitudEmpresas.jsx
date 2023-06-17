@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
@@ -196,6 +196,36 @@ const colsUsuarios = [
     );
   };
  
+  const getSolicitudes = async () => {
+    const url = `http://localhost:4000/api/reqPending`;
+    let config = {
+      method: "GET", //ELEMENTOS A ENVIAR
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+
+      const data_res = await res.json();
+
+      console.log(data_res)
+    
+
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  useEffect(() => {
+    getSolicitudes();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+},[]);
+
   return (
     <React.Fragment>
         {/* PARA MOSTRAR LA VENTANA EMERGENTE */}

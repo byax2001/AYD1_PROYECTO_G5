@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, createContext} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
 import '../css/Isesion.css'; 
 import md5 from 'md5';
+import {Link,useNavigate} from 'react-router-dom'
+import MyContext from '../context'
+
 
 function InitSesion() {
+  const { infoUser, setInfoUser } = useContext(MyContext);
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
-  const [infoUser, setInfoUser] = useState({
-    iduser:'',
-    token:'',
-    idempresa:''
-  })
   const [id, setID] = useState("")
   const [token,setToken] = useState("")
 
@@ -28,16 +28,16 @@ function InitSesion() {
     }));
   };
 
-  const handleSubmit = (event) => {
+    const handleSubmit = (event) => {
     event.preventDefault();
     // Aquí puedes enviar los datos del formulario a través de una API o realizar otras acciones con ellos
     console.log(formData);
-
+    iSesion();
     //INICIAR SESION
   };
 
   const iSesion = async () => {
-    const url = `http://localhost:4000/api/userdeliver`;
+    const url = `http://localhost:4000/api/login`;
     const cFormData = { ...formData };
     cFormData["password"] = md5(cFormData["password"])
     let config = {
@@ -53,7 +53,28 @@ function InitSesion() {
 
       const data_res = await res.json();
 
+
       console.log(data_res)
+      if(data_res.valid){
+        if(data_res.data.rol==0){
+          navigate("/adm",{state:{user:"INFORMACION"}})
+        }
+        else if(data_res.data.rol==1){
+          alert("Usuario ingresado con exito");
+        }else if (data_res.data.rol==2){
+          setInfoUser({'iduser':data_res.data.iduser, 
+            'idempresa':data_res.data.idempresa, 
+            'token':data_res.data.token, 
+            'rol':data_res.data.rol})
+          navigate("/emp",{state:{user:"INFORMACION"}})
+        }else{
+          navigate("/inicioe",{state:{user:"INFORMACION"}})
+        }
+      }else{
+        //AVISO CONTRASEÑA
+        alert(data_res.message)
+      }
+
       //console.log(votoC)
       //setVotos(votoC)
     } catch (e) {
@@ -76,14 +97,14 @@ function InitSesion() {
           </div>
           <div className="col-3 bg-dark" id="Isesion">
             <Form onSubmit={handleSubmit} className='text-white bg-dark mt-5' >
-              <Form.Group controlId="firstName">
-                <Form.Label className="textForm">Email:</Form.Label>
-                <Form.Control type="email" name="firstName" value={formData.username} onChange={handleChange} required />
+              <Form.Group controlId="username">
+                <Form.Label className="textForm">Username:</Form.Label>
+                <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="lastName">
+              <Form.Group controlId="password">
                 <Form.Label className="textForm">Contraseña</Form.Label>
-                <Form.Control type="password" name="lastName" value={formData.password} onChange={handleChange} required />
+                <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
               </Form.Group>
               <Button className='bg-secondary mt-2 btnEffect' variant="primary" type="submit">
                 Enviar
