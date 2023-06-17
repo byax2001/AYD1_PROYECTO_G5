@@ -55,13 +55,13 @@
 }
 .textForm {
   font-family: "Comic Sans", cursive;
+  text-align: justify;
 }
 
 .btnRT{
   position: absolute;
   top: 0px;
   right: 10px;
-  background-color: red;
   z-index: 3;
 }
 

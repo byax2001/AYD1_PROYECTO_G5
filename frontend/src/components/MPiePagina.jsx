@@ -128,6 +128,21 @@ const PrivacyPolicy = () => {
   );
 };
 
+const QuienesSomos =()=>{
+  return(
+    <div className='text-justify textForm'>
+      <h1>Bienvenidos a AlChilazo</h1>
+      <p ><em>La plataforma líder en Guatemala para el envío de comida a domicilio.</em></p>
+      <p>En AlChilazo, nos enorgullece ser el nexo entre los mejores restaurantes de Guatemala y los comensales hambrientos que desean disfrutar de una deliciosa comida en la comodidad de sus hogares. Nuestro principal objetivo es satisfacer tus antojos con una amplia variedad de opciones gastronómicas, ofreciendo un servicio de entrega rápido y confiable.</p>
+      <p>Pero no nos limitamos solo a eso, porque en AlChilazo también nos preocupamos por Guatemala y nuestra responsabilidad social. Nos esforzamos por apoyar a la comunidad local y a los negocios locales, ya que creemos firmemente en fomentar el crecimiento económico y la generación de empleo en nuestro país. Trabajamos de la mano con una amplia red de restaurantes asociados, muchos de los cuales son pequeñas empresas guatemaltecas, para impulsar su presencia en el mercado y brindarles una plataforma para llegar a más clientes.</p>
+      <p>La innovación es parte integral de nuestra identidad. Estamos constantemente buscando formas de mejorar tu experiencia en AlChilazo, desde una interfaz intuitiva y fácil de usar hasta opciones de personalización que se adaptan a tus preferencias culinarias. También implementamos tecnología de vanguardia para optimizar la entrega, asegurando que tu comida llegue caliente y en perfectas condiciones.</p>
+      <p>En AlChilazo, nos apasiona la comida y la conveniencia, pero también nos preocupamos por Guatemala, somos responsables y promovemos la innovación. Estamos comprometidos en ofrecerte la mejor experiencia de entrega de comida, apoyando a la comunidad y siendo un catalizador del crecimiento gastronómico en nuestro país.</p>
+    </div>
+  )
+}
+
+
+
 const InfoEquipo =()=>{
   return(<table className="table table-dark">
   <thead className="thead-dark">
@@ -168,32 +183,14 @@ function MPiePagina(props) {
   useEffect(() => {
     let state = location.state.tinfo;
     if (state === "q") {
-      let mensaje = `Bienvenidos a AlChilazo, la plataforma líder en Guatemala para el envío de comida a domicilio. En AlChilazo, nos enorgullece ser el nexo entre los mejores restaurantes de Guatemala y los comensales hambrientos que desean disfrutar de una deliciosa comida en la comodidad de sus hogares.
-
-      Nuestro principal objetivo es satisfacer tus antojos con una amplia variedad de opciones gastronómicas, ofreciendo un servicio de entrega rápido y confiable. Pero no nos limitamos solo a eso, porque en AlChilazo también nos preocupamos por Guatemala y nuestra responsabilidad social.
-      
-      Nos esforzamos por apoyar a la comunidad local y a los negocios locales, ya que creemos firmemente en fomentar el crecimiento económico y la generación de empleo en nuestro país. \nTrabajamos de la mano con una amplia red de restaurantes asociados, muchos de los cuales son pequeñas empresas guatemaltecas, para impulsar su presencia en el mercado y brindarles una plataforma para llegar a más clientes.
-      
-      La innovación es parte integral de nuestra identidad. Estamos constantemente buscando formas de mejorar tu experiencia en AlChilazo, desde una interfaz intuitiva y fácil de usar hasta opciones de personalización que se adaptan a tus preferencias culinarias. También implementamos tecnología de vanguardia para optimizar la entrega, asegurando que tu comida llegue caliente y en perfectas condiciones.
-      
-      En AlChilazo, nos apasiona la comida y la conveniencia, pero también nos preocupamos por Guatemala, somos responsables y promovemos la innovación. Estamos comprometidos en ofrecerte la mejor experiencia de entrega de comida, apoyando a la comunidad y siendo un catalizador del crecimiento gastronómico en nuestro país.
-      
-      ¡Gracias por ser parte de AlChilazo y permitirnos servirte lo mejor de la cocina guatemalteca!
-      
-      `;
-      setMensaje(mensaje);
       setTNav("Quienes Somos");
     } else if (state === "e") {
-      setMensaje(mensaje);
       setTNav("Equipo");
     } else if (state === "pf") {
-      setMensaje("Preguntas frecuentes");
       setTNav("Preguntas Frecuentes");
     } else if (state === "tc") {
-      setMensaje("Términos y condiciones");
       setTNav("Términos y Condiciones");
     } else if (state === "pp") {
-      setMensaje("Políticas de privacidad");
       setTNav("Políticas de Privacidad");
     }
   }, [location.state]);
@@ -263,7 +260,7 @@ function MPiePagina(props) {
       <React.Fragment>
         <div className="col-3"></div>
         <div className="col-6 bg-dark"> 
-          <p className="text-justify">{mensaje}</p>
+          <QuienesSomos/>
         </div>
         <div className="col-3"></div>
       </React.Fragment>
