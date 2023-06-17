@@ -121,13 +121,3 @@ exports.getuser = async function (req,res){
         res.status(400).send({status: "error", message: "Error al obtener usuarios", data: e});
     }
 }
-
-
-exports.login = async function (req,res){
-    try{
-        
-    }catch(e){
-
-    }
-
-}

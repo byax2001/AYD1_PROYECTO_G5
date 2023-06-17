@@ -39,9 +39,9 @@ function App() {
         <Route path="/emp" exact element={<InicioEmp/>}/>
         <Route path="/infoP" exact element={<MPiePagina/>}/>
         <Route path="/adm" exact element={<InicioAdm/>}/>
-        <Route path="/infR" exact element={<InformeRepartidores/>}/>
-        <Route path="/infU" exact element={<InformeUsuarios/>}/>
         <Route path="/infV" exact element={<InformeVentas/>}/>
+        <Route path="/infU" exact element={<InformeUsuarios/>}/>
+        <Route path="/infR" exact element={<InformeRepartidores/>}/>
         <Route path="/inicioe" exact element={<InicioE/>}/>
       </Routes>
     </BrowserRouter>
