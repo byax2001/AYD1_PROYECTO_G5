@@ -44,10 +44,13 @@ module.exports = {
 		CASE WHEN s.aprobada = 0 THEN 'PENDIENTE' 
 			WHEN s.aprobada = 1 THEN 'APROBADA'
 		ELSE 'DENEGADA'  END AS aprobada ,
-		s.telefono,s.direccion
+		s.telefono,s.direccion,
+		ds.documento
 		FROM solicitud_pendiente s left join tipo_empresa te on s.tipo_empresa = te.id_tipo 
 		inner join municipio m on s.municipio_id_municipio = m.id_municipio
-		where s.descripcion_empresa is not null AND s.descripcion_empresa != ''` ,
+		inner join documento_solicitud ds on s.id_solicitud_repartidor = ds.solicitud_pendiente_id_solicitud_repartidor
+		where s.descripcion_empresa is not null AND s.descripcion_empresa != ''
+		and s.aprobada = 0` ,
 
 		req_pending_delivers:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
 		CASE WHEN s.medio_transporte = 0 THEN 'NO' ELSE 'SI'  END AS medio_transporte,
@@ -55,11 +58,14 @@ module.exports = {
 		m.nombre_municipio, s.tipo_licencia ,
 		CASE WHEN s.aprobada = 0 THEN 'PENDIENTE' 
 			WHEN s.aprobada = 1 THEN 'APROBADA'
-		ELSE 'DENEGADA'  END AS aprobada ,
-		s.telefono,s.direccion
+		ELSE 'DENEGADA'  END AS aprobada , 
+		s.telefono,s.direccion,
+		ds.documento
 		FROM solicitud_pendiente s left join tipo_empresa te on s.tipo_empresa = te.id_tipo 
 		inner join municipio m on s.municipio_id_municipio = m.id_municipio
-		where s.descripcion_empresa is null OR s.descripcion_empresa = ''` ,
+		inner join documento_solicitud ds on s.id_solicitud_repartidor = ds.solicitud_pendiente_id_solicitud_repartidor
+		where s.descripcion_empresa is null OR s.descripcion_empresa = ''
+		and s.aprobada = 0` ,
 
 		//Municipios
 		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento",
@@ -88,7 +94,7 @@ module.exports = {
 
 		ins_sol:"INSERT INTO solicitud_pendiente "+
 				   "(fecha_solicitud,nombre,apellido,email,nit,medio_transporte,usuario_id_usuario,descripcion_empresa,username,password,tipo_empresa,municipio_id_municipio,tipo_licencia,aprobada,telefono,direccion) "+
-				   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+				   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
 				   
 		ins_sol_image: "INSERT INTO documento_solicitud "+ 
 		" (descripcion, documento,solicitud_pendiente_id_solicitud_repartidor ) "+
