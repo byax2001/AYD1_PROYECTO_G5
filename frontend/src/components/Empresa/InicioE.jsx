@@ -1,12 +1,13 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
-import Amb from '../../images/quesoB.png';
+//import Amb from '../../images/quesoB.png';
 import { Link } from 'react-router-dom';
 import Form from './FormE';
 import ReactTable from 'react-data-table-component';
 import ReactModal from 'react-modal';
+import axios from 'axios';
 ReactModal.setAppElement('#root'); // Establece el elemento de la aplicación principal
 // varaible de stilo
 const customStyles = {
@@ -64,7 +65,7 @@ const customStyles = {
 
 //varaibles Necesarias para la Carga de Datos
 //Aqui mi filas
-const data = [
+/*const data = [
     {
         nombre: 'Chorizo Argentino',   
         descripcion: 'Completo',
@@ -92,14 +93,29 @@ const data = [
         imagen: Amb,//sera de validar si me mandaria algun Link
         id:1,
     },
-  ];
+  ];*/
 
 
 const InicioE = () => {
-    const [filteredData, setFilteredData] = useState(data);
+    const [filteredData, setFilteredData] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
+    useEffect(() => {
+      fetchData(); // Realizar la petición al cargar el componente
+    }, []);
+  
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/cargaP'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const data = response.data; // Obtener los datos de la respuesta
+        setFilteredData(data.data); // Actualizar los datos del componente
+        console.log('Datos Obtenidos:', data.data);
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    };
+  
 
       //Aqui mis columnas
     const columns = [
@@ -111,37 +127,37 @@ const InicioE = () => {
       },
     {
       name: 'Nombre del producto',
-      selector: row => row.nombre,
+      selector: row => row.nombre_producto,
       sortable: true,
     },
       {
         name: 'Descripcion',
         cell: (row) => (
             <button  className='btn btn-secondary' onClick={() => handleClick(row)}>
-              {row.descripcion}
+              {row.descripcion_producto}
             </button>
           ),
         sortable: true,
       },
       {
         name: 'Precio',
-        selector: row => row.precio,
+        selector: row => row.precio_producto,
         sortable: true,
       },
       {
         name: 'Tipo',
-        selector: row => row.tipo,
+        selector: row => row.tipo_producto_id_tipo_producto,
         sortable: true,
       },
       {
         name: 'Imagen',
-        selector: row=> row.imagen,
+        selector: row=> row.imagen_producto,
         cell: (row) => (
             <a href={row.documento} target="_blank" rel="noopener noreferrer">
-                <img
-                    src={row.imagen}
+                <img className='img-thumbnail'
+                    src={row.imagen_producto}
                     alt="Fotografia"
-                    style={{ width: '35px', cursor: 'pointer' }}
+                    style={{ width: '400px', cursor: 'pointer' }}
                 />
             </a>
           ),

@@ -63,15 +63,15 @@ const Form = ({ selectedRow, closeModal  }) => {
             {/*Formulario: */}
 
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Producto: {selectedRow.nombre}</label>
+              <label htmlFor="exampleFormControlInput1" className="form-label">Producto: {selectedRow.nombre_producto}</label>
               <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setNameR(e.target.value)}></input>
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo}</label>
+              <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo_producto_id_tipo_producto}</label>
               <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setTipoR(e.target.value)}></input>
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion}</label>
+              <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion_producto}</label>
               <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setDescR(e.target.value)}></input>
             </div>
 
@@ -82,7 +82,7 @@ const Form = ({ selectedRow, closeModal  }) => {
               <input id="image" className="form-control" type="file" accept="image/*" onChange={handleImageChange} />
             </div>
             <div className="mb-3">
-               <label htmlFor="exampleFormControlInput1" className="form-label">Precio: {selectedRow.precio}</label>
+               <label htmlFor="exampleFormControlInput1" className="form-label">Precio: {selectedRow.precio_producto}</label>
               <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setPrecio(e.target.value)}></input>
             </div>
 
