@@ -2,6 +2,8 @@
 import React, { useState,useEffect  } from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
+import edit from '../../images/editv2.png';
+import deleteV from '../../images/delete.png';
 //import Amb from '../../images/quesoB.png';
 import { Link } from 'react-router-dom';
 import Form from './FormE';
@@ -36,6 +38,7 @@ const customStyles = {
         //style fila 1
         //stripedstyle fila2
         style: {
+            fontSize: '16px',
             backgroundColor: "#9b9b9b",
             color: "white"
         },
@@ -45,6 +48,7 @@ const customStyles = {
     },
     headCells: {
         style: {
+            
             backgroundColor: "#3a3a3a",
             color: "white"
         },
@@ -100,6 +104,7 @@ const InicioE = () => {
     const [filteredData, setFilteredData] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [showModal, setShowModal] = useState(false);
+    const [showModalv, setShowModalv] = useState(false);
 
     useEffect(() => {
       fetchData(); // Realizar la petición al cargar el componente
@@ -107,7 +112,7 @@ const InicioE = () => {
   
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/products/rest/1'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const response = await axios.get('http://localhost:4000/api/products/rest/3'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
@@ -124,30 +129,36 @@ const InicioE = () => {
         name: 'ID',
         selector: row => row.id_producto,
         sortable: true,
+        width: 'auto',
       },
     {
       name: 'Nombre del producto',
       selector: row => row.nombre_producto,
       sortable: true,
+      autoWidth: true,
     },
       {
         name: 'Descripcion',
-        cell: (row) => (
+        selector: row => row.descripcion_producto,
+        /*cell: (row) => (
             <button  className='btn btn-secondary' onClick={() => handleClick(row)}>
               {row.descripcion_producto}
             </button>
-          ),
+          ),*/
         sortable: true,
+        autoWidth: true,
       },
       {
         name: 'Precio',
         selector: row => row.precio_producto,
         sortable: true,
+        autoWidth: true,
       },
       {
         name: 'Tipo',
         selector: row => row.tipo_producto_id_tipo_producto,
         sortable: true,
+        autoWidth: true,
       },
       {
         name: 'Imagen',
@@ -162,7 +173,36 @@ const InicioE = () => {
             </a>
           ),
         sortable: true,
+        autoWidth: true,
       },
+      {
+        name: 'Acciones',
+        cell: (row) => (
+
+          <div>
+            <a  onClick={() => handleClick(row)}>
+                <img className='img-thumbnail'
+                    src={edit}
+                    alt="Fotografia"
+                    style={{ width: '50px', cursor: 'pointer' }}
+                />
+            </a>
+
+            <a  onClick={() => deleteClick(row)}>
+            <img className='img-thumbnail'
+                src={deleteV}
+                alt="Fotografia"
+                style={{ width: '50px', cursor: 'pointer' }}
+            />
+            </a>
+
+          </div>
+            
+          ),
+        sortable: true,
+        autoWidth: true,
+
+      }
      ];
 
      const handleClick = (row) => {
@@ -170,11 +210,51 @@ const InicioE = () => {
         setShowModal(true);
 
       };
+      const deleteClick = (row) => {
+        setSelectedRow(row);
+        setShowModalv(true);
+
+
+      };
       
       const closeModal = () => {
         setShowModal(false);
       };
 
+      //Modal delete
+      const closeModalv = () => {
+        setShowModalv(false);
+      };
+
+      const [showSubMenu, setShowSubMenu] = useState(false);
+
+      const handleSubMenuToggle = () => {
+        setShowSubMenu(!showSubMenu);
+      };
+
+      const deleteRow = async () => {
+        const url = `http://localhost:4000/api/products/${selectedRow.id_producto}`; // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+            
+            let config = {
+                method: "DELETE"
+
+            };
+            try{
+                const res = await fetch(url, config);
+                
+                const data_res = await res.json();
+                
+                console.log(data_res)
+                alert(data_res.message);
+                //console.log(votoC)
+                //setVotos(votoC)
+            }catch(e){
+                console.log(e)
+            }
+
+            closeModalv();
+
+      }
     return (
         <React.Fragment>
             {/* Navbar*/}
@@ -185,7 +265,19 @@ const InicioE = () => {
                 <div className="h2 text-light">Inicio Empresa</div>
                 <div className="btn-group d-inline-flex" data-toggle="buttons">
                     {/*aqui colocaria los link para visitar */}
-                    <Link to="/emp/EmPanel" className="btn textForm text-light">Panel de control</Link>
+                    <button
+                      onClick={handleSubMenuToggle}
+                      className="btn textForm text-light"
+                    >
+                      Panel de control
+                    </button>
+                    {showSubMenu && (
+                      <div className="submenu">
+                        <Link to="/registroPro" className="btn textForm text-light">
+                          Registro de Producto
+                        </Link>
+                      </div>
+                    )}
                     <Link to="/" className="btn textForm text-light">Cerrar Sesion</Link>
 
                 </div>
@@ -205,6 +297,7 @@ const InicioE = () => {
                     highlightOnHover
                     striped
                     responsive
+                    noDataText="No se encontraron registros"
                 />
                 </div>
             </div>
@@ -215,6 +308,41 @@ const InicioE = () => {
                 contentLabel="Formulario"
             >
                 <Form selectedRow={selectedRow} closeModal={closeModal} />
+            </ReactModal>
+
+
+            <ReactModal
+                isOpen={showModalv}
+                onRequestClose={() => setShowModalv(false)}
+                contentLabel="Formulario"
+                style={{
+                  content: {
+                    position: 'fixed',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: '400px',
+                    height: '200px',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '5px',
+                  },
+                  overlay: {
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  },
+                }}
+            >
+                <h2>¿Esta seguro de eliminar el producto?</h2>
+                <button  className='btn btn-secondary' onClick={()=>deleteRow()} >
+                  Delete
+                </button>
+                <button  className='btn btn-secondary' onClick={() => closeModalv()}>
+                  Cancelar
+                </button>
             </ReactModal>
         </React.Fragment>
     );
