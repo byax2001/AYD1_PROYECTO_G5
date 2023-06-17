@@ -22,19 +22,48 @@ const Form = ({ selectedRow, closeModal  }) => {
 
     
 
-    const handleClick = () => {
-
-       
-      if (nameR.trim() === '' || tipoR.trim() === ''|| tipoR.trim() === ''|| descR.trim() === ''|| precio.trim() === '') {
-        alert('Por favor, complete todos los campos');
-        
-        return;
-      }
+    const handleClick = async () => {
         console.log('fila a modificar: ',data, data.id)
         console.log('Datos a Almacenar: ',nameR, ' Tipo',tipoR ,' Descp',descR, ' Precio: ', precio)
         console.log('Imagen:', image);
 
-        alert('Se guardaran los datos: '+ nameR + ' '+ tipoR +' '+descR+ ' '+ precio + ' '+ ' Estos Datos corresponde a la Fila: '+ data.id);
+        
+
+        //----
+          const url = `http://localhost:4000/api/products`;
+          const dataFD = new FormData();
+          dataFD.append('nombre', nameR ? nameR : selectedRow.nombre_producto)
+          dataFD.append('descripcion', descR ? descR : selectedRow.descripcion_producto)
+          dataFD.append('tipo', tipoR ? tipoR : selectedRow.tipo_producto_id_tipo_producto)
+          dataFD.append('empresa', selectedRow.empresa_id_empresa)  
+          dataFD.append('combo', selectedRow.combo) 
+          dataFD.append('precio', precio ? precio : selectedRow.precio_producto)
+          dataFD.append('idproduct', selectedRow.id_producto)
+          if (image) dataFD.append('image', image)
+          else{
+            dataFD.append('imagenold', selectedRow.imagen_producto)
+          }
+      
+      
+          let config = {
+              method: "PUT", //ELEMENTOS A ENVIAR
+              body: dataFD,
+          };
+          try{
+            const res = await fetch(url, config);
+            
+            const data_res = await res.json();
+            
+            console.log(data_res)
+            alert(data_res.message);
+            //console.log(votoC)
+            //setVotos(votoC)
+          }catch(e){
+            console.log(e)
+          }
+
+
+        //----
 
         setNameR('');
         setTipoR('');
