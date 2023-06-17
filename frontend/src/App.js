@@ -24,6 +24,7 @@ import InformeUsuarios from './components/Admin/informes/InformeUsuarios/Informe
 
 //Empresa:
 import InicioE from './components/Empresa/InicioE';
+import RegstroEe from './components/Empresa/RegistroEe';
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
         <Route path="/infU" exact element={<InformeUsuarios/>}/>
         <Route path="/infR" exact element={<InformeRepartidores/>}/>
         <Route path="/inicioe" exact element={<InicioE/>}/>
+        <Route path="/registroPro" exact element={<RegstroEe/>}/>
       </Routes>
     </BrowserRouter>
   );
