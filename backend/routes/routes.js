@@ -54,6 +54,7 @@ router.put(baseurl + 'products',        upload.single('image'),   PRODUCTS.updat
 router.delete(baseurl + 'products',                               PRODUCTS.deleteproduct)
 router.get(baseurl + 'products/type/:id',                         PRODUCTS.getproductsbytype)
 router.get(baseurl + 'products/rest/:id',                         PRODUCTS.getproductsbyrestaurant)
+router.get(baseurl + 'products/type',                             PRODUCTS.getproductsbytype)
 
 //Revision Solicitudes
 router.put(baseurl + 'aceptRequest',                              ACEPTREQ.updateAceptReq)
