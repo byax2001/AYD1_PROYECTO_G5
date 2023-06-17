@@ -60,7 +60,8 @@ router.get(baseurl + 'products/type',                             PRODUCTS.getpr
 //Revision Solicitudes
 router.put(baseurl + 'aceptRequest',                              ACEPTREQ.updateAceptReq)
 router.put(baseurl + 'denyRequest',                               ACEPTREQ.updateDenyReq)
-router.get(baseurl + 'reqPending',                                ACEPTREQ.getInfoReq)
+router.get(baseurl + 'reqPendingRestaurant',                      ACEPTREQ.getInfoReqRestaurant)
+router.get(baseurl + 'reqPendingDelivers',                        ACEPTREQ.getInfoReqDelivers)
 
 // Reportes
 router.get(baseurl + 'reports',                                   REPORTS.getInfoUser)
