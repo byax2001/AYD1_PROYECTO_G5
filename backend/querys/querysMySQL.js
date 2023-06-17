@@ -37,7 +37,7 @@ module.exports = {
 							 FROM usuario GROUP BY fecha) tabla`,
 
 		//Solicitudes pendientes
-		req_pending:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
+		req_pending_restaurant:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
 		CASE WHEN s.medio_transporte = 0 THEN 'NO' ELSE 'SI'  END AS medio_transporte,
 		s.usuario_id_usuario, s.descripcion_empresa, s.username, s.password, te.nombre_tipo,
 		m.nombre_municipio, s.tipo_licencia ,
@@ -46,7 +46,20 @@ module.exports = {
 		ELSE 'DENEGADA'  END AS aprobada ,
 		s.telefono,s.direccion
 		FROM solicitud_pendiente s left join tipo_empresa te on s.tipo_empresa = te.id_tipo 
-		inner join municipio m on s.municipio_id_municipio = m.id_municipio` ,
+		inner join municipio m on s.municipio_id_municipio = m.id_municipio
+		where s.descripcion_empresa is not null AND s.descripcion_empresa != ''` ,
+
+		req_pending_delivers:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
+		CASE WHEN s.medio_transporte = 0 THEN 'NO' ELSE 'SI'  END AS medio_transporte,
+		s.usuario_id_usuario, s.descripcion_empresa, s.username, s.password, te.nombre_tipo,
+		m.nombre_municipio, s.tipo_licencia ,
+		CASE WHEN s.aprobada = 0 THEN 'PENDIENTE' 
+			WHEN s.aprobada = 1 THEN 'APROBADA'
+		ELSE 'DENEGADA'  END AS aprobada ,
+		s.telefono,s.direccion
+		FROM solicitud_pendiente s left join tipo_empresa te on s.tipo_empresa = te.id_tipo 
+		inner join municipio m on s.municipio_id_municipio = m.id_municipio
+		where s.descripcion_empresa is null OR s.descripcion_empresa = ''` ,
 
 		//Municipios
 		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento",
