@@ -15,11 +15,14 @@ module.exports = {
 
 		//Products
 		list_all_products_by_type :"SELECT * FROM producto WHERE tipo_producto_id_tipo_producto = ?", 
-		list_all_products_by_rest :"SELECT * FROM producto WHERE empresa_id_empresa = ?", 
-
-		
+		list_all_products_by_rest :`SELECT p.id_producto ,p.nombre_producto , p.descripcion_producto ,p.imagen_producto ,p.precio_producto, tp.nombre_tipo_prod ,p.empresa_id_empresa ,
+		CASE WHEN p.combo = 0 THEN 'NO' ELSE 'SI' 
+		END AS combo
+		FROM producto p inner join tipo_producto tp  on p.tipo_producto_id_tipo_producto = tp.id_tipo_producto  WHERE p.empresa_id_empresa = ?`, 
+		 
 		//Restaurant
 		list_restaurant_byemail:"SELECT * FROM empresa WHERE email = ?",
+		list_tipoempresa: "SELECT * FROM tipo_empresa",
         
 		//Reports
 		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
@@ -32,6 +35,22 @@ module.exports = {
 		total_users_byyear: `SELECT AVG(tabla.cuenta) AS Promedio_Year
 							 FROM (select YEAR(fecha_registro) AS fecha , COUNT(*) AS cuenta  
 							 FROM usuario GROUP BY fecha) tabla`,
+
+		//Solicitudes pendientes
+		req_pending:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
+		CASE WHEN s.medio_transporte = 0 THEN 'NO' ELSE 'SI'  END AS medio_transporte,
+		s.usuario_id_usuario, s.descripcion_empresa, s.username, s.password, te.nombre_tipo,
+		m.nombre_municipio, s.tipo_licencia ,
+		CASE WHEN s.aprobada = 0 THEN 'PENDIENTE' 
+			WHEN s.aprobada = 1 THEN 'APROBADA'
+		ELSE 'DENEGADA'  END AS aprobada ,
+		s.telefono,s.direccion
+		FROM solicitud_pendiente s left join tipo_empresa te on s.tipo_empresa = te.id_tipo 
+		inner join municipio m on s.municipio_id_municipio = m.id_municipio` ,
+
+		//Municipios
+		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento",
+		list_dep: "SELECT * FROM departamento",
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */

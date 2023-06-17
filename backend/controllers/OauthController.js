@@ -5,7 +5,7 @@ const crypto = require('crypto');
 exports.login = async function(req, res) {
     try {
       var datausesr = {};
-      let passwordEncrypt = crypto.createHash('md5').update(req.body.password).digest("hex");
+      //let passwordEncrypt = crypto.createHash('md5').update(req.body.password).digest("hex");
   
       // Primero debemos buscar al usuario mediante su username
       const result = await new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ exports.login = async function(req, res) {
   
       if (result.length > 0) { 
         // Comparo la contraseña encriptada con la proporcionada por el usuario
-        if (result[0].password == passwordEncrypt) {
+        if (result[0].password == req.body.password) {
           // Si está bien la contraseña, busco si es un usuario tipo restaurante
           if (result[0].rol == 3) {
             const result2 = await new Promise((resolve, reject) => {
