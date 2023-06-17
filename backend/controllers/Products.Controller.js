@@ -143,7 +143,7 @@ exports.updateproduct = async function(req,res){
 //Eliminar Producto
 exports.deleteproduct = async function(req,res){
     try{
-        database.query(querysMySQL.del_product,[req.body.idproduct],function(err,result,fields){
+        database.query(querysMySQL.del_product,[req.params.id],function(err,result,fields){
             if (result.affectedRows>0){
 
                 res.status(200).send({status: "success", message: "El producto fue eliminado con exito:"});

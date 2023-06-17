@@ -34,6 +34,8 @@ exports.updateAceptReq = async function (req, res) {
         datausesr.nit = result[0].nit;
         datausesr.fecha_registro = result[0].fecha_solicitud;
         datausesr.descripcion_empresa = result[0].descripcion_empresa;
+        datausesr.direccion = result[0].direccion;
+        datausesr.municipio = result[0].municipio_id_municipio;
         res.status(200).send({ status: "success", message: "Usuario creado con exito", data: datausesr });
         if (result.length > 0) {
             //si es repartidor inserta el repartidor en usuario
@@ -43,7 +45,11 @@ exports.updateAceptReq = async function (req, res) {
                         if (err) {
                             reject(err);
                         } else {
-                            enviarEmailUser(datausesr.email, "Bienvenido", datausesr.username)
+
+                            database.query(querysMySQL.ins_address,[datausesr.direccion,"",result2.insertId,datausesr.municipio],function(err,result,fields){
+                                if (err)throw err;
+                                enviarEmailUser(datausesr.email,"Bienvenido",datausesr.username)
+                            });
                             resolve(result2);
                         }
                     });
@@ -56,13 +62,18 @@ exports.updateAceptReq = async function (req, res) {
                         if (err) {
                             reject(err);
                         } else {
-                            //ahora inserta la empresa
+                            //ahora inserta la empresa 
                             const result3 = await new Promise((resolve, reject) => {
                                 database.query(querysMySQL.ins_empre, [datausesr.nombre, datausesr.descripcion_empresa, datausesr.email, datausesr.tipo_empresa, datausesr.telefono], function (err, result3, fields) {
                                     if (err) {
                                         reject(err);
                                     } else {
-                                        enviarEmailUser(datausesr.email, "Bienvenido", datausesr.username)
+                                        console.log(result2)
+                                        database.query(querysMySQL.ins_address,[datausesr.direccion,"",result2.insertId,datausesr.municipio],function(err,result,fields){
+                                            if (err)throw err;
+
+                                            enviarEmailUser(datausesr.email,"Bienvenido",datausesr.username)
+                                        });
                                         resolve(result3);
                                     }
                                 });
@@ -71,7 +82,7 @@ exports.updateAceptReq = async function (req, res) {
                         }
                     });
                 });
-                   
+
             }
 
 
@@ -94,6 +105,29 @@ exports.updateDenyReq = async function (req, res) {
 
             res.status(200).send({ status: "success", message: "Update Deny Request" });
         });
+    } catch (e) {
+        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+    }
+}
+
+
+exports.getInfoReq = async function (req, res) {
+    try {
+        database.query(querysMySQL.req_pending, [], async function (err, result, fields) {
+
+            //Luego de ejecutar todos los querys se validan si fueron exitos
+            if (result) {
+                //devuelve los 5 resultados en un JSON
+                res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes:", data: result});
+            } else {
+                res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
+                return;
+
+            }
+
+
+        });
+
     } catch (e) {
         res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }

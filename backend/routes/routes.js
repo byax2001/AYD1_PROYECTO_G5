@@ -9,6 +9,7 @@ var OAUTH = require('../controllers/OauthController')
 var REPORTS = require('../controllers/Admin.Reports')
 var PRODUCTS = require('../controllers/Products.Controller')
 var ACEPTREQ = require('../controllers/Acept.Request')
+var ADDR = require('../controllers/Address.Controller')
 
 var router = express.Router();
 var baseurl = '/api/';
@@ -51,7 +52,7 @@ router.delete(baseurl + 'restaurants',                            RESTAURANTS.de
 router.post(baseurl + 'products',       upload.single('image'),   PRODUCTS.newproduct)
 router.get(baseurl + 'products',                                  PRODUCTS.getproducts)
 router.put(baseurl + 'products',        upload.single('image'),   PRODUCTS.updateproduct)
-router.delete(baseurl + 'products',                               PRODUCTS.deleteproduct)
+router.delete(baseurl + 'products/:id',                           PRODUCTS.deleteproduct)
 router.get(baseurl + 'products/type/:id',                         PRODUCTS.getproductsbytype)
 router.get(baseurl + 'products/rest/:id',                         PRODUCTS.getproductsbyrestaurant)
 router.get(baseurl + 'products/type',                             PRODUCTS.getproductsbytype)
@@ -59,8 +60,13 @@ router.get(baseurl + 'products/type',                             PRODUCTS.getpr
 //Revision Solicitudes
 router.put(baseurl + 'aceptRequest',                              ACEPTREQ.updateAceptReq)
 router.put(baseurl + 'denyRequest',                               ACEPTREQ.updateDenyReq)
+router.get(baseurl + 'reqPending',                                ACEPTREQ.getInfoReq)
 
 // Reportes
 router.get(baseurl + 'reports',                                   REPORTS.getInfoUser)
+
+//Municipio
+router.get(baseurl + 'departamento',                              ADDR.getInfoDep)
+router.get(baseurl + 'departamento/municipio',                    ADDR.getInfoMun)
 
 module.exports = router;
