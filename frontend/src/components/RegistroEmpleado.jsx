@@ -47,7 +47,7 @@ function RegistroEmpleado() {
   
   //POST
   const Registro = async () => {
-    const url = `http://localhost:4000/api/userdeliver`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/userdeliver`;
     const data = new FormData();
     data.append('nombre', formData.nombre)
     data.append('apellido', formData.apellido)

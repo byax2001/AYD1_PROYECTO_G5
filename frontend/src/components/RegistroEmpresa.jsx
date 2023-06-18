@@ -39,7 +39,7 @@ function RegistroEmpresa() {
 
   //POST
   const Registro = async () => {
-    const url = `http://localhost:4000/api/restaurants`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/restaurants`;
     const data = new FormData();
     data.append('nombre', formData.nombre)
     data.append('username', formData.username)

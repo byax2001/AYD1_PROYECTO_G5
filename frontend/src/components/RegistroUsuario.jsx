@@ -18,7 +18,8 @@ function RegistroUsuario() {
     telefono: '',
     rol:1,
     departamento: '',
-    municipio: ''
+    municipio: '',
+    direccion: ''
   });
 
   //CAMBIA EL VALOR DE LAS VARIABLES EN EL STRUCT FORMDATA
@@ -34,7 +35,7 @@ function RegistroUsuario() {
 
   //POST
   const Registro = async () => {
-    const url = `http://localhost:4000/api/user`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/user`;
     const cFormData = { ...formData };
     cFormData["password"]=md5(cFormData["password"])
     
@@ -176,6 +177,11 @@ function RegistroUsuario() {
               <Form.Group controlId="departamento">
                 <Form.Label className="textForm">Departamento</Form.Label>
                 <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
+              </Form.Group>
+
+              <Form.Group controlId="municipio">
+                <Form.Label className="textForm">Municipio</Form.Label>
+                <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="municipio">
