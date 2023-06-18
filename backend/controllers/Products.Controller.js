@@ -203,7 +203,7 @@ exports.getproductsbyrestaurant = async function(req,res){
 
 
 //Obtener tipos producto
-exports.getproductsbytype = async function(req,res){
+exports.gettyproducts = async function(req,res){
     try{
         database.query(querysMySQL.list_tipoprod,[],async function(err,result,fields){    
             if (result){

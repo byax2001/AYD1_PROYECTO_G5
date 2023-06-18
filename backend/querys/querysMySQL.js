@@ -64,8 +64,7 @@ module.exports = {
 		FROM solicitud_pendiente s left join tipo_empresa te on s.tipo_empresa = te.id_tipo 
 		inner join municipio m on s.municipio_id_municipio = m.id_municipio
 		inner join documento_solicitud ds on s.id_solicitud_repartidor = ds.solicitud_pendiente_id_solicitud_repartidor
-		where s.descripcion_empresa is null OR s.descripcion_empresa = ''
-		and s.aprobada = 0` ,
+		where s.aprobada = 0 and s.descripcion_empresa is null OR s.descripcion_empresa = '' `,
 
 		//Municipios
 		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento",
