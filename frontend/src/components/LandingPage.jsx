@@ -17,10 +17,40 @@ function LandingPage(props) {
     setIsLoginDropdownOpen(false);
   };
 
+  const Lema=()=>{
+    return (
+      <div id="lema">
+        <div className="row">
+          <div className="col-1" />
+          <div className="col-6 ml-3">
+            <div className="row">
+              <div className="col-2 p-0">
+                <div className='textForm h1 display-1' style={{ textAlign: 'right', color: '#DB4F23' }}>
+                  Al
+                </div>
+              </div>
+              <div className="col-10 p-0">
+                <div className='textForm h1 display-1' style={{ textAlign: 'left', color: '#F9F4EF' }}>
+                  Chilazo</div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
+                <div className="text-light text-left h4">
+                  <em>Sabor Guatemalteco, ¡A tu alcance!</em>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <React.Fragment>
       <div id="bgLP">
-        <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+        <nav className="navbar navbar-expand-lg navbar-light">
           <img id="logoLP" src={logo} alt="Logo" />
           <a className="navbar-brand" href="/">AlChilazo</a>
           <div className={`collapse navbar-collapse`}>
@@ -42,6 +72,7 @@ function LandingPage(props) {
             </ul>
           </div>
         </nav>
+        <Lema/>
         <div id="piepaginaLP" className="container-flexible bg-dark">
           <div className="row">
             <div className="col-2 h5 text-center">

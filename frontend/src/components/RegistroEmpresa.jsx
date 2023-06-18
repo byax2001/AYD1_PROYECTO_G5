@@ -22,6 +22,7 @@ function RegistroEmpresa() {
     departamento: '',
     zona: '',
     municipio: 0,
+    direccion:'',
     rol: 3,
     userid: 1,
     file: null
@@ -52,6 +53,7 @@ function RegistroEmpresa() {
     data.append('departamento', formData.departamento)
     data.append('zona', formData.zona)
     data.append('municipio', formData.municipio)
+    data.append('direccion', formData.direccion)
     data.append('rol', formData.rol)
     data.append('userid', formData.userid)
     data.append('image', formData.file)
@@ -197,14 +199,19 @@ function RegistroEmpresa() {
                 <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
               </Form.Group>
 
+              <Form.Group controlId="municipio">
+                <Form.Label className="textForm">Municipio</Form.Label>
+                <Form.Control type="number" name="municipio" value={formData.municipio} onChange={handleChange} required />
+              </Form.Group>
+              
               <Form.Group controlId="zona">
                 <Form.Label className="numberForm">Zona</Form.Label>
                 <Form.Control type="number" name="zona" value={formData.zona} onChange={handleChange} required />
               </Form.Group>
-
-              <Form.Group controlId="municipio">
-                <Form.Label className="textForm">Municipio</Form.Label>
-                <Form.Control type="number" name="municipio" value={formData.municipio} onChange={handleChange} required />
+              
+              <Form.Group controlId="direccion">
+                <Form.Label className="textForm">Zona</Form.Label>
+                <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="file">

@@ -184,9 +184,9 @@ function RegistroUsuario() {
                 <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="municipio">
-                <Form.Label className="textForm">Municipio</Form.Label>
-                <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
+              <Form.Group controlId="direccion">
+                <Form.Label className="textForm">Direccion</Form.Label>
+                <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
               </Form.Group>
              
 

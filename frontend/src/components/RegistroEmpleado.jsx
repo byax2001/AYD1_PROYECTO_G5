@@ -19,6 +19,8 @@ function RegistroEmpleado() {
     nit:'',
     telefono: '',
     municipio: '',
+    departamento:'',
+    direccion:'',
     tieneLicencia: false,
     tipo_licencia: '',
     medio_transporte: false,
@@ -57,6 +59,8 @@ function RegistroEmpleado() {
     data.append('nit', formData.nit)
     data.append('telefono', formData.telefono)
     data.append('municipio', formData.municipio)
+    data.append('departamento', formData.departamento)
+    data.append('direccion', formData.direccion)
     data.append('tipo_licencia', 'C')
     if(formData.medio_transporte){
       data.append('medio_transporte', 1)
@@ -73,9 +77,7 @@ function RegistroEmpleado() {
     };
     try {
       const res = await fetch(url, config);
-
       const data_res = await res.json();
-
       console.log(data_res)
       //console.log(votoC)
       //setVotos(votoC)
@@ -204,10 +206,22 @@ function RegistroEmpleado() {
                 />
               </Form.Group>
 
+              <Form.Group controlId="departamento">
+                <Form.Label className="textForm">Departamento</Form.Label>
+                <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
+              </Form.Group>
+
               <Form.Group controlId="municipio">
                 <Form.Label className="textForm">Municipio</Form.Label>
                 <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
               </Form.Group>
+
+              <Form.Group controlId="direccion">
+                <Form.Label className="textForm">Direccion</Form.Label>
+                <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
+              </Form.Group>
+
+
               <div className="row mt-2">
                 <div className="col-6">
                 <Form.Group controlId="tieneLicencia">

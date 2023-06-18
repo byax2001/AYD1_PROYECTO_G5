@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {Route,BrowserRouter,Routes} from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MyContext from './context';
-
+import Provider from './context';
 //LANDING PAGE
 import LandingPage from './components/LandingPage';
 import MPiePagina from './components/MPiePagina';
@@ -27,6 +26,7 @@ import InformeUsuarios from './components/Admin/informes/InformeUsuarios/Informe
 //Empresa:
 import InicioE from './components/Empresa/InicioE';
 import RegstroEe from './components/Empresa/RegistroEe';
+import { AuthProvider } from './context';
 function App() {
   const [infoUser, setInfoUser] = useState({
     iduser:'',
@@ -36,9 +36,8 @@ function App() {
   })
 
   return (
-    <React.Fragment>
-      <MyContext.Provider value={[infoUser, setInfoUser]}>
-        <BrowserRouter>
+        <Provider>
+            <BrowserRouter>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/ru" element={<RegistroUsuario />} />
@@ -56,8 +55,10 @@ function App() {
             <Route path="/registroPro" element={<RegstroEe />} />
           </Routes>
         </BrowserRouter>
-      </MyContext.Provider>
-    </React.Fragment>
+        </Provider>
+        
+      
+
   );
 }
 

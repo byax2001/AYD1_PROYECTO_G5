@@ -1,14 +1,15 @@
-import React, { useState, useContext, createContext} from 'react';
+import React, { useState, useContext, createContext,useEffect} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
 import '../css/Isesion.css'; 
 import md5 from 'md5';
 import {Link,useNavigate} from 'react-router-dom'
-import MyContext from '../context';
+import { useMyContext } from '../context';
 
 
 function InitSesion() {
-  const { infoUser, setInfoUser } = useContext(MyContext);
+
+  const [state,setState] = useMyContext();
   const navigate=useNavigate()
   const [formData, setFormData] = useState({
     username: '',
@@ -62,10 +63,7 @@ function InitSesion() {
         else if(data_res.data.rol==1){
           alert("Usuario ingresado con exito");
         }else if (data_res.data.rol==2){
-          setInfoUser({'iduser':data_res.data.iduser, 
-            'idempresa':data_res.data.idempresa, 
-            'token':data_res.data.token, 
-            'rol':data_res.data.rol})
+          setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/emp",{state:{user:"INFORMACION"}})
         }else{
           navigate("/inicioe",{state:{user:"INFORMACION"}})

@@ -6,6 +6,7 @@
 }
 .navbar{
   position: relative;
+  background-color: #F2890D;
 }
 body{
   background-color: #1C1716 !important;
@@ -66,6 +67,11 @@ body{
   top: 0px;
   right: 10px;
   z-index: 3;
+}
+
+#lema{
+  position:relative;
+  top:125px;
 }
 
 
