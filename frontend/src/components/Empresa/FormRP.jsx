@@ -1,5 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
+import axios from 'axios';
+
+
+const comboInfo = [
+  {
+    id:0,
+    descripcion: 'Individual',
+  },{
+    id:1,
+    descripcion: 'Combo',
+  }
+];
 
 const FormRP = () => {//aqui debo indicarle que espero el valor empresa
 
@@ -11,6 +23,23 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
     const [empresa, setEmpresa] = useState(1);///Falta recibir dato
     const [combo, setCombo] = useState(null);
     const [image, setImage] = useState(null);
+
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+      fetchData(); // Realizar la petición al cargar el componente
+    },[]);
+  
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/products/type'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const data = response.data; // Obtener los datos de la respuesta
+        setFilteredData(data.data); // Actualizar los datos del componente
+        console.log('Datos Obtenidos:', data.data);
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    };
     
 
    
@@ -73,6 +102,21 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
         setImage(file);
       };
     
+
+      const handleSelectChange = (event) => {
+        const selectedValue = event.target.value;
+        setTipoR(selectedValue);
+        // Realiza las acciones que necesites con el valor seleccionado
+        console.log('Valor seleccionado:', selectedValue);
+      };
+
+      const handleSelectChangeC = (event) => {
+        const selectedValue = event.target.value;
+        setCombo(selectedValue);
+        // Realiza las acciones que necesites con el valor seleccionado
+        console.log('Valor seleccionado:', selectedValue);
+      };
+      
       
 
   return (
@@ -88,14 +132,29 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
               <label htmlFor="exampleFormControlInput1" className="form-label">Producto</label>
               <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setNameR(e.target.value)}></input>
             </div>
+            {/*
             <div className="mb-3">
               <label htmlFor="exampleFormControlInput1" className="form-label">Tipo</label>
               <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setTipoR(e.target.value)}></input>
-            </div>
+            </div>*/}
+
+            {/*--------------------------------------------------------------------------- */}
+            {/*
             <div className="mb-3">
               <label htmlFor="exampleFormControlInput1" className="form-label">Combo</label>
               <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setCombo(e.target.value)}></input>
+            </div>*/}
+
+            <div className="mb-3">
+              <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChangeC}>
+                <option value="default">Combo/Individual</option>
+                {comboInfo.map((item) => (
+                  <option key={item.id} value={item.id}>{item.descripcion}</option>
+                ))}
+              </select>
             </div>
+
+
             <div className="mb-3">
               <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion</label>
               <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setDescR(e.target.value)}></input>
@@ -111,6 +170,16 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
                <label htmlFor="exampleFormControlInput1" className="form-label">Precio</label>
               <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setPrecio(e.target.value)}></input>
             </div>
+
+            <div className="mb-3">
+            <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChange}>
+              <option value="default">Seleccione el Tipo</option>
+              {filteredData.map((item) => (
+                <option key={item.id_tipo_producto} value={item.id_tipo_producto}>{item.nombre_tipo_prod}</option>
+              ))}
+            </select>
+          </div>
+
 
             <div className="mb-3">
               <button  className='btn btn-secondary' onClick={() => handleClick()}>

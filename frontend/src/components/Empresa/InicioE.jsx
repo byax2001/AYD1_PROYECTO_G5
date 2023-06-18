@@ -102,20 +102,33 @@ const customStyles = {
 
 const InicioE = () => {
     const [filteredData, setFilteredData] = useState([]);
+    const [filteredDataV, setFilteredDataV] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [showModalv, setShowModalv] = useState(false);
 
     useEffect(() => {
       fetchData(); // Realizar la petición al cargar el componente
+      fetchDataV();
     }, []);
   
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/products/rest/3'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const response = await axios.get('http://localhost:4000/api/products/rest/1'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
+      } catch (error) {
+        console.error('Error al obtener los datos:', error);
+      }
+    };
+
+    const fetchDataV = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/products/type'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const data = response.data; // Obtener los datos de la respuesta
+        setFilteredDataV(data.data); // Actualizar los datos del componente
+        //console.log('Datos Obtenidos:', data.data);
       } catch (error) {
         console.error('Error al obtener los datos:', error);
       }
@@ -307,7 +320,7 @@ const InicioE = () => {
                 onRequestClose={() => setShowModal(false)}
                 contentLabel="Formulario"
             >
-                <Form selectedRow={selectedRow} closeModal={closeModal} />
+                <Form selectedRow={selectedRow} closeModal={closeModal} filteredDataV={filteredDataV} />
             </ReactModal>
 
 
