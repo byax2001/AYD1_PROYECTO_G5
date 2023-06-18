@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-const Form = ({ selectedRow, closeModal  }) => {
+const Form = ({ selectedRow, closeModal ,filteredDataV }) => {
 
 
     const [nameR, setNameR] = useState('');
@@ -78,6 +78,13 @@ const Form = ({ selectedRow, closeModal  }) => {
         const file = e.target.files[0];
         setImage(file);
       };
+
+      const handleSelectChange = (event) => {
+        const selectedValue = event.target.value;
+        setTipoR(selectedValue);
+        // Realiza las acciones que necesites con el valor seleccionado
+        console.log('Valor seleccionado:', selectedValue);
+      };
     
       
 
@@ -97,7 +104,12 @@ const Form = ({ selectedRow, closeModal  }) => {
             </div>
             <div className="mb-3">
               <label htmlFor="exampleFormControlInput1" className="form-label">Tipo: {selectedRow.tipo_producto_id_tipo_producto}</label>
-              <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setTipoR(e.target.value)}></input>
+              <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChange}>
+              <option value="default">Seleccione el Tipo</option>
+              {filteredDataV.map((item) => (
+                <option key={item.id_tipo_producto} value={item.id_tipo_producto}>{item.nombre_tipo_prod}</option>
+              ))}
+            </select>
             </div>
             <div className="mb-3">
               <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion: {selectedRow.descripcion_producto}</label>
