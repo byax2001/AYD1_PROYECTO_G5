@@ -222,6 +222,7 @@ const InicioE = () => {
       const deleteClick = (row) => {
         setSelectedRow(row);
         setShowModalv(true);
+       
 
 
       };
@@ -251,9 +252,7 @@ const InicioE = () => {
             };
             try{
                 const res = await fetch(url, config);
-                
                 const data_res = await res.json();
-                
                 console.log(data_res)
                 alert(data_res.message);
                 //console.log(votoC)
@@ -261,7 +260,7 @@ const InicioE = () => {
             }catch(e){
                 console.log(e)
             }
-
+            fetchData();
             closeModalv();
 
       }

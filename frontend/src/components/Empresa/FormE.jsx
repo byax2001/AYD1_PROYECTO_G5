@@ -36,7 +36,7 @@ const Form = ({ selectedRow, closeModal ,filteredDataV }) => {
           console.log(selectedRow)
           dataFD.append('nombre', nameR ? nameR : selectedRow.nombre_producto)
           dataFD.append('descripcion', descR ? descR : selectedRow.descripcion_producto)
-          dataFD.append('tipo', tipoR ? tipoR : selectedRow.tipo_producto_id_tipo_producto)
+          dataFD.append('tipo', tipoR ? tipoR : selectedRow.tipo_producto)
           dataFD.append('empresa', selectedRow.empresa_id_empresa)  
           if(selectedRow.combo == "SI"){
             dataFD.append('combo', 1) 

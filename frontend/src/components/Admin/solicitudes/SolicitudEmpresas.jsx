@@ -69,7 +69,7 @@ const openModal = () => {
 
 const closeModal = () => {
   setModalIsOpen(false);
-  getSolicitudes()
+  getSolicitudes();
 };
 const columnas = [
     {

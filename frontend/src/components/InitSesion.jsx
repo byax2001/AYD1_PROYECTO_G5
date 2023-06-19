@@ -6,6 +6,35 @@ import md5 from 'md5';
 import {Link,useNavigate} from 'react-router-dom'
 import { useMyContext } from '../context';
 
+const Lema=()=>{
+  return (
+    <div id="lema">
+      <div className="row">
+        <div className="col-1" />
+        <div className="col-6 ml-3">
+          <div className="row">
+            <div className="col-2 p-0">
+              <div className='textForm h1 display-1' style={{ textAlign: 'right', color: '#DB4F23' }}>
+                Al
+              </div>
+            </div>
+            <div className="col-10 p-0">
+              <div className='textForm h1 display-1' style={{ textAlign: 'left', color: '#F9F4EF' }}>
+                Chilazo</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <div className="text-light text-left h4">
+                <em>Sabor Guatemalteco, ¡A tu alcance!</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function InitSesion() {
 
@@ -88,10 +117,11 @@ function InitSesion() {
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Iniciar Sesion</div>
       </nav>
+     
       <div className='container-fluid ' id="conInit">
         <div className='row'>
           <div className='col-9'>
-
+              <Lema/>
           </div>
           <div className="col-3 bg-dark" id="Isesion">
             <Form onSubmit={handleSubmit} className='text-white bg-dark mt-5' >

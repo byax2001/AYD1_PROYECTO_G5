@@ -64,7 +64,7 @@ function RegistroEmpresa() {
     const data = new FormData();
     data.append('nombre', formData.nombre)
     data.append('username', formData.username)
-    data.append('password', formData.password)
+    data.append('password', md5(formData.password))
     data.append('descripcion', formData.descripcion)
     data.append('apellido', '')
     data.append('tipo_empresa', formData.tipo_empresa)
@@ -300,7 +300,7 @@ function RegistroEmpresa() {
               </Form.Group>
               
               <Form.Group controlId="direccion">
-                <Form.Label className="textForm">Zona</Form.Label>
+                <Form.Label className="textForm">Direccion</Form.Label>
                 <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
               </Form.Group>
 
