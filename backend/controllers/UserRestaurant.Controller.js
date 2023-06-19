@@ -155,3 +155,25 @@ exports.getrestaurant = async function (req,res){
       
 }
 
+exports.getrestauranttype = async function (req,res){
+    try{
+        database.query(querysMySQL.list_tipoempresa,[],async function(err,result,fields){    
+            if (result){
+    
+                res.status(200).send({status: "success", message: "Estos son los tipos de empresa:", data: result});
+            }else{
+                res.status(200).send({msg:"Se produjo un error al obtener restaurantes.", valid:false})
+                return;
+    
+            }
+        }); 
+
+    }catch(e){
+        res.status(400).send({status: "error", message: "Error al crear restaurante", data: e});
+    }
+      
+}
+
+
+
+
