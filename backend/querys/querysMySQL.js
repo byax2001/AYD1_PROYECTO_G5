@@ -16,6 +16,7 @@ module.exports = {
 		//Products
 		list_all_products_by_type :"SELECT * FROM producto WHERE tipo_producto_id_tipo_producto = ?", 
 		list_all_products_by_rest :`SELECT p.id_producto ,p.nombre_producto , p.descripcion_producto ,p.imagen_producto ,p.precio_producto, tp.nombre_tipo_prod ,p.empresa_id_empresa ,
+		tp.id_tipo_producto as tipo_producto,
 		CASE WHEN p.combo = 0 THEN 'NO' ELSE 'SI' 
 		END AS combo
 		FROM producto p inner join tipo_producto tp  on p.tipo_producto_id_tipo_producto = tp.id_tipo_producto  WHERE p.empresa_id_empresa = ?`, 
