@@ -1,0 +1,94 @@
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.navbar{
+  position: relative;
+  background-color: #F2890D;
+}
+body{
+  background-color: #1C1716 !important;
+}
+/*EFECTOS DE BOTONES*/
+.btnEffect{
+  padding: 5px 10px;
+  text-align: center;
+  color:white;
+  text-decoration: none;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 7px;
+  box-shadow: 0 4px black;
+  padding-right:5px;
+  padding-left: 5px;
+}
+
+.btnEffect:hover {
+  background-color: #08555b;
+}
+.btnEffect:active {
+  background-color: #08555b;
+  box-shadow: 0 5px black;
+  transform: translateY(4px);
+}
+
+
+#piepaginaLP {
+  position: absolute;
+  text-decoration: none;
+  bottom: 0px;
+  left: 0;
+  right: 0;
+}
+
+.custom-link {
+  color: orange; /* Cambia el color del texto a verde */
+  text-decoration: none; /* Quita la subrayado de los enlaces */
+  font-family: "Comic Sans", cursive;
+  /* Agrega otros estilos personalizados si es necesario */
+}
+#logoLP{
+  height: 45px;
+  width: 45px;
+}
+#logoStar{
+  height: 35px;
+  width: 45px;
+}
+.textForm {
+  font-family: "Comic Sans", cursive;
+  text-align: justify;
+}
+
+.btnRT{
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  z-index: 3;
+}
+
+#lema{
+  position:relative;
+  top:125px;
+}
+
+
+.slide-enter {
+  transform: translateY(100%);
+}
+
+.slide-enter-active {
+  transform: translateY(0%);
+  transition: transform 500ms ease-in-out;
+}
+
+.slide-exit {
+  transform: translateY(0%);
+}
+
+.slide-exit-active {
+  transform: translateY(-100%);
+  transition: transform 500ms ease-in-out;
+}
