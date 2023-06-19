@@ -13,7 +13,7 @@ function RegistroEmpresa() {
   const [showMunicipios, setShowMunicipios] = useState(false)
   const [municipios, setMunicipios] = useState([])
   const [departamentos, setDepartamentos] = useState([])
-
+  const [tiposEmpresa,setTiposEmpresa]=useState([])
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -134,12 +134,31 @@ function RegistroEmpresa() {
     } catch (e) {
       console.log(e)
     }
-
+  }
+  //GET TIPOS DE RESTAURANTES
+  const getTiposRestaurantes = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/restaurants/type`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setTiposEmpresa(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   useEffect(() => {
     
     getDepartamentos();
+    getTiposRestaurantes();
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   },[]);
 
@@ -235,8 +254,17 @@ function RegistroEmpresa() {
               </Form.Group>
 
               <Form.Group controlId="tipo_empresa">
-                <Form.Label className="textForm">Categoría</Form.Label>
-                <Form.Control type="int" name="tipo_empresa" value={formData.tipo_empresa} onChange={handleChange} required />
+                <Form.Label className="textForm">Tipo de Empresa:</Form.Label>
+                <div>
+                  <select onChange={handleChange} name="tipo_empresa" className='form-select'>
+                    <option value={0}>Seleccione un Tipo de Empresa</option>
+                    {tiposEmpresa.map((tEmpresa) => (
+                      <option key={tEmpresa.id_tipo} value={tEmpresa.id_tipo}>
+                        {tEmpresa.nombre_tipo}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </Form.Group>
 
               <Form.Group controlId="username">
