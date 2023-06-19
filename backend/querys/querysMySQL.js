@@ -25,6 +25,14 @@ module.exports = {
 		list_tipoempresa: "SELECT * FROM tipo_empresa",
         
 		//Reports
+		list_all_users_rep: `select id_usuario,nombre,apellido,email,username,password,
+		CASE WHEN rol=0 THEN 'ADMIN'
+		WHEN rol = 1 THEN 'CLIENTE'
+		WHEN rol=2 THEN 'REPARTIDOR'
+		WHEN rol =3 THEN 'EMPRESA'
+		END AS rol,
+		telefono, tipo_licencia,nit,fecha_registro 
+		from usuario`,
 		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
 		total_users_byday: `SELECT AVG(tabla.cuenta) AS Promedio_Dia
 							FROM (SELECT DAY(fecha_registro) AS fecha , COUNT(*) AS cuenta  
