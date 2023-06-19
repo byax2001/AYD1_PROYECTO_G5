@@ -4,7 +4,7 @@ const querysMySQL = require("../querys/querysMySQL");
 
 exports.getInfoUser = async function (req, res) {
     try {
-        database.query(querysMySQL.list_all_users, [], async function (err, result, fields) {
+        database.query(querysMySQL.list_all_users_rep, [], async function (err, result, fields) {
 
             database.query(querysMySQL.total_users, [], async function (err, result1, fields) {
                 database.query(querysMySQL.total_users_byday, [], async function (err, result2, fields) {
