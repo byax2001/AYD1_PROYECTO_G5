@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
 import star from '../../images/star.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMyContext } from '../../context';
+
 
 const customStyles = {
   noData: {
@@ -73,28 +75,40 @@ const data = [
 const columns = [
   {
     name: 'Nombre del producto',
-    selector: 'producto',
+    selector: row => row.producto,
     sortable: true,
   },
   {
     name: 'Fecha de pedido',
-    selector: 'fechaPedido',
+    selector: row => row.fechaPedido,
     sortable: true,
   },
   {
     name: 'Estado',
-    selector: 'estado',
+    selector: row => row.estado,
     sortable: true,
   },
 ];
 
 const Perfil = () => {
+  const [state, setState] = useMyContext();
   const [filteredData, setFilteredData] = useState(data);
   const [puntuacion, setPuntuacion] = useState(5);
+  const navigate=useNavigate()
+
+  useEffect(() => {
+    console.log(state)
+    if(state.rol!=2){
+      navigate("/")
+      return
+    }
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  },[]);
+
   return (
     <React.Fragment>
       <Link to={"/emp"} className='btn btn-warning btnRT text-light'>Volver a Inicio</Link>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">MiPerfil</div>
@@ -103,7 +117,7 @@ const Perfil = () => {
         <div className='container bg-dark text-light rounded'>
           <div className="row textForm">
             <div className="col-3 h5 bg-secondary">Nombre del empleado:</div>
-            <div className="col-9 h3">John Doe</div>
+            <div className="col-9 h3">{state.data.nombre + ' ' +state.data.apellido}</div>
           </div>
           <div className="row textForm">
             <div className="col-3 h4"> Puntuacion: </div>

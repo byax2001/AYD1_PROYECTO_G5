@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
@@ -56,38 +56,7 @@ const customStyles = {
 };
 
 
-const data = [
-    {
-      nombre: 'Empresa 1',
-      descripcion: 'Descripción de la empresa 1',
-      categoria: 'Categoría 1',
-      correo: 'empresa1@example.com',
-      departamento: 'Departamento 1',
-      zona: 'Zona 1',
-      municipio: 'Municipio 1',
-      documento: 'https://ejemplo.com/documento1.pdf'
-    },
-    {
-      nombre: 'Empresa 2',
-      descripcion: 'Descripción de la empresa 2',
-      categoria: 'Categoría 2',
-      correo: 'empresa2@example.com',
-      departamento: 'Departamento 2',
-      zona: 'Zona 2',
-      municipio: 'Municipio 2',
-      documento: 'https://ejemplo.com/documento2.pdf'
-    },
-    {
-      nombre: 'Empresa 3',
-      descripcion: 'Descripción de la empresa 3',
-      categoria: 'Categoría 3',
-      correo: 'empresa3@example.com',
-      departamento: 'Departamento 3',
-      zona: 'Zona 3',
-      municipio: 'Municipio 3',
-      documento: 'https://ejemplo.com/documento3.pdf'
-    }
-  ];
+const data = [];
   
 const SolicitudEmpresa = () => {
   const [filteredData, setFilteredData] = useState(data);
@@ -100,8 +69,9 @@ const openModal = () => {
 
 const closeModal = () => {
   setModalIsOpen(false);
+  getSolicitudes();
 };
-const colsUsuarios = [
+const columnas = [
     {
       name: 'Nombre',
       selector: row => row.nombre,
@@ -109,33 +79,45 @@ const colsUsuarios = [
     },
     {
       name: 'Descripcion',
-      selector: row => row.descripcion,
+      selector: row => row.descripcion_empresa,
       sortable: true,
     },
     {
       name: 'Categoria',
-      selector: row => row.categoria,
+      selector: row => row.nombre_tipo,
       sortable: true,
     },
     {
       name: 'Correo Electronico',
-      selector: row => row.correo,
+      selector: row => row.email,
       sortable: true,
     },
     {
       name: 'Departamento',
       selector: row => row.departamento,
       sortable: true,
-    },{
+    },
+    {
         name: 'Zona',
         selector: row => row.zona,
         sortable: true,
       },
     {
       name: 'Municipio',
-      selector: row => row.municipio,
+      selector: row => row.nombre_municipio,
       sortable: true,
     },
+    {
+      name: 'Direccion',
+      selector: row => row.direccion,
+      sortable: true,
+    },
+    {
+      name: 'Fecha Solicitud',
+      selector: row => row.fecha_solicitud,
+      sortable: true,
+    },
+    
     {
       name: 'DocumentoPdf',
       selector: row=> row.documento,
@@ -151,10 +133,10 @@ const colsUsuarios = [
       
     },
     {
-      name: 'documento',
+      name: 'accion_sol',
       cell: row => (
         <button className='btn btn-secondary' onClick={() => {
-            handleActionClick(row);
+            setSelectedRow(row);
             openModal();
           }}>
             A/R
@@ -167,42 +149,139 @@ const colsUsuarios = [
   ];
   
   const handleActionClick = (row) => {
-        setSelectedRow(row);
+      setSelectedRow(row);
       console.log('Fila seleccionada:', row);
   };
 
   //VENTANA EMERGENTE PARA ACCIONAR 
-  const ActionModal = ({ isOpen, onRequestClose }) => {
+  const ActionModal = ({ isOpen, onRequestClose, aceptarSol,id,rechazarSol}) => {
+    const handleAceptarSol = () => {
+      aceptarSol(id);
+      onRequestClose();
+    };
+  
+    const handleRechazarSol = () => {
+      rechazarSol(id);
+      onRequestClose();
+    };
     return (
       <Modal
-        isOpen={isOpen}Inicio
+        isOpen={isOpen} Inicio
         onRequestClose={onRequestClose}
+        aceptarsol ={aceptarSol}
+        rechazarSol={rechazarSol}
         contentLabel="Aceptar o Rechazar"
       >
         <div className='container'>
-        <h2>Aceptar o Rechazar</h2>
-        <p>Contenido de la fila:</p>
-        <pre>{JSON.stringify(selectedRow, null, 2)}</pre>
-        <div className="row">
-        <div className="col-2"></div>
-        <button className='btn btn-primary col-2 btnEffect' onClick={()=>{onRequestClose(); handleActionClick(selectedRow)}}>Aceptar</button>
-        <div className="col-4"></div>
-        <button className='btn btn-primary col-2 btnEffect' onClick={()=>{onRequestClose(); handleActionClick(selectedRow)}}>Rechazar</button>
-        <div className="col-2"></div>
+          <h2>Aceptar o Rechazar</h2>
+          <p>Contenido de la fila:</p>
+          <pre>{JSON.stringify(selectedRow, null, 2)}</pre>
+          <div className="row">
+            <div className="col-2"></div>
+            <button className='btn btn-primary col-2 btnEffect' onClick={handleAceptarSol}>Aceptar</button>
+            <div className="col-4"></div>
+            <button className='btn btn-primary col-2 btnEffect' onClick={handleRechazarSol}>Rechazar</button>
+            <div className="col-2"></div>
+          </div>
         </div>
-        
-        </div>
-          </Modal>
+      </Modal>
     );
   };
- 
+
+  const getSolicitudes = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/reqPendingRestaurant`;
+    console.log(url)
+    let config = {
+      method: "GET", //ELEMENTOS A ENVIAR
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+
+      const data_res = await res.json();
+
+      setFilteredData(data_res.data)
+      console.log(data_res)
+
+
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  //ACEPTAR SOLICITUD
+  const aSolicitud = async (id) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/aceptRequest`;
+    const accion = { "id_solicitud": id}
+    console.log(`------------------Id mandado a aceptar ${id}`)
+    let config = {
+      method: "PUT", //ELEMENTOS A ENVIAR
+      body: JSON.stringify(accion),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      console.log(data_res)
+      alert(data_res.message)
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+
+  //RECHAZAR SOLICITUD
+  const rSolicitud = async (id) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/denyRequest`;
+    const accion = { "id_solicitud": id}
+    let config = {
+      method: "PUT", //ELEMENTOS A ENVIAR
+      body: JSON.stringify(accion),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+
+      console.log(data_res)
+      alert(data_res.message)
+      //console.log(votoC)
+      //setVotos(votoC)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  useEffect(() => {
+    getSolicitudes();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  }, []);
+
+
   return (
     <React.Fragment>
         {/* PARA MOSTRAR LA VENTANA EMERGENTE */}
     {selectedRow && (
       <ActionModal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
+        isOpen={modalIsOpen}  //VARIABLE
+        onRequestClose={closeModal}  //FUNCION
+        aceptarSol = {aSolicitud}  // FUNCION
+        id = {selectedRow.id_solicitud_repartidor} //VARIABLE
+        rechazarSol= {rSolicitud} //FUNCION
       />
     )}
     {/* CONTENEDOR DE TABLA  */}
@@ -210,7 +289,7 @@ const colsUsuarios = [
         <div className="my-4">
           <ReactTable
             title={"Solicitud de Empresas"}
-            columns={colsUsuarios}
+            columns={columnas}
             data={filteredData}
             customStyles={customStyles}
             pagination

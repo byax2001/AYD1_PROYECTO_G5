@@ -1,6 +1,6 @@
-body{
+#bgLP{
   background-image: url('../images/fondo.jpg');
-  height: 100vh4;
+  height: 100vh;
   background-size: cover;
  
 }

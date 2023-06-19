@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef, useEffect} from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
 import md5 from 'md5';
@@ -10,6 +10,10 @@ function RegistroEmpresa() {
   const [showSucess, setShowSucess] = useState(false);
   const screenRef = useRef(null);
 
+  const [showMunicipios, setShowMunicipios] = useState(false)
+  const [municipios, setMunicipios] = useState([])
+  const [departamentos, setDepartamentos] = useState([])
+  const [tiposEmpresa,setTiposEmpresa]=useState([])
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -19,9 +23,10 @@ function RegistroEmpresa() {
     tipo_empresa: 0,
     email: '',
     telefono: '',
-    departamento: '',
+    departamento: 0,
     zona: '',
     municipio: 0,
+    direccion:'',
     rol: 3,
     userid: 1,
     file: null
@@ -35,15 +40,31 @@ function RegistroEmpresa() {
       ...prevFormData,
       [name]: fieldValue,
     }));
+
+    if(name ==="departamento"){
+      if(value==0){
+        setShowMunicipios(false);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ["municipio"]: 0,
+        }));
+      }else{
+        //METODO PARA RELLENAR MUNICIPIOS 
+        getMunicipios(value);
+        //MOSTRAR DEPARTAMENTOS
+        setShowMunicipios(true)
+      }
+      
+    }
   };
 
   //POST
   const Registro = async () => {
-    const url = `http://localhost:4000/api/restaurants`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/restaurants`;
     const data = new FormData();
     data.append('nombre', formData.nombre)
     data.append('username', formData.username)
-    data.append('password', formData.password)
+    data.append('password', md5(formData.password))
     data.append('descripcion', formData.descripcion)
     data.append('apellido', '')
     data.append('tipo_empresa', formData.tipo_empresa)
@@ -52,6 +73,7 @@ function RegistroEmpresa() {
     data.append('departamento', formData.departamento)
     data.append('zona', formData.zona)
     data.append('municipio', formData.municipio)
+    data.append('direccion', formData.direccion)
     data.append('rol', formData.rol)
     data.append('userid', formData.userid)
     data.append('image', formData.file)
@@ -74,6 +96,71 @@ function RegistroEmpresa() {
     }
 
   }
+  //GET
+  const getMunicipios = async (departamento) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${departamento}`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setMunicipios(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  //getDepartamentos
+  const getDepartamentos = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setDepartamentos(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  //GET TIPOS DE RESTAURANTES
+  const getTiposRestaurantes = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/restaurants/type`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setTiposEmpresa(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    
+    getDepartamentos();
+    getTiposRestaurantes();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  },[]);
 
 
   //ACCION QUE REALIZA EL FORMULARIO LUEGO DE HACER CLICK A ALGUN BOTON
@@ -94,6 +181,12 @@ function RegistroEmpresa() {
     if (formData.telefono.length !== 8) {
       setShowAlert(true);
       setMessage("Numero de telefono invalido")
+      screenRef.current.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (formData.departamento === 0 || formData.municipio === 0) {
+      setShowAlert(true);
+      setMessage("Departamento o Municipio Invalidos")
       screenRef.current.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -134,7 +227,7 @@ function RegistroEmpresa() {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning mb-3" ref={screenRef}>
+      <nav className="navbar navbar-expand-lg navbar-light mb-3" ref={screenRef}>
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Registro de Empresa</div>
@@ -149,7 +242,7 @@ function RegistroEmpresa() {
         <div className='row'>
           <div className='col-3 col-sm-0'></div>
           <div className="col-6">
-            <Form onSubmit={handleSubmit} className='text-white bg-dark'>
+            <Form onSubmit={handleSubmit} className='text-white bg-dark bg-transparent'>
               <Form.Group controlId="nombre">
                 <Form.Label className="textForm">Nombre de la Entidad</Form.Label>
                 <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
@@ -161,8 +254,17 @@ function RegistroEmpresa() {
               </Form.Group>
 
               <Form.Group controlId="tipo_empresa">
-                <Form.Label className="textForm">Categoría</Form.Label>
-                <Form.Control type="int" name="tipo_empresa" value={formData.tipo_empresa} onChange={handleChange} required />
+                <Form.Label className="textForm">Tipo de Empresa:</Form.Label>
+                <div>
+                  <select onChange={handleChange} name="tipo_empresa" className='form-select'>
+                    <option value={0}>Seleccione un Tipo de Empresa</option>
+                    {tiposEmpresa.map((tEmpresa) => (
+                      <option key={tEmpresa.id_tipo} value={tEmpresa.id_tipo}>
+                        {tEmpresa.nombre_tipo}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </Form.Group>
 
               <Form.Group controlId="username">
@@ -194,17 +296,40 @@ function RegistroEmpresa() {
 
               <Form.Group controlId="departamento">
                 <Form.Label className="textForm">Departamento</Form.Label>
-                <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
+                <div>
+                  <select onChange={handleChange} name="departamento" className='form-select'>
+                    <option value={0}>Seleccione un departamento</option>
+                    {departamentos.map((departamento) => (
+                      <option key={departamento.id_departamento} value={departamento.id_departamento}>
+                        {departamento.nombre_dep}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </Form.Group>
 
+              {showMunicipios && (
+                <Form.Group controlId="municipio">
+                  <Form.Label className="textForm">Municipio</Form.Label>
+                  <Form.Control as="select" name="municipio" value={formData.municipio} onChange={handleChange} required>
+                    <option value={0}>Seleccione un municipio</option>
+                    {municipios.map((municipio) => (
+                      <option key={municipio.id_municipio} value={municipio.id_municipio}>
+                        {municipio.nombre_municipio}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
+              )}
+              
               <Form.Group controlId="zona">
                 <Form.Label className="numberForm">Zona</Form.Label>
                 <Form.Control type="number" name="zona" value={formData.zona} onChange={handleChange} required />
               </Form.Group>
-
-              <Form.Group controlId="municipio">
-                <Form.Label className="textForm">Municipio</Form.Label>
-                <Form.Control type="number" name="municipio" value={formData.municipio} onChange={handleChange} required />
+              
+              <Form.Group controlId="direccion">
+                <Form.Label className="textForm">Direccion</Form.Label>
+                <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="file">

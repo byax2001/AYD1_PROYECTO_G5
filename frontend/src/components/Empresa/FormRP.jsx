@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import axios from 'axios';
-
+import { useMyContext } from '../../context';
 
 const comboInfo = [
   {
@@ -15,7 +15,7 @@ const comboInfo = [
 
 const FormRP = () => {//aqui debo indicarle que espero el valor empresa
 
-
+    const [state, setState] = useMyContext();
     const [nameR, setNameR] = useState('');
     const [descR, setDescR] = useState('');
     const [precio, setPrecio] = useState(null);
@@ -27,6 +27,8 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
+      console.log("Uses STATE---------------------------------------\n")
+      console.log(state)
       fetchData(); // Realizar la petición al cargar el componente
     },[]);
   
@@ -61,7 +63,7 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
             dataFD.append('nombre', nameR)
             dataFD.append('descripcion', descR)
             dataFD.append('tipo', tipoR)
-            dataFD.append('empresa', empresa)  
+            dataFD.append('empresa', state.data.idempresa)  
             dataFD.append('combo', combo) 
             dataFD.append('precio', precio)
             dataFD.append('image', image)
@@ -147,7 +149,7 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
 
             <div className="mb-3">
               <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChangeC}>
-                <option value="default">Combo/Individual</option>
+                <option value="default">Indique si el Producto es Combo o Individual</option>
                 {comboInfo.map((item) => (
                   <option key={item.id} value={item.id}>{item.descripcion}</option>
                 ))}

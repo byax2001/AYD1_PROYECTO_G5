@@ -130,7 +130,7 @@ const PrivacyPolicy = () => {
 
 const QuienesSomos =()=>{
   return(
-    <div className='text-justify textForm'>
+    <div className='text-justify textForm rounded'>
       <h1>Bienvenidos a AlChilazo</h1>
       <p ><em>La plataforma líder en Guatemala para el envío de comida a domicilio.</em></p>
       <p>En AlChilazo, nos enorgullece ser el nexo entre los mejores restaurantes de Guatemala y los comensales hambrientos que desean disfrutar de una deliciosa comida en la comodidad de sus hogares. Nuestro principal objetivo es satisfacer tus antojos con una amplia variedad de opciones gastronómicas, ofreciendo un servicio de entrega rápido y confiable.</p>
@@ -172,6 +172,40 @@ const InfoEquipo =()=>{
 </table>)
 }
 
+const TermiCondiciones =()=>{
+  return(
+    <React.Fragment>
+                <h1>Términos y Condiciones de AlChilazo</h1>
+                <h2>1. Aceptación de los Términos y Condiciones</h2>
+                <p>Al utilizar los servicios de AlChilazo, aceptas y te comprometes a cumplir con los presentes Términos y Condiciones, así como con nuestras políticas y directrices adicionales que puedan ser publicadas en nuestro sitio web o aplicaciones móviles.</p>
+                <h2>2. Uso de la Plataforma</h2>
+                <h3>2.1 Registro</h3>
+                <p>Para acceder a nuestros servicios, es necesario registrarse en nuestra plataforma proporcionando información precisa y veraz. Tú eres responsable de mantener la confidencialidad de tu cuenta y de todas las actividades que ocurran bajo tu nombre de usuario.</p>
+                <h3>2.2 Uso Adecuado</h3>
+                <p>Al utilizar nuestros servicios, te comprometes a utilizar la plataforma de manera adecuada, respetando los derechos de otros usuarios, restaurantes asociados y de AlChilazo. No está permitido utilizar la plataforma con fines ilegales, difamatorios, fraudulentos o que puedan causar daño a terceros.</p>
+                <h3>2.3 Restricciones</h3>
+                <p>No podrás utilizar la plataforma si no tienes la capacidad legal para hacerlo o si has sido previamente suspendido o eliminado de nuestra plataforma.</p>
+                <h2>3. Pedidos y Entregas</h2>
+                <h3>3.1 Restaurantes Asociados</h3>
+                <p>AlChilazo se compromete a ofrecer una amplia variedad de restaurantes asociados, garantizando que cumplan con altos estándares de calidad e higiene. Sin embargo, no nos responsabilizamos por cualquier inconveniente o incidente que pueda ocurrir durante la entrega de los pedidos.</p>
+                <h3>3.2 Compromiso de Entrega</h3>
+                <p>Nos esforzamos por realizar las entregas en el tiempo estipulado, sin embargo, existen circunstancias imprevistas que pueden causar demoras. En tales casos, te mantendremos informado y haremos todo lo posible para minimizar cualquier inconveniente.</p>
+                <h2>4. Responsabilidad y Seguridad</h2>
+                <h3>4.1 Seguridad de los Usuarios</h3>
+                <p>Tanto AlChilazo como los restaurantes asociados se comprometen a garantizar la seguridad de los usuarios. Sin embargo, no podemos garantizar la seguridad absoluta, por lo que te recomendamos tomar las precauciones necesarias al utilizar nuestros servicios.</p>
+                <h3>4.2 Uso Responsable</h3>
+                <p>Tú eres responsable de utilizar nuestros servicios de manera responsable y respetuosa. No podrás utilizar la plataforma para actividades ilegales, fraudulentas o que puedan poner en peligro la seguridad de otros usuarios.</p>
+                <h2>5. Legislación Aplicable y Jurisdicción</h2>
+                <p>Estos Términos y Condiciones se regirán e interpretarán de acuerdo con las leyes de Guatemala. Cualquier disputa que surja en relación con estos Términos y Condiciones estará sujeta a la jurisdicción exclusiva de los tribunales competentes de Guatemala.</p>
+                <p>Al utilizar los servicios de AlChilazo, aceptas cumplir con estos Términos y Condiciones. Si no estás de acuerdo con alguno de los términos establecidos, te recomendamos no utilizar nuestra plataforma. Si tienes alguna pregunta o consulta, no dudes en contactarnos a través de nuestros canales de atención al cliente.</p>
+                <p>Fecha de entrada en vigencia: 13/06/2023</p>
+                <p>¡Gracias por ser parte de AlChilazo y permitirnos servirte lo mejor de la cocina guatemalteca!</p>
+                <p> AlChilazo</p>
+              </React.Fragment>
+  )
+}
+
+
 function MPiePagina(props) {
   const location = useLocation();
   const [mensaje, setMensaje] = useState("Nosotros somos");
@@ -197,76 +231,49 @@ function MPiePagina(props) {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className='textForm h4 text-light'>{tNav}</div>
       </nav>
       <div className='container textForm text-light mt-3'>
-  <div className="row">
-    {location.state.tinfo === 'pf' ? (
-      <div className="col-12">
-          <DataTable
-            title={mensaje}
-            columns={cols}
-            data={data}
-            customStyles={customStyles}
-          />
-      </div>
-    ): location.state.tinfo === 'tc' ? (
-      <div className="col-12 bg-dark">
-        <React.Fragment>
-        <h1>Términos y Condiciones de AlChilazo</h1>
-            <h2>1. Aceptación de los Términos y Condiciones</h2>
-            <p>Al utilizar los servicios de AlChilazo, aceptas y te comprometes a cumplir con los presentes Términos y Condiciones, así como con nuestras políticas y directrices adicionales que puedan ser publicadas en nuestro sitio web o aplicaciones móviles.</p>
-            <h2>2. Uso de la Plataforma</h2>
-            <h3>2.1 Registro</h3>
-            <p>Para acceder a nuestros servicios, es necesario registrarse en nuestra plataforma proporcionando información precisa y veraz. Tú eres responsable de mantener la confidencialidad de tu cuenta y de todas las actividades que ocurran bajo tu nombre de usuario.</p>
-            <h3>2.2 Uso Adecuado</h3>
-            <p>Al utilizar nuestros servicios, te comprometes a utilizar la plataforma de manera adecuada, respetando los derechos de otros usuarios, restaurantes asociados y de AlChilazo. No está permitido utilizar la plataforma con fines ilegales, difamatorios, fraudulentos o que puedan causar daño a terceros.</p>
-            <h3>2.3 Restricciones</h3>
-            <p>No podrás utilizar la plataforma si no tienes la capacidad legal para hacerlo o si has sido previamente suspendido o eliminado de nuestra plataforma.</p>
-            <h2>3. Pedidos y Entregas</h2>
-            <h3>3.1 Restaurantes Asociados</h3>
-            <p>AlChilazo se compromete a ofrecer una amplia variedad de restaurantes asociados, garantizando que cumplan con altos estándares de calidad e higiene. Sin embargo, no nos responsabilizamos por cualquier inconveniente o incidente que pueda ocurrir durante la entrega de los pedidos.</p>
-            <h3>3.2 Compromiso de Entrega</h3>
-            <p>Nos esforzamos por realizar las entregas en el tiempo estipulado, sin embargo, existen circunstancias imprevistas que pueden causar demoras. En tales casos, te mantendremos informado y haremos todo lo posible para minimizar cualquier inconveniente.</p>
-            <h2>4. Responsabilidad y Seguridad</h2>
-            <h3>4.1 Seguridad de los Usuarios</h3>
-            <p>Tanto AlChilazo como los restaurantes asociados se comprometen a garantizar la seguridad de los usuarios. Sin embargo, no podemos garantizar la seguridad absoluta, por lo que te recomendamos tomar las precauciones necesarias al utilizar nuestros servicios.</p>
-            <h3>4.2 Uso Responsable</h3>
-            <p>Tú eres responsable de utilizar nuestros servicios de manera responsable y respetuosa. No podrás utilizar la plataforma para actividades ilegales, fraudulentas o que puedan poner en peligro la seguridad de otros usuarios.</p>
-            <h2>5. Legislación Aplicable y Jurisdicción</h2>
-            <p>Estos Términos y Condiciones se regirán e interpretarán de acuerdo con las leyes de Guatemala. Cualquier disputa que surja en relación con estos Términos y Condiciones estará sujeta a la jurisdicción exclusiva de los tribunales competentes de Guatemala.</p>
-            <p>Al utilizar los servicios de AlChilazo, aceptas cumplir con estos Términos y Condiciones. Si no estás de acuerdo con alguno de los términos establecidos, te recomendamos no utilizar nuestra plataforma. Si tienes alguna pregunta o consulta, no dudes en contactarnos a través de nuestros canales de atención al cliente.</p>
-            <p>Fecha de entrada en vigencia: 13/06/2023</p>
-            <p>¡Gracias por ser parte de AlChilazo y permitirnos servirte lo mejor de la cocina guatemalteca!</p>
-            <p> AlChilazo</p>
-        </React.Fragment>
+        <div className="row">
+          {location.state.tinfo === 'pf' ? (
+            <div className="col-12">
+              <DataTable
+                title={mensaje}
+                columns={cols}
+                data={data}
+                customStyles={customStyles}
+              />
+            </div>
+          ) : location.state.tinfo === 'tc' ? (
+            <div className="col-12 bg-dark bg-transparent">
+              <TermiCondiciones/>
+            </div>
+          ) : location.state.tinfo === 'pp' ? (
+            <div className="col-12 bg-dark bg-transparent">
+              <React.Fragment>
+                <PrivacyPolicy />
+              </React.Fragment>
+            </div>
+          ) :
+            location.state.tinfo === 'e' ? (
+              <div className="col-12">
+                <InfoEquipo />
+              </div>
+            ) :
+              (
+                <React.Fragment>
+                  <div className="col-3"></div>
+                  <div className="col-6 bg-dark bg-transparent">
+                    <QuienesSomos />
+                  </div>
+                  <div className="col-3"></div>
+                </React.Fragment>
+              )}
         </div>
-    ): location.state.tinfo === 'pp' ? (
-      <div className="col-12 bg-dark">
-        <React.Fragment>
-        <PrivacyPolicy/>  
-        </React.Fragment>
       </div>
-    ):
-    location.state.tinfo === 'e' ? (
-      <div className="col-12">
-        <InfoEquipo/>
-      </div>
-    ):
-    (
-      <React.Fragment>
-        <div className="col-3"></div>
-        <div className="col-6 bg-dark"> 
-          <QuienesSomos/>
-        </div>
-        <div className="col-3"></div>
-      </React.Fragment>
-    )}
-  </div>
-</div>
 
 
     </React.Fragment>

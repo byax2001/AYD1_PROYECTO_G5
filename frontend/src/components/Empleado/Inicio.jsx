@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect} from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
+import { useMyContext } from '../../context';
 
 const customStyles = {
   noData: {
@@ -85,12 +86,25 @@ const columns = [
 ];
 
 const Inicio = () => {
+  //const { infoUser, setInfoUser } = useContext(MyContext);
+  const [state, setState] = useMyContext();
+  const navigate=useNavigate()
   const [filteredData, setFilteredData] = useState(data);
   const [pedidoActual, setPedidoActual]=useState([{ producto: 'Producto 1',
   fechaPedido: '2023-06-01'}])
+
+  useEffect(() => {
+    console.log(state)
+    if(state.rol!=2){
+      navigate("/")
+    }
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  },[]);
+
+
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
+      <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">Inicio</div>

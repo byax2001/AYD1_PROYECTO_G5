@@ -15,7 +15,7 @@ const Informe = () => {
   };
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
+      <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">Informe de Repartidores</div>
