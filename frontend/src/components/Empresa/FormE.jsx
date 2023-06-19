@@ -30,7 +30,7 @@ const Form = ({ selectedRow, closeModal ,filteredDataV }) => {
         
 
         //----
-          const url = `http://localhost:4000/api/products`;
+          const url = `${process.env.REACT_APP_API_CONSUME}/api/products`;
           const dataFD = new FormData();
           console.log("######################################################")
           console.log(selectedRow)
