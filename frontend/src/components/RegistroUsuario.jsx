@@ -45,7 +45,7 @@ function RegistroUsuario() {
         }));
       }else{
         //METODO PARA RELLENAR MUNICIPIOS 
-        getMunicipios();
+        getMunicipios(value);
         //MOSTRAR DEPARTAMENTOS
         setShowMunicipios(true)
       }
@@ -82,8 +82,8 @@ function RegistroUsuario() {
 
   }
   //GET
-  const getMunicipios = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${formData.departamento}`;
+  const getMunicipios = async (departamento) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${departamento}`;
     let config = {
       method: "GET", 
       headers: {
@@ -208,7 +208,7 @@ function RegistroUsuario() {
 
           </div>
           <div className="col-6">
-            <Form onSubmit={handleSubmit} className='text-white bg-dark'>
+            <Form onSubmit={handleSubmit} className='text-white bg-dark bg-transparent'>
               <Form.Group controlId="nombre">
                 <Form.Label className="textForm">Nombre</Form.Label>
                 <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
@@ -257,7 +257,6 @@ function RegistroUsuario() {
                       </option>
                     ))}
                   </select>
-                  <p className='h6 textForm'><small>Dep ID: {formData.departamento}</small></p>
                 </div>
               </Form.Group>
 
@@ -272,7 +271,6 @@ function RegistroUsuario() {
                       </option>
                     ))}
                   </Form.Control>
-                  <p className='h6 textForm'><small>Muni ID: {formData.municipio}</small></p>
                 </Form.Group>
               )}
 

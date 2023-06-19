@@ -12,7 +12,7 @@ const FormRe = () => {
   return (
 
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning mb-3">
+      <nav className="navbar navbar-expand-lg navbar-light mb-3">
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/inicioe">Inicio</a>
         <div className="h2 text-light">Registro de Producto</div>

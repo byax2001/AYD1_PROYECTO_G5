@@ -10,6 +10,8 @@ import Form from './FormE';
 import ReactTable from 'react-data-table-component';
 import ReactModal from 'react-modal';
 import axios from 'axios';
+import { useMyContext } from '../../context';
+
 ReactModal.setAppElement('#root'); // Establece el elemento de la aplicación principal
 // varaible de stilo
 const customStyles = {
@@ -101,20 +103,23 @@ const customStyles = {
 
 
 const InicioE = () => {
+    const [state, setState] = useMyContext();
     const [filteredData, setFilteredData] = useState([]);
     const [filteredDataV, setFilteredDataV] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [showModalv, setShowModalv] = useState(false);
+    
 
     useEffect(() => {
+      console.log(state)
       fetchData(); // Realizar la petición al cargar el componente
       fetchDataV();
     }, []);
   
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/products/rest/1'); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const response = await axios.get(`http://localhost:4000/api/products/rest/${state.data.idempresa}`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
@@ -136,87 +141,78 @@ const InicioE = () => {
   
 
       //Aqui mis columnas
-    const columns = [
-        
-      {
-        name: 'ID',
-        selector: row => row.id_producto,
-        sortable: true,
-        width: 'auto',
-      },
+  const columns = [
+
     {
       name: 'Nombre del producto',
       selector: row => row.nombre_producto,
       sortable: true,
       autoWidth: true,
     },
-      {
-        name: 'Descripcion',
-        selector: row => row.descripcion_producto,
-        /*cell: (row) => (
-            <button  className='btn btn-secondary' onClick={() => handleClick(row)}>
-              {row.descripcion_producto}
-            </button>
-          ),*/
-        sortable: true,
-        autoWidth: true,
-      },
-      {
-        name: 'Precio',
-        selector: row => row.precio_producto,
-        sortable: true,
-        autoWidth: true,
-      },
-      {
-        name: 'Tipo',
-        selector: row => row.tipo_producto_id_tipo_producto,
-        sortable: true,
-        autoWidth: true,
-      },
-      {
-        name: 'Imagen',
-        selector: row=> row.imagen_producto,
-        cell: (row) => (
-            <a href={row.documento} target="_blank" rel="noopener noreferrer">
-                <img className='img-thumbnail'
-                    src={row.imagen_producto}
-                    alt="Fotografia"
-                    style={{ width: '400px', cursor: 'pointer' }}
-                />
-            </a>
-          ),
-        sortable: true,
-        autoWidth: true,
-      },
-      {
-        name: 'Acciones',
-        cell: (row) => (
-
-          <div>
-            <a  onClick={() => handleClick(row)}>
-                <img className='img-thumbnail'
-                    src={edit}
-                    alt="Fotografia"
-                    style={{ width: '50px', cursor: 'pointer' }}
-                />
-            </a>
-
-            <a  onClick={() => deleteClick(row)}>
+    {
+      name: 'Descripcion',
+      selector: row => row.descripcion_producto,
+      /*cell: (row) => (
+          <button  className='btn btn-secondary' onClick={() => handleClick(row)}>
+            {row.descripcion_producto}
+          </button>
+        ),*/
+      sortable: true,
+      autoWidth: true,
+    },
+    {
+      name: 'Precio',
+      selector: row => row.precio_producto,
+      sortable: true,
+      autoWidth: true,
+    },
+    {
+      name: 'Tipo',
+      selector: row => row.nombre_tipo_prod,
+      sortable: true,
+      autoWidth: true,
+    },
+    {
+      name: 'Imagen',
+      selector: row => row.imagen_producto,
+      cell: (row) => (
+        <a href={row.documento} target="_blank" rel="noopener noreferrer">
+          <img className='img-thumbnail'
+            src={row.imagen_producto}
+            alt="Fotografia"
+            style={{ width: '400px', cursor: 'pointer' }}
+          />
+        </a>
+      ),
+      sortable: true,
+      autoWidth: true,
+    },
+    {
+      name: 'Acciones',
+      cell: (row) => (
+        <div>
+          <a onClick={() => handleClick(row)}>
             <img className='img-thumbnail'
-                src={deleteV}
-                alt="Fotografia"
-                style={{ width: '50px', cursor: 'pointer' }}
+              src={edit}
+              alt="Fotografia"
+              style={{ width: '50px', cursor: 'pointer' }}
             />
-            </a>
+          </a>
+          <a onClick={() => deleteClick(row)}>
+            <img className='img-thumbnail'
+              src={deleteV}
+              alt="Fotografia"
+              style={{ width: '50px', cursor: 'pointer' }}
+            />
+          </a>
+        </div>
 
-          </div>
-            
-          ),
-        sortable: true,
-        autoWidth: true,
+      ),
+      sortable: true,
+      autoWidth: true,
 
-      }
-     ];
+    }
+  ];
 
      const handleClick = (row) => {
         setSelectedRow(row);
@@ -272,25 +268,18 @@ const InicioE = () => {
         <React.Fragment>
             {/* Navbar*/}
 
-            <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
+            <nav className="navbar navbar-expand-lg navbar-light position-relative">
                 <img id="logoStar" src={logo} alt="Logo" />
                 <a className="navbar-brand" href="/">AlChilazo</a>
-                <div className="h2 text-light">Inicio Empresa</div>
+                <div className="h2 text-light">Panel de Control</div>
                 <div className="btn-group d-inline-flex" data-toggle="buttons">
                     {/*aqui colocaria los link para visitar */}
-                    <button
-                      onClick={handleSubMenuToggle}
-                      className="btn textForm text-light"
-                    >
-                      Panel de control
-                    </button>
-                    {showSubMenu && (
+                   
                       <div className="submenu">
                         <Link to="/registroPro" className="btn textForm text-light">
                           Registro de Producto
                         </Link>
                       </div>
-                    )}
                     <Link to="/" className="btn textForm text-light">Cerrar Sesion</Link>
 
                 </div>

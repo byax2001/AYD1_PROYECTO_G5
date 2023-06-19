@@ -50,7 +50,7 @@ function RegistroEmpresa() {
         }));
       }else{
         //METODO PARA RELLENAR MUNICIPIOS 
-        getMunicipios();
+        getMunicipios(value);
         //MOSTRAR DEPARTAMENTOS
         setShowMunicipios(true)
       }
@@ -97,8 +97,8 @@ function RegistroEmpresa() {
 
   }
   //GET
-  const getMunicipios = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${formData.departamento}`;
+  const getMunicipios = async (departamento) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${departamento}`;
     let config = {
       method: "GET", 
       headers: {
@@ -223,7 +223,7 @@ function RegistroEmpresa() {
         <div className='row'>
           <div className='col-3 col-sm-0'></div>
           <div className="col-6">
-            <Form onSubmit={handleSubmit} className='text-white bg-dark'>
+            <Form onSubmit={handleSubmit} className='text-white bg-dark bg-transparent'>
               <Form.Group controlId="nombre">
                 <Form.Label className="textForm">Nombre de la Entidad</Form.Label>
                 <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
@@ -277,7 +277,6 @@ function RegistroEmpresa() {
                       </option>
                     ))}
                   </select>
-                  <p className='h6 textForm'><small>Dep ID: {formData.departamento}</small></p>
                 </div>
               </Form.Group>
 
@@ -292,7 +291,6 @@ function RegistroEmpresa() {
                       </option>
                     ))}
                   </Form.Control>
-                  <p className='h6 textForm'><small>Muni ID: {formData.municipio}</small></p>
                 </Form.Group>
               )}
               

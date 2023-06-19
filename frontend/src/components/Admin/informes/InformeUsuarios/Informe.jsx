@@ -7,30 +7,47 @@ import logo from '../images/Logo.png';
 const datoprueba=[
 ]
 
-const columnas=[
-    {
-        name:'Id',
-        selector: row => row.id_voto,
-        sortable:true
-    },
-    {
-        name:'Municipio',
-        selector: row => row.municipio,
-        sortable:true,
-        grow:2
-    },{
-        name:'Departamento',
-        selector: row => row.departamento,
-        sortable:true,
-        grow:2
-    },{
-        name:'Papeleta',
-        selector: row => row.papeleta,
-        sortable:true
-    },{
-      name:'Partido',
-      selector: row => row.partido,
-      sortable:true
+const columnas = [
+  {
+    name: 'Nombre',
+    selector: row => row.nombre,
+    sortable: true
+  },
+  {
+    name: 'Apellido',
+    selector: row => row.apellido,
+    sortable: true,
+    grow: 2
+  }, {
+    name: 'Email',
+    selector: row => row.email,
+    sortable: true,
+    grow: 2
+  }, {
+    name: 'UserName',
+    selector: row => row.username,
+    sortable: true
+  }, {
+    name: 'Telefono',
+    selector: row => row.telefono,
+    sortable: true
+  }, {
+    name: 'Tipo de Licencia',
+    selector: row => row.tipo_licencia,
+    sortable: true
+  },{
+    name:'Nit',
+    selector: row => row.nit,
+    sortable:true
+  },{
+    name:'Rol',
+    selector: row => row.rol,
+    sortable:true
+  },
+  {
+    name:'Fecha Registro',
+    selector: row => row.fecha_registro,
+    sortable:true
   }
 ]
 const customStyles = {
@@ -83,7 +100,7 @@ const customStyles = {
       borderTopWidth: '4px',
       borderTopColor: 'd2d2d2',
     }}
-  };
+};
 /*2.Total de Usuarios Registrados
 
 3.
@@ -121,19 +138,38 @@ function TopProductos (props){
   }
 
   useEffect(() => {
-   /* const interval = setInterval(() => {
-      datosdb()
-    }, 1000);
-    return () => clearInterval(interval);*/
+   getInfo()
   }, []);
 
+  const getInfo = async (departamento) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/reports`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      console.log(data_res)
+      setUsersAcep(data_res.totalAprob[0].Aprobadas)
+      setUsersRec(data_res.totalDeny[0].Denegadas)
+      SetData(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
   
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
-        <div className="h2 text-light">Informe de Ventas</div>
+        <div className="h2 text-light">Informe de Usuarios</div>
       </nav>
       <Link to={"/adm"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
       <div className='container mt-3'>
