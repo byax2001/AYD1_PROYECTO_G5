@@ -149,7 +149,7 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
 
             <div className="mb-3">
               <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChangeC}>
-                <option value="default">Combo/Individual</option>
+                <option value="default">Indique si el Producto es Combo o Individual</option>
                 {comboInfo.map((item) => (
                   <option key={item.id} value={item.id}>{item.descripcion}</option>
                 ))}

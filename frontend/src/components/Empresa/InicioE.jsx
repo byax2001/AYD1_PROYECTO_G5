@@ -228,6 +228,7 @@ const InicioE = () => {
       
       const closeModal = () => {
         setShowModal(false);
+        fetchData()
       };
 
       //Modal delete
