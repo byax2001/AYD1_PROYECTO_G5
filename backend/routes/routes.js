@@ -68,6 +68,6 @@ router.get(baseurl + 'reports',                                   REPORTS.getInf
 
 //Municipio
 router.get(baseurl + 'departamento',                              ADDR.getInfoDep)
-router.get(baseurl + 'departamento/municipio',                    ADDR.getInfoMun)
+router.get(baseurl + 'departamento/municipio/:id',                    ADDR.getInfoMun)
 
 module.exports = router;
