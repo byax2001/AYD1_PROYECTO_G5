@@ -120,7 +120,7 @@ function RegistroEmpleado() {
   }
   //GET
   const getMunicipios = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/municipio/:${formData.departamento}`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${formData.departamento}`;
     let config = {
       method: "GET", 
       headers: {

@@ -46,9 +46,6 @@ function RegistroUsuario() {
       }else{
         //METODO PARA RELLENAR MUNICIPIOS 
         getMunicipios();
-        //FILTRAR SOLO LOS MUNICIPIOS QUE EL DEPARTAMENTO POSEE
-        const muniFiltrados = municipios.filter((municipio) => municipio.id_departamento == parseInt(value));
-        setMunicipios(muniFiltrados);
         //MOSTRAR DEPARTAMENTOS
         setShowMunicipios(true)
       }
@@ -86,7 +83,7 @@ function RegistroUsuario() {
   }
   //GET
   const getMunicipios = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio/${formData.departamento}`;
     let config = {
       method: "GET", 
       headers: {
