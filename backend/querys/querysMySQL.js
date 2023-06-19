@@ -36,6 +36,14 @@ module.exports = {
 							 FROM (select YEAR(fecha_registro) AS fecha , COUNT(*) AS cuenta  
 							 FROM usuario GROUP BY fecha) tabla`,
 
+		total_req_accept: `SELECT COUNT(*) AS Aprobadas 
+							 FROM solicitud_pendiente 
+							 WHERE aprobada = 1`,
+
+		total_req_deny: `SELECT COUNT(*) AS Denegadas 
+						 FROM solicitud_pendiente 
+						 WHERE aprobada = 2`,
+
 		//Solicitudes pendientes
 		req_pending_restaurant:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
 		CASE WHEN s.medio_transporte = 0 THEN 'NO' ELSE 'SI'  END AS medio_transporte,
@@ -67,7 +75,7 @@ module.exports = {
 		where s.aprobada = 0 and s.descripcion_empresa is null OR s.descripcion_empresa = '' `,
 
 		//Municipios
-		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento",
+		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento WHERE m.departamento_id_departamento = ?",
 		list_dep: "SELECT * FROM departamento",
 
     /* ----------------------------------------------------------------------- */
