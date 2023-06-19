@@ -83,7 +83,7 @@ function InitSesion() {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Iniciar Sesion</div>

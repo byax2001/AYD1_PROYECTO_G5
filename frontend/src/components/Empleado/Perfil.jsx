@@ -94,7 +94,7 @@ const Perfil = () => {
   return (
     <React.Fragment>
       <Link to={"/emp"} className='btn btn-warning btnRT text-light'>Volver a Inicio</Link>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning">
+      <nav className="navbar navbar-expand-lg navbar-light">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">MiPerfil</div>

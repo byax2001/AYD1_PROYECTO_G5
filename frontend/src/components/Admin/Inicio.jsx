@@ -67,17 +67,17 @@ const Inicio = () => {
   };
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning position-relative">
+      <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">Inicio</div>
       </nav>
       <div className='d-inline-flex btnRT'>
         <div className="btn-group">
-          <Link to={"/"} className="btn btn-warning btnEffect">Cerrar Sesion</Link>
+          <Link to={"/"} className="btn btnEffect">Cerrar Sesion</Link>
           {/* DROPDOWN DE REGISTRARSE*/}
           <li className="nav-item dropdown btn btnEffect">
-            <button className="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" onClick={toggleReportesDropdown}>Reportes</button>
+            <button className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" onClick={toggleReportesDropdown}>Reportes</button>
             <div className={`dropdown-menu ${isReportesDropdownOpen ? 'show' : ''}`} aria-labelledby="navbarDropdown1">
               <Link to={"/infV"} className="dropdown-item">Ventas</Link>
               <Link to={'/infR'} className="dropdown-item">Repartidores</Link>

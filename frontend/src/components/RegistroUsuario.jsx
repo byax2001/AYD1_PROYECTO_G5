@@ -1,4 +1,4 @@
-import React, { useState,useRef  } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
 import md5 from 'md5';
@@ -9,6 +9,10 @@ function RegistroUsuario() {
   const [showAlert, setShowAlert] = useState(false);
   const [showSucess, setShowSucess] = useState(false);
   const screenRef = useRef(null);
+
+  const [showMunicipios, setShowMunicipios] = useState(false)
+  const [municipios, setMunicipios] = useState([])
+  const [departamentos, setDepartamentos] = useState([])
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -17,8 +21,8 @@ function RegistroUsuario() {
     email: '',
     telefono: '',
     rol:1,
-    departamento: '',
-    municipio: '',
+    departamento: 0,
+    municipio: 0,
     direccion: ''
   });
 
@@ -31,6 +35,25 @@ function RegistroUsuario() {
       ...prevFormData,
       [name]: fieldValue,
     }));
+
+    if(name ==="departamento"){
+      if(value==0){
+        setShowMunicipios(false);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ["municipio"]: 0,
+        }));
+      }else{
+        //METODO PARA RELLENAR MUNICIPIOS 
+        getMunicipios();
+        //FILTRAR SOLO LOS MUNICIPIOS QUE EL DEPARTAMENTO POSEE
+        const muniFiltrados = municipios.filter((municipio) => municipio.id_departamento == parseInt(value));
+        setMunicipios(muniFiltrados);
+        //MOSTRAR DEPARTAMENTOS
+        setShowMunicipios(true)
+      }
+      
+    }
   };
 
   //POST
@@ -61,6 +84,52 @@ function RegistroUsuario() {
     }
 
   }
+  //GET
+  const getMunicipios = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento/municipio`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setMunicipios(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  //getDepartamentos
+  const getDepartamentos = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setDepartamentos(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  useEffect(() => {
+    
+    getDepartamentos();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  },[]);
 
   //ACCION QUE REALIZA EL FORMULARIO LUEGO DE HACER CLICK A ALGUN BOTON
   const handleSubmit = (event) => {
@@ -78,6 +147,12 @@ function RegistroUsuario() {
     if (formData.telefono.length !== 8) {
       setShowAlert(true);
       setMessage("Numero de telefono invalido")
+      screenRef.current.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (formData.departamento === 0 || formData.municipio === 0) {
+      setShowAlert(true);
+      setMessage("Departamento o Municipio Invalidos")
       screenRef.current.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -119,7 +194,7 @@ function RegistroUsuario() {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning mb-3" ref={screenRef}>
+      <nav className="navbar navbar-expand-lg navbar-light mb-3" ref={screenRef}>
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Registro de Usuario</div>
@@ -176,13 +251,33 @@ function RegistroUsuario() {
 
               <Form.Group controlId="departamento">
                 <Form.Label className="textForm">Departamento</Form.Label>
-                <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
+                <div>
+                  <select onChange={handleChange} name="departamento" className='form-select'>
+                    <option value={0}>Seleccione un departamento</option>
+                    {departamentos.map((departamento) => (
+                      <option key={departamento.id_departamento} value={departamento.id_departamento}>
+                        {departamento.nombre_dep}
+                      </option>
+                    ))}
+                  </select>
+                  <p className='h6 textForm'><small>Dep ID: {formData.departamento}</small></p>
+                </div>
               </Form.Group>
 
-              <Form.Group controlId="municipio">
-                <Form.Label className="textForm">Municipio</Form.Label>
-                <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
-              </Form.Group>
+              {showMunicipios && (
+                <Form.Group controlId="municipio">
+                  <Form.Label className="textForm">Municipio</Form.Label>
+                  <Form.Control as="select" name="municipio" value={formData.municipio} onChange={handleChange} required>
+                    <option value={0}>Seleccione un municipio</option>
+                    {municipios.map((municipio) => (
+                      <option key={municipio.id_municipio} value={municipio.id_municipio}>
+                        {municipio.nombre_municipio}
+                      </option>
+                    ))}
+                  </Form.Control>
+                  <p className='h6 textForm'><small>Muni ID: {formData.municipio}</small></p>
+                </Form.Group>
+              )}
 
               <Form.Group controlId="direccion">
                 <Form.Label className="textForm">Direccion</Form.Label>

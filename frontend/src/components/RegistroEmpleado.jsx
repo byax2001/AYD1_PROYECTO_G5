@@ -1,4 +1,4 @@
-import React, { useState,useRef } from 'react';
+import React, { useState,useRef,useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../images/logo.png';
 import Alert from 'react-bootstrap/Alert';
@@ -10,6 +10,10 @@ function RegistroEmpleado() {
   const screenRef = useRef(null);
   const [showAlert, setShowAlert] = useState(false);
   const [showSucess, setShowSucess] = useState(false);
+  const [showMunicipios, setShowMunicipios] = useState(false)
+  const [municipios, setMunicipios] = useState([])
+  const [departamentos, setDepartamentos] = useState([])
+
   const [formData, setFormData] = useState({
     nombre: '',
     apellido: '',
@@ -18,8 +22,8 @@ function RegistroEmpleado() {
     email: '',
     nit:'',
     telefono: '',
-    municipio: '',
-    departamento:'',
+    municipio: 0,
+    departamento:0,
     direccion:'',
     tieneLicencia: false,
     tipo_licencia: '',
@@ -29,6 +33,20 @@ function RegistroEmpleado() {
     file: null,
   });
 
+  const departamentos1 = [
+    {
+      "id_departamento": 1,
+      "nombre_dep": "Alta Verapaz"
+    },
+    {
+      "id_departamento": 2,
+      "nombre_dep": "Baja Verapaz"
+    },
+    {
+      "id_departamento": 3,
+      "nombre_dep": "Chimaltenango"
+    }
+  ];
   //CAMBIA EL VALOR DE LAS VARIABLES EN EL STRUCT FORMDATA
   const handleChange = (event) => {
     /* 
@@ -45,8 +63,24 @@ function RegistroEmpleado() {
       ...prevFormData,
       [name]: fieldValue,
     }));
+    if(name ==="departamento"){
+      if(value==0){
+        setShowMunicipios(false);
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          ["municipio"]: 0,
+        }));
+      }else{
+        //METODO PARA RELLENAR MUNICIPIOS 
+        getMunicipios();
+        //MOSTRAR DEPARTAMENTOS
+        setShowMunicipios(true)
+      }
+      
+    }
   };
   
+  // CONSULTAS A  BACKEND--------------------------------------------------------------
   //POST
   const Registro = async () => {
     const url = `${process.env.REACT_APP_API_CONSUME}/api/userdeliver`;
@@ -79,13 +113,58 @@ function RegistroEmpleado() {
       const res = await fetch(url, config);
       const data_res = await res.json();
       console.log(data_res)
-      //console.log(votoC)
-      //setVotos(votoC)
     } catch (e) {
       console.log(e)
     }
 
   }
+  //GET
+  const getMunicipios = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/municipio/:${formData.departamento}`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setMunicipios(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  //getDepartamentos
+  const getDepartamentos = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/departamento`;
+    let config = {
+      method: "GET", 
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setDepartamentos(data_res.data)
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+  useEffect(() => {
+    
+    getDepartamentos();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  },[]);
+//-------------------------------------------------------------------------------------
 
   //ACCION QUE REALIZA EL FORMULARIO LUEGO DE HACER CLICK A ALGUN BOTON
   const handleSubmit = (event) => {
@@ -105,6 +184,13 @@ function RegistroEmpleado() {
     if (formData.telefono.length !== 8) {
       setShowAlert(true);
       setMessage("Numero de telefono invalido")
+      screenRef.current.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+
+    if (formData.departamento === 0 || formData.municipio === 0) {
+      setShowAlert(true);
+      setMessage("Departamento o Municipio Invalidos")
       screenRef.current.scrollIntoView({ behavior: 'smooth' });
       return;
     }
@@ -148,7 +234,7 @@ function RegistroEmpleado() {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light bg-warning" ref={screenRef}>
+      <nav className="navbar navbar-expand-lg navbar-light" ref={screenRef}>
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Registro de Empleado</div>
@@ -205,16 +291,35 @@ function RegistroEmpleado() {
                   required
                 />
               </Form.Group>
-
               <Form.Group controlId="departamento">
                 <Form.Label className="textForm">Departamento</Form.Label>
-                <Form.Control type="text" name="departamento" value={formData.departamento} onChange={handleChange} required />
+                <div>
+                  <select onChange={handleChange} name="departamento" className='form-select'>
+                    <option value={0}>Seleccione un departamento</option>
+                    {departamentos.map((departamento) => (
+                      <option key={departamento.id_departamento} value={departamento.id_departamento}>
+                        {departamento.nombre_dep}
+                      </option>
+                    ))}
+                  </select>
+                  <p className='h6 textForm'><small>Dep ID: {formData.departamento}</small></p>
+                </div>
               </Form.Group>
 
-              <Form.Group controlId="municipio">
-                <Form.Label className="textForm">Municipio</Form.Label>
-                <Form.Control type="text" name="municipio" value={formData.municipio} onChange={handleChange} required />
-              </Form.Group>
+              {showMunicipios && (
+                <Form.Group controlId="municipio">
+                  <Form.Label className="textForm">Municipio</Form.Label>
+                  <Form.Control as="select" name="municipio" value={formData.municipio} onChange={handleChange} required>
+                    <option value={0}>Seleccione un municipio</option>
+                    {municipios.map((municipio) => (
+                      <option key={municipio.id_municipio} value={municipio.id_municipio}>
+                        {municipio.nombre_municipio}
+                      </option>
+                    ))}
+                  </Form.Control>
+                  <p className='h6 textForm'><small>Muni ID: {formData.municipio}</small></p>
+                </Form.Group>
+              )}
 
               <Form.Group controlId="direccion">
                 <Form.Label className="textForm">Direccion</Form.Label>
@@ -224,25 +329,25 @@ function RegistroEmpleado() {
 
               <div className="row mt-2">
                 <div className="col-6">
-                <Form.Group controlId="tieneLicencia">
-                <Form.Check type="checkbox" name="tieneLicencia" label="¿Posee Licencia?" checked={formData.tieneLicencia} onChange={handleChange} />
-              </Form.Group>
+                  <Form.Group controlId="tieneLicencia">
+                    <Form.Check type="checkbox" name="tieneLicencia" label="¿Posee Licencia?" checked={formData.tieneLicencia} onChange={handleChange} />
+                  </Form.Group>
                 </div>
                 <div className="col-6">
-                {formData.tieneLicencia && (
-                <Form.Group controlId="tipo_licencia">
-                  <Form.Select name="tipo_licencia" value={formData.tipo_licencia} onChange={handleChange} required>
-                    <option className='' value="">Seleccione un tipo</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="M">M</option>
-                  </Form.Select>
-                </Form.Group>
-              )}
+                  {formData.tieneLicencia && (
+                    <Form.Group controlId="tipo_licencia">
+                      <Form.Select name="tipo_licencia" value={formData.tipo_licencia} onChange={handleChange} required>
+                        <option className='' value="">Seleccione un tipo</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="M">M</option>
+                      </Form.Select>
+                    </Form.Group>
+                  )}
                 </div>
               </div>
-              
+
               <Form.Group controlId="medio_transporte">
                 <Form.Check type="checkbox" name="medio_transporte" label="¿Posee Motocicleta Propia?" checked={formData.medio_transporte} onChange={handleChange} />
               </Form.Group>
