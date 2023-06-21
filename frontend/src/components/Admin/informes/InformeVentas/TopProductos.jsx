@@ -119,7 +119,7 @@ function TopProductos (props){
         <DataTable 
         columns={columnas}
         data={data}
-        title="Top Productos Vendidos"
+        title="Productos mas Vendidos"
         pagination
         fixedHeader
         fixedHeaderScrollHeight="600px"

@@ -122,6 +122,7 @@ function Vventas (props){
   return (
     <React.Fragment>
       <div className="row">
+        <div className="col-5"></div>
         <div className="col-5">
           <input
             type="date"
@@ -130,9 +131,9 @@ function Vventas (props){
             onChange={handleDateChange}
           />
         </div>
-        <div className="col-4">
-          <button className="btn btn-primary btnEffect" onClick={datosdb()}>
-            Enviar
+        <div className="col-2 mb-3 p-0 justify-content-center d-flex">
+          <button className="btn btn-secondary btnEffect" onClick={datosdb()}>
+            Filtrar
           </button>
         </div>
       </div>

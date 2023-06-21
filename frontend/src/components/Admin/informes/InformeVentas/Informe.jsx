@@ -19,12 +19,12 @@ const Informe = () => {
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
-        <a className="navbar-brand" href="/">AlChilazo</a>
+        <div className="navbar-brand">AlChilazo</div>
         <div className="h2 text-light">Informe de Ventas</div>
       </nav>
       <Link to={"/adm"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
       <div className='container mt-3'>
-        <div className="row">
+        <div className="row mb-3">
           <div className="col-2"></div>
           <div className="col-8">
             {/* TABLA VALOR DE VENTAS */}
