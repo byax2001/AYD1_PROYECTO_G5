@@ -4,7 +4,8 @@ import logo from '../../images/logo.png';
 import star from '../../images/star.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMyContext } from '../../context';
-
+import Modal from 'react-modal';
+import CambioZona from './CambioZonaDepartamental';
 
 const customStyles = {
   noData: {
@@ -93,17 +94,45 @@ const columns = [
 const Perfil = () => {
   const [state, setState] = useMyContext();
   const [filteredData, setFilteredData] = useState(data);
-  const [puntuacion, setPuntuacion] = useState(5);
+  const [puntuacion, setPuntuacion] = useState(3);
   const navigate=useNavigate()
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+
+const openModal = () => {
+  setModalIsOpen(true);
+};
+
+const closeModal = () => {
+  setModalIsOpen(false);
+  
+};
 
   useEffect(() => {
-    console.log(state)
+    /*console.log(state)
     if(state.rol!=2){
       navigate("/")
       return
-    }
+    }*/
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   },[]);
+  
+  const Puntuacion_Estrellas = () => {
+    const estrellas = [];
+    for (let i = 0; i < puntuacion; i++) {
+      estrellas.push(
+        <img
+          key={i}
+          id="logoStar"
+          className='img-thumbnail'
+          src={star}
+          alt="Estrella"
+        />
+      );
+    }
+    return estrellas;
+  };
+   //VENTANA EMERGENTE PARA ACCIONAR 
 
   return (
     <React.Fragment>
@@ -113,22 +142,31 @@ const Perfil = () => {
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">MiPerfil</div>
       </nav>
-      <div className="container mt-4">
+      <div className="container mt-4 p-0">
         <div className='container bg-dark text-light rounded'>
           <div className="row textForm">
             <div className="col-3 h5 bg-secondary">Nombre del empleado:</div>
-            <div className="col-9 h3">{state.data.nombre + ' ' +state.data.apellido}</div>
+            <div className="col-9 h3">{/*state.data.nombre + ' ' +state.data.apellido*/}</div>
           </div>
           <div className="row textForm">
             <div className="col-3 h4"> Puntuacion: </div>
-              <img id="logoStar" className='img-thumbnail' src={star} />
-              <img id="logoStar" className='img-thumbnail' src={star} />
-              <img id="logoStar" className='img-thumbnail' src={star} />
-              <img id="logoStar" className='img-thumbnail' src={star} />
-              <img id="logoStar" className='img-thumbnail' src={star} />
+            <div className="col-9">
+              {<Puntuacion_Estrellas/>}
+            </div>
+          </div>
+          <div className="row textForm">
+            <div className="col-3 h4 bg-secondary">Comisiones Generadas: </div>
+            <div className="col-9"></div>
           </div>
         </div>
+        {modalIsOpen && (
+          <CambioZona
+          //VARIABLE
+            onRequestClose={closeModal}  //FUNCION
+            
 
+          />
+        )}
         <div className="my-4">
           <DataTable
             title={"Historial de pedidos"}
@@ -141,7 +179,7 @@ const Perfil = () => {
             responsive
           />
         </div>
-        <button className="btn btn-secondary btnEffect">Solicitud de cambio zona departamental</button>
+        <button className="btn btn-secondary btnEffect" onClick={()=>{openModal()}}>Solicitud de cambio zona departamental</button>
       </div>
     </React.Fragment>
   );
