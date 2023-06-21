@@ -30,7 +30,7 @@ router.post(baseurl + 'login',                                    OAUTH.login)
 
 // Usuarios
 router.post(baseurl + 'user',                                     USER.newuser)
-router.get(baseurl + 'user',                                      USER.getuser)
+router.get(baseurl + 'user',                                      OAUTH.validateToken,USER.getuser)
 router.put(baseurl + 'user',                                      USER.updateuser)
 router.delete(baseurl + 'user',                                   USER.deleteuser)
 
