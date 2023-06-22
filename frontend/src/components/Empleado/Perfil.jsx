@@ -160,12 +160,13 @@ const closeModal = () => {
           </div>
         </div>
         {modalIsOpen && (
-          <CambioZona
-          //VARIABLE
-            onRequestClose={closeModal}  //FUNCION
-            
-
-          />
+          <Modal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            contentLabel="Aceptar o Rechazar"
+          >
+            <CambioZona onRequestClose={closeModal} />
+          </Modal>
         )}
         <div className="my-4">
           <DataTable
