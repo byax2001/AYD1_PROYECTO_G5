@@ -7,6 +7,16 @@ import { useMyContext } from '../../context';
 import Modal from 'react-modal';
 import CambioZona from './CambioZonaDepartamental';
 
+const customStylesModal = {
+  content: {
+    width: '500px', // Ancho personalizado del modal
+    height: '400px', // Alto personalizado del modal
+    top: '50%', // Centrar verticalmente
+    left: '50%', // Centrar horizontalmente
+    transform: 'translate(-50%, -50%)', // Ajustar la posición al centro
+  },
+};
+
 const customStyles = {
   noData: {
     style: {
@@ -164,6 +174,7 @@ const closeModal = () => {
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             contentLabel="Aceptar o Rechazar"
+            style={customStylesModal}
           >
             <CambioZona onRequestClose={closeModal} />
           </Modal>

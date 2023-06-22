@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/Logo.png';
+import logo from '../images/logo.png';
 import '../css/LandingPage.css'; 
 
 function LandingPage(props) {
