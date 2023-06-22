@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import DataTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
 import star from '../../images/star.png';
@@ -26,47 +26,48 @@ const customStyles = {
       backgroundColor: '#a2a2a2',
     },
   },
-    header: {
-        
+  header: {
+
     style: {
       justifyContent: 'center',
       fontSize: '22px',
       color: 'white',
-      backgroundColor:"#3a3a3a",
+      backgroundColor: "#3a3a3a",
       minHeight: '56px',
       paddingLeft: '16px',
       paddingRight: '8px',
     },
   },
-    rows: {
-        //para variar colores entre fila y fila 
-        //style fila 1
-        //stripedstyle fila2
-        style: {
-            backgroundColor:"#9b9b9b",
-            color:"white"
-        },
-        stripedStyle: {
+  rows: {
+    //para variar colores entre fila y fila 
+    //style fila 1
+    //stripedstyle fila2
+    style: {
+      backgroundColor: "#9b9b9b",
+      color: "white"
+    },
+    stripedStyle: {
       backgroundColor: "#646464",
     },
+  },
+  headCells: {
+    style: {
+      backgroundColor: "#3a3a3a",
+      color: "white"
     },
-    headCells: {
-        style: {
-            backgroundColor:"#3a3a3a",
-            color:"white"
-        },
-    },
-   
-    pagination: {
+  },
+
+  pagination: {
     style: {
       fontSize: '13px',
-      color:'white',
+      color: 'white',
       minHeight: '56px',
       backgroundColor: '#3a3a3a',
       borderTopStyle: 'solid',
       borderTopWidth: '4px',
       borderTopColor: 'd2d2d2',
-    }}
+    }
+  }
 };
 
 const data = [
@@ -103,20 +104,27 @@ const columns = [
 
 const Perfil = () => {
   const [state, setState] = useMyContext();
+  const [filtraciones, setFiltraciones]=useState([
+    {ft:"Estado",idft:1},
+    {ft:"Fecha",idft:2},
+    {ft:"Nombre de Pedido",idft:3}
+  ])
+  const[filtroActual,setfiltroActual]=useState(0)
+  const[valfiltro, setValFiltro]=useState("")
   const [filteredData, setFilteredData] = useState(data);
   const [puntuacion, setPuntuacion] = useState(3);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
 
-const openModal = () => {
-  setModalIsOpen(true);
-};
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
 
-const closeModal = () => {
-  setModalIsOpen(false);
-  
-};
+  const closeModal = () => {
+    setModalIsOpen(false);
+
+  };
 
   useEffect(() => {
     /*console.log(state)
@@ -125,8 +133,15 @@ const closeModal = () => {
       return
     }*/
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
-  },[]);
-  
+  }, []);
+  const handleChange = (event) => {
+    const { name, value, type, checked, files } = event.target;
+    setfiltroActual(value)
+    if(value==0){
+      setValFiltro("")
+    }
+  };
+
   const Puntuacion_Estrellas = () => {
     const estrellas = [];
     for (let i = 0; i < puntuacion; i++) {
@@ -142,7 +157,17 @@ const closeModal = () => {
     }
     return estrellas;
   };
-   //VENTANA EMERGENTE PARA ACCIONAR 
+  //VENTANA EMERGENTE PARA ACCIONAR 
+  const filtrar = async()=>{
+    if(filtroActual==0){
+      alert("Escoja un Tipo de Filtrado")
+      return
+    }else if(valfiltro==""){
+      alert('Campo del Filtro no puede ir vacio')
+      return
+    }
+    console.log(filtroActual)
+  }
 
   return (
     <React.Fragment>
@@ -153,19 +178,19 @@ const closeModal = () => {
         <div className="h2 text-light">MiPerfil</div>
       </nav>
       <div className="container mt-4 p-0">
-        <div className='container bg-dark text-light rounded'>
+        <div className='container  text-light rounded'>
           <div className="row textForm">
-            <div className="col-3 h5 bg-secondary">Nombre del empleado:</div>
+            <div className="col-3 h5">Nombre del empleado:</div>
             <div className="col-9 h3">{/*state.data.nombre + ' ' +state.data.apellido*/}</div>
           </div>
           <div className="row textForm">
             <div className="col-3 h4"> Puntuacion: </div>
             <div className="col-9">
-              {<Puntuacion_Estrellas/>}
+              {<Puntuacion_Estrellas />}
             </div>
           </div>
           <div className="row textForm">
-            <div className="col-3 h4 bg-secondary">Comisiones Generadas: </div>
+            <div className="col-3 h4">Comisiones Generadas: </div>
             <div className="col-9"></div>
           </div>
         </div>
@@ -179,19 +204,55 @@ const closeModal = () => {
             <CambioZona onRequestClose={closeModal} />
           </Modal>
         )}
-        <div className="my-4">
-          <DataTable
-            title={"Historial de pedidos"}
-            columns={columns}
-            data={filteredData}
-            customStyles={customStyles}
-            pagination
-            highlightOnHover
-            striped
-            responsive
-          />
+        <div className="row mt-3">
+          <div className="col-3"></div>
+          <div className="col-4">
+            <select onChange={handleChange} name="filtro" className='form-select'>
+              <option value={0}>Seleccione Tipo de Filtro</option>
+              {filtraciones.map((filtracion) => (
+                <option key={filtracion.idft} value={filtracion.idft}>
+                  {filtracion.ft}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="col-2 p-0">
+                <button className="btn btnEffect btn-secondary" onClick={()=>{filtrar()}}>Filtrar</button>
+          </div>
+          <div className="col-3"></div>
         </div>
-        <button className="btn btn-secondary btnEffect" onClick={()=>{openModal()}}>Solicitud de cambio zona departamental</button>
+        <div className="row mt-2">
+          <div className="col-3"></div>
+          <div className="col-4">
+            {filtroActual != 0 && (
+              <div className="">
+                {filtroActual == 2 ? (
+                  <input className='form-control' onChange={(e)=>{setValFiltro(e.target.value); console.log(e.target.value)}} type="date" />
+                ) : (
+                  <input className='form-control' onChange={(e)=>{setValFiltro(e.target.value)}} type="text" />
+                )}
+              </div>
+            )}
+          </div>
+
+        </div>
+        <div className="row d-flex">
+          <div className="my-4">
+            <DataTable
+              title={"Historial de pedidos"}
+              columns={columns}
+              data={filteredData}
+              customStyles={customStyles}
+              pagination
+              highlightOnHover
+              striped
+              responsive
+            />
+          </div>
+        </div>
+
+
+        <button className="btn btn-secondary btnEffect" onClick={() => { openModal() }}>Solicitud de cambio zona departamental</button>
       </div>
     </React.Fragment>
   );

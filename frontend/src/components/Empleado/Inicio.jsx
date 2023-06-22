@@ -129,23 +129,34 @@ const Inicio = () => {
             responsive
           />
         </div>
-        <div className='my-4 col-5'>
-        <DataTable
-            title={"Pedidos Actuales"}
-            columns={columns}
-            data={pedidoActual}
-            customStyles={customStyles}
-            highlightOnHover
-            striped
-            responsive
-          />
-          <div className="btn-group d-inline-flex" data-toggle="buttons">
-          <button className="btnEffect btn btn-secondary">Entregado</button>
-          <button className="btnEffect btn btn-secondary">Cancelado</button>
-        
-        </div>
+          <div className='my-4 col-5'>
+            <div className="row">
+              <div className="col-12">
+                <DataTable
+                  title={"Pedidos Actuales"}
+                  columns={columns}
+                  data={pedidoActual}
+                  customStyles={customStyles}
+                  highlightOnHover
+                  striped
+                  responsive
+                />
+              </div>
 
-        </div>
+            </div>
+            <div className="row mt-2">
+              <div className="col-6"></div>
+              <div className="col-6">
+              <div className="btn-group d-inline-flex" data-toggle="buttons">
+              <button className="btnEffect btn btn-secondary">Entregado</button>
+              <button className="btnEffect btn btn-secondary">Cancelado</button>
+            </div>
+              </div>
+            </div>
+
+            
+
+          </div>
         </div>
       </div>
     </React.Fragment>
