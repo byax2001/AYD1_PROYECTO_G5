@@ -38,7 +38,7 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Empresas con mas Pedidos Generados',
+      text: 'Los 5 Mejores Repartidores',
       color: "white",
       font: {
         size: 16
@@ -67,7 +67,7 @@ const options = {
     }
   }
 };
-function Top5Emp(props) {
+function Top5Dev(props) {
   const [labelB,setLabelB]=useState(['Sede 1', 'Sede 2', 'Sede 3', 'Sede 4', 'Sede 5'])
   const [dataB,setDataB]=useState([12, 19, 3, 5, 2])
   const data = {
@@ -141,4 +141,4 @@ function Top5Emp(props) {
     <Bar data={data} options={options} />)
 
 }
-export default Top5Emp;
+export default Top5Dev;
