@@ -26,6 +26,8 @@ import InformeUsuarios from './components/Admin/informes/InformeUsuarios/Informe
 //Empresa:
 import InicioE from './components/Empresa/InicioE';
 import RegstroEe from './components/Empresa/RegistroEe';
+import InformeEmpresa from './components/Empresa/informes/Informe';
+
 import { AuthProvider } from './context';
 function App() {
   const [infoUser, setInfoUser] = useState({
@@ -53,6 +55,7 @@ function App() {
             <Route path="/infR" element={<InformeRepartidores />} />
             <Route path="/inicioe" element={<InicioE />} />
             <Route path="/registroPro" element={<RegstroEe />} />
+            <Route path="/infEmpresa" element={<InformeEmpresa/>} />
           </Routes>
         </BrowserRouter>
         </Provider>
