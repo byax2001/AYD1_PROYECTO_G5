@@ -1,6 +1,7 @@
 const database = require("../managers/databaseManager");
 const querysMySQL = require("../querys/querysMySQL");
 const crypto = require('crypto');
+const JWT = require('jsonwebtoken');
 
 exports.login = async function(req, res) {
     try {
@@ -44,8 +45,11 @@ exports.login = async function(req, res) {
           datausesr.tipo_licencia = result[0].tipo_licencia;
           datausesr.nit = result[0].nit;
           datausesr.fecha_registro = result[0].fecha_registro;
+
+          // Creación del token JWT 
+          const token = JWT.sign(datausesr,process.env.JWT_TOKEN,{expiresIn: '1h'});
   
-          res.status(200).send({ message: "Bienvenido", data: datausesr, valid: true });
+          res.status(200).send({ message: "Bienvenido", data: datausesr, valid: true, token:token });
         } else {
           res.status(200).send({ message: "Credenciales incorrectas", data: datausesr, valid: false });
         }
@@ -57,3 +61,21 @@ exports.login = async function(req, res) {
       res.status(400).send({status: "error", message: "Hubo un error en el inicio de sesión", data: e});
     }
   };
+
+
+
+  exports.validateToken = async (req,res,next) =>{
+    
+    try{
+      // const headers = req.headers
+      // const authCode = headers.authorization
+      // const basic = authCode.split(' ')
+
+      // const decode = JWT.verify(authCode,process.env.JWT_TOKEN)
+      // req.body.auth = decode
+      next();
+    }catch(error){
+      res.status(200).send({ message: "Token Invalido",valid: false });
+    }
+  }
+  

@@ -86,6 +86,15 @@ function InitSesion() {
 
       //console.log(data_res)
       if(data_res.valid){
+        console.log(data_res)
+
+        //En esta parte es donde se puede leer la informacion del token
+        const tokenppayload = data_res.token.split('.')[1];
+        const decodedPayload = atob(tokenppayload);
+        const payloadData = JSON.parse(decodedPayload);
+        console.log("DATAAAAAAA")
+        console.log(payloadData)
+        console.log("DATAAAAAAA")
         if(data_res.data.rol==0){
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/adm",{state:{user:"INFORMACION"}})
