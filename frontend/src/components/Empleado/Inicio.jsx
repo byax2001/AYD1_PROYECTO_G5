@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect} from 'react';
 import DataTable from 'react-data-table-component';
+import ReactTable from 'react-data-table-component';
 import logo from '../../images/logo.png';
 import { Link, useNavigate} from 'react-router-dom';
 import { useMyContext } from '../../context';

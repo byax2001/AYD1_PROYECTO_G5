@@ -7,7 +7,7 @@ import { useMyContext } from '../../context';
 import Modal from 'react-modal';
 
 //VENTANA EMERGENTE PARA ACCIONAR 
-const CambioZona = ({ onRequestClose }) => {
+const CambioZona = ({ onRequestClose, idUser }) => {
     const [state, setState] = useMyContext();
     const navigate = useNavigate()
     const [depCambio, setDepCambio] = useState(0)
