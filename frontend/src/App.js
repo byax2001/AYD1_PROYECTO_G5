@@ -27,6 +27,11 @@ import InformeUsuarios from './components/Admin/informes/InformeUsuarios/Informe
 import InicioE from './components/Empresa/InicioE';
 import RegstroEe from './components/Empresa/RegistroEe';
 import { AuthProvider } from './context';
+
+//Todo lo de Usuario
+
+import Iniciouser from './components/Usuario/InicioUsuario';
+
 function App() {
   const [infoUser, setInfoUser] = useState({
     iduser:'',
@@ -53,6 +58,7 @@ function App() {
             <Route path="/infR" element={<InformeRepartidores />} />
             <Route path="/inicioe" element={<InicioE />} />
             <Route path="/registroPro" element={<RegstroEe />} />
+            <Route path="/inicioU" element={<Iniciouser />} />
           </Routes>
         </BrowserRouter>
         </Provider>
