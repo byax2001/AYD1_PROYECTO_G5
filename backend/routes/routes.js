@@ -31,44 +31,44 @@ router.post(baseurl + 'login',                                    OAUTH.login)
 // Usuarios
 router.post(baseurl + 'user',                                     USER.newuser)
 router.get(baseurl + 'user',                                      OAUTH.validateToken,USER.getuser)
-router.put(baseurl + 'user',                                      USER.updateuser)
-router.delete(baseurl + 'user',                                   USER.deleteuser)
+router.put(baseurl + 'user',                                      OAUTH.validateToken,USER.updateuser)
+router.delete(baseurl + 'user',                                   OAUTH.validateToken,USER.deleteuser)
 
 
 // Repartidores
 router.post(baseurl + 'userdeliver',    upload.single('image'),   USERDELIVER.newdeliveruser)
-router.get(baseurl + 'userdeliver',                               USERDELIVER.getdeliveruser)
-router.put(baseurl + 'userdeliver',     upload.single('image'),   USERDELIVER.updatedeliveruser)
-router.delete(baseurl + 'userdeliver',                            USERDELIVER.deletedeliveruser)
+router.get(baseurl + 'userdeliver',                               OAUTH.validateToken,USERDELIVER.getdeliveruser)
+router.put(baseurl + 'userdeliver',     upload.single('image'),   OAUTH.validateToken,USERDELIVER.updatedeliveruser)
+router.delete(baseurl + 'userdeliver',                            OAUTH.validateToken,USERDELIVER.deletedeliveruser)
 
 // Restaurantes
 
 router.post(baseurl + 'restaurants',    upload.single('image'),   RESTAURANTS.newrestaurant)
-router.get(baseurl + 'restaurants',                               RESTAURANTS.getrestaurant)
+router.get(baseurl + 'restaurants',                               OAUTH.validateToken,RESTAURANTS.getrestaurant)
 router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
-router.delete(baseurl + 'restaurants',                            RESTAURANTS.deleterestaurant)
-router.get(baseurl + 'restaurants/type',                          RESTAURANTS.getrestauranttype)
+router.delete(baseurl + 'restaurants',                            OAUTH.validateToken,RESTAURANTS.deleterestaurant)
+router.get(baseurl + 'restaurants/type',                          OAUTH.validateToken,RESTAURANTS.getrestauranttype)
 
 //Productos
-router.post(baseurl + 'products',       upload.single('image'),   PRODUCTS.newproduct)
-router.get(baseurl + 'products',                                  PRODUCTS.getproducts)
-router.put(baseurl + 'products',        upload.single('image'),   PRODUCTS.updateproduct)
-router.delete(baseurl + 'products/:id',                           PRODUCTS.deleteproduct)
-router.get(baseurl + 'products/type/:id',                         PRODUCTS.getproductsbytype)
-router.get(baseurl + 'products/rest/:id',                         PRODUCTS.getproductsbyrestaurant)
-router.get(baseurl + 'products/type',                             PRODUCTS.gettyproducts)
+router.post(baseurl + 'products',       upload.single('image'),   OAUTH.validateToken,PRODUCTS.newproduct)
+router.get(baseurl + 'products',                                  OAUTH.validateToken,PRODUCTS.getproducts)
+router.put(baseurl + 'products',        upload.single('image'),   OAUTH.validateToken,PRODUCTS.updateproduct)
+router.delete(baseurl + 'products/:id',                           OAUTH.validateToken,PRODUCTS.deleteproduct)
+router.get(baseurl + 'products/type/:id',                         OAUTH.validateToken,PRODUCTS.getproductsbytype)
+router.get(baseurl + 'products/rest/:id',                         OAUTH.validateToken,PRODUCTS.getproductsbyrestaurant)
+router.get(baseurl + 'products/type',                             OAUTH.validateToken,PRODUCTS.gettyproducts)
 
 //Revision Solicitudes
-router.put(baseurl + 'aceptRequest',                              ACEPTREQ.updateAceptReq)
-router.put(baseurl + 'denyRequest',                               ACEPTREQ.updateDenyReq)
-router.get(baseurl + 'reqPendingRestaurant',                      ACEPTREQ.getInfoReqRestaurant)
-router.get(baseurl + 'reqPendingDelivers',                        ACEPTREQ.getInfoReqDelivers)
+router.put(baseurl + 'aceptRequest',                              OAUTH.validateToken,ACEPTREQ.updateAceptReq)
+router.put(baseurl + 'denyRequest',                               OAUTH.validateToken,ACEPTREQ.updateDenyReq)
+router.get(baseurl + 'reqPendingRestaurant',                      OAUTH.validateToken,ACEPTREQ.getInfoReqRestaurant)
+router.get(baseurl + 'reqPendingDelivers',                        OAUTH.validateToken,ACEPTREQ.getInfoReqDelivers)
 
 // Reportes
-router.get(baseurl + 'reports',                                   REPORTS.getInfoUser)
+router.get(baseurl + 'reports',                                   OAUTH.validateToken,REPORTS.getInfoUser)
 
 //Municipio
-router.get(baseurl + 'departamento',                              ADDR.getInfoDep)
-router.get(baseurl + 'departamento/municipio/:id',                    ADDR.getInfoMun)
+router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)
+router.get(baseurl + 'departamento/municipio/:id',                OAUTH.validateToken,ADDR.getInfoMun)
 
 module.exports = router;

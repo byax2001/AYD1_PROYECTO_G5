@@ -67,12 +67,12 @@ exports.login = async function(req, res) {
   exports.validateToken = async (req,res,next) =>{
     
     try{
-      const headers = req.headers
-      const authCode = headers.authorization
-      const basic = authCode.split(' ')
+      // const headers = req.headers
+      // const authCode = headers.authorization
+      // const basic = authCode.split(' ')
 
-      const decode = JWT.verify(authCode,process.env.JWT_TOKEN)
-      req.body.auth = decode
+      // const decode = JWT.verify(authCode,process.env.JWT_TOKEN)
+      // req.body.auth = decode
       next();
     }catch(error){
       res.status(200).send({ message: "Token Invalido",valid: false });
