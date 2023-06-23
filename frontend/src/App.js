@@ -18,6 +18,8 @@ import Perfil from './components/Empleado/Perfil';
 import InicioEmp from './components/Empleado/Inicio';
 //ADMIN
 import InicioAdm from './components/Admin/Inicio';
+import AdministracionDeUsuarios from './components/Admin/administracion/AdministracionDeUsuarios';
+
 //INFORMES
 import InformeVentas from './components/Admin/informes/InformeVentas/Informe';
 import InformeRepartidores from './components/Admin/informes/InformeRepartidores/Informe';
@@ -49,7 +51,8 @@ function App() {
             <Route path="/emp/Miperfil" element={<Perfil />} />
             <Route path="/emp" element={<InicioEmp />} />
             <Route path="/infoP" element={<MPiePagina />} />
-            <Route path="/adm" element={<InicioAdm />} />
+            <Route path="/adm" exact element={<InicioAdm />} />
+            <Route path="/adm/users" exact element={<AdministracionDeUsuarios />} />
             <Route path="/infV" element={<InformeVentas />} />
             <Route path="/infU" element={<InformeUsuarios />} />
             <Route path="/infR" element={<InformeRepartidores />} />
