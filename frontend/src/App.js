@@ -31,6 +31,8 @@ import { AuthProvider } from './context';
 //Todo lo de Usuario
 
 import Iniciouser from './components/Usuario/InicioUsuario';
+import PanelE from './components/Usuario/PanelEmpresa';
+
 
 function App() {
   const [infoUser, setInfoUser] = useState({
@@ -59,6 +61,8 @@ function App() {
             <Route path="/inicioe" element={<InicioE />} />
             <Route path="/registroPro" element={<RegstroEe />} />
             <Route path="/inicioU" element={<Iniciouser />} />
+            <Route path="/panelE/:title" element={<PanelE />} />
+
           </Routes>
         </BrowserRouter>
         </Provider>

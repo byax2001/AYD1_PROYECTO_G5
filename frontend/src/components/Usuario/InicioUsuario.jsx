@@ -119,7 +119,7 @@ const Iniciouser = () => {
                     {/*aqui colocaria los link para visitar */}
                     <Link to="/" className="btn textForm text-light">Cerrar Sesion</Link>
                 </div>
-                <div>
+                <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'center', marginLeft: 'auto' }}>                    
                     <form className="d-flex" role="search">
                         <Autosuggest
                             suggestions={suggestions}
@@ -134,7 +134,11 @@ const Iniciouser = () => {
                 </div>
             </nav>
 
-            
+            <div>
+                <br />
+                <br />
+                
+            </div>
             <div className="App">
                 <Card />
             </div>

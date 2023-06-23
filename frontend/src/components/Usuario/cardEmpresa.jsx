@@ -1,10 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link,BrowserRouter  } from 'react-router-dom';
+
 
 import "./card.css";
 
-function Card({ imageSource, title, text, url }) {
+function Card({ imageSource, title, text, id }) {
+
+  const guardarRes= ()  =>{
+    localStorage.setItem("titleres",title);
+    localStorage.setItem("idres",id);
+      
+  }
+
+
   return (
+
+
+    
+   
     <div className="card text-center bg-dark animate__animated animate__fadeInUp">
       <div className="overflow">
         <img src={imageSource} alt="a wallpaper" className="card-img-top" />
@@ -14,16 +28,22 @@ function Card({ imageSource, title, text, url }) {
         <p className="card-text text-secondary">
           {text
             ? text
-            : "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam deserunt fuga accusantium excepturi quia, voluptates obcaecati nam in voluptas perferendis velit harum dignissimos quasi ex? Tempore repellat quo doloribus magnam."}
+            : "Texto Provisional Descripcion de empresa"}
         </p>
-        <a
-          href={url ? url : "#!"}
-          target="_blank"
+        <Link 
+          
+          onClick={guardarRes()}
+          to={{
+            pathname:`/panelE/${encodeURIComponent(title)}`,
+            state: { title: title }
+          }}
+
+          //target="_blank"  /// este es para que lo abra en otra pestaña
           className="btn btn-outline-secondary border-0"
           rel="noreferrer"
         >
-          Go to {title}
-        </a>
+          Visitar {title}
+        </Link>
       </div>
     </div>
   );
