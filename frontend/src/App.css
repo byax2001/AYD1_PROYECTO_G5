@@ -71,8 +71,17 @@ body{
 
 #lema{
   position:relative;
-  top:125px;
+  top:400px;
 }
+#lema{
+  position:relative;
+  top:400px;
+}
+#lemaLanding{
+  position:relative;
+  top:150px;
+}
+
 
 
 .slide-enter {
@@ -93,3 +102,35 @@ body{
   transition: transform 500ms ease-in-out;
 }
 
+.wallpaper{
+  background-image: url('./images//fondo4.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 1);
+ 
+}
+
+.barfood{
+  background-image: url('./images//barfood.png');
+  height: 100vh;
+  background-size: cover;
+  border-radius: 10px;
+  opacity: 0.3;
+ 
+}
+.barfoodL{
+  background-image: url('./images//barfoodL.png');
+  height: 100vh;
+  background-size: cover;
+  border-radius: 10px;
+  opacity: 0.3;
+ 
+}
+
+.rfood{
+  background-image: url('./images//fondo4.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 1);
+ 
+}

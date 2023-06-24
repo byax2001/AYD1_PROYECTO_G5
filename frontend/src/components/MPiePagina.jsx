@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import DataTable from 'react-data-table-component';
 import '../css/LandingPage.css';
 

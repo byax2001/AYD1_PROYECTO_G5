@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactTable from 'react-data-table-component';
-import logo from '../../images/logo.png';
+import logo from '../../images/logo copy.png';
 import { Link } from 'react-router-dom';
 import cv from '../../images/cv.png';
 import Modal from 'react-modal';
