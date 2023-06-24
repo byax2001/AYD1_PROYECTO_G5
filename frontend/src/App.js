@@ -31,6 +31,15 @@ import RegstroEe from './components/Empresa/RegistroEe';
 import InformeEmpresa from './components/Empresa/informes/Informe';
 
 import { AuthProvider } from './context';
+
+//Todo lo de Usuario
+
+import Iniciouser from './components/Usuario/InicioUsuario';
+import PanelE from './components/Usuario/PanelEmpresa';
+import PanelCa from './components/Usuario/PanelCategoria';
+
+
+
 function App() {
   const [infoUser, setInfoUser] = useState({
     iduser:'',
@@ -59,6 +68,9 @@ function App() {
             <Route path="/inicioe" element={<InicioE />} />
             <Route path="/registroPro" element={<RegstroEe />} />
             <Route path="/infEmpresa" element={<InformeEmpresa/>} />
+            <Route path="/inicioU" element={<Iniciouser />} />
+            <Route path="/panelE/:title" element={<PanelE />} />
+            <Route path="/panelC/:title" element={<PanelCa />} />
           </Routes>
         </BrowserRouter>
         </Provider>
