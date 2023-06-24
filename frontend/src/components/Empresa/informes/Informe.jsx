@@ -12,25 +12,26 @@ const Informe = () => {
     setIsReportesDropdownOpen(!isReportesDropdownOpen);
   };
   return (
-    <React.Fragment>
+
+    <div className="wall2">
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">Informe de Empresa</div>
       </nav>
-      <Link to={"/adm"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
+      <Link to={"/inicioe"} className="btn btnEffect btn-warning btnRT">Regresar</Link>
       <div className="container mt-5">
         <div className="row">
           <div className="col-5">
-            <IHistorialPedidos/>
+            <IHistorialPedidos />
           </div>
-          <div className="col-1"/>
+          <div className="col-1" />
           <div className="col-6">
-            <IProductoMasVendido/>
+            <IProductoMasVendido />
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

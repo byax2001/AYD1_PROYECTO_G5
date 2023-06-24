@@ -7,6 +7,17 @@ import cv from '../../../images/cv.png';
 import Modal from 'react-modal';
 Modal.setAppElement('#root'); 
 
+const customStylesModal = {
+    content: {
+      width: '500px', // Ancho personalizado del modal
+      height: '400px', // Alto personalizado del modal
+      top: '50%', // Centrar verticalmente
+      left: '50%', // Centrar horizontalmente
+      transform: 'translate(-50%, -50%)', // Ajustar la posición al centro
+    },
+  };
+  
+
 const customStyles = {
   noData: {
     style: {
@@ -58,7 +69,7 @@ const customStyles = {
 
 const data = [];
   
-const SolicitudEmpresa = () => {
+const SolicitudCambioArea = () => {
   const [filteredData, setFilteredData] = useState(data);
   const [selectedRow, setSelectedRow] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -272,37 +283,35 @@ const columnas = [
   }, []);
 
 
-  return (
-    <React.Fragment>
-        {/* PARA MOSTRAR LA VENTANA EMERGENTE */}
-    {selectedRow && (
-      <ActionModal
-        isOpen={modalIsOpen}  //VARIABLE
-        onRequestClose={closeModal}  //FUNCION
-        aceptarSol = {aSolicitud}  // FUNCION
-        id = {selectedRow.id_solicitud_repartidor} //VARIABLE
-        rechazarSol= {rSolicitud} //FUNCION
-      />
-    )}
-    {/* CONTENEDOR DE TABLA  */}
-      <div className="container mt-4">
-        <div className="my-4">
-          <ReactTable
-            title={"Solicitud de Empresas"}
-            noDataComponent={"Sin solicitudes pendientes"}
-            columns={columnas}
-            data={filteredData}
-            customStyles={customStyles}
-            pagination
-            paginationPerPage={10}
-            highlightOnHover
-            striped
-            responsive
-          />
-        </div>
-      </div>
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            {/* PARA MOSTRAR LA VENTANA EMERGENTE */}
+            {selectedRow && (
+                <ActionModal
+                    isOpen={modalIsOpen}  //VARIABLE
+                    onRequestClose={closeModal}  //FUNCION
+                    aceptarSol={aSolicitud}  // FUNCION
+                    id={selectedRow.id_solicitud_repartidor} //VARIABLE
+                    rechazarSol={rSolicitud} //FUNCION
+                />
+            )}
+            {/* CONTENEDOR DE TABLA  */}
+            <div className="container mt-4">
+                <ReactTable
+                    title={"Solicitud de Cambio de Area de Trabajo"}
+                    columns={columnas}
+                    data={filteredData}
+                    customStyles={customStyles}
+                    pagination
+                    paginationPerPage={10}
+                    noDataComponent={"Sin solicitudes pendientes"}
+                    highlightOnHover
+                    striped
+                    responsive
+                />
+            </div>
+        </React.Fragment>
+    );
 };
 
-export default SolicitudEmpresa;
+export default SolicitudCambioArea;

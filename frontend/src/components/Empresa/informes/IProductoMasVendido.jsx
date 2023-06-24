@@ -124,7 +124,7 @@ function IProductoMasVendido(props) {
   
     return (
         <React.Fragment>
-            <div className="row">
+            <div className="row mb-2">
                 <div className="col-4">
                     <select onChange={handleChange} name="filtro" className='form-select'>
                         <option value={0}>Seleccione Tipo de Filtro</option>
@@ -135,7 +135,7 @@ function IProductoMasVendido(props) {
                         ))}
                     </select>
                 </div>
-                <div className="col-5 mb-3">
+                <div className="col-5 ">
                     {filtroActual != 0 && (
                         <div className="">
                             {filtroActual == 2 ? (

@@ -22,7 +22,7 @@ const Inicio = () => {
 
 
   return (
-    <React.Fragment>
+    <div className="wall2">
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
@@ -35,14 +35,16 @@ const Inicio = () => {
       <div className="container">
         <div className="row mt-4">
           <div className="col-7">
-            <PedidosPendientes/>
+            <PedidosPendientes />
           </div>
           <div className='col-5'>
-            <PedidoAsignado/>
+            <PedidoAsignado />
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </div>
+
+
   );
 };
 

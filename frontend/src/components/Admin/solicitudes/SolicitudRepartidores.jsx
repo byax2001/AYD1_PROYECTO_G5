@@ -301,6 +301,7 @@ const SolicitudRepartidor = () => {
         <div className="my-4">
           <ReactTable
             title={"Solicitud de Repartidores"}
+            noDataComponent={"Sin solicitudes pendientes"}
             columns={colsUsuarios}
             data={filteredData}
             customStyles={customStyles}
