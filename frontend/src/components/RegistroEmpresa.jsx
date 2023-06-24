@@ -1,6 +1,6 @@
 import React, { useState,useRef, useEffect} from 'react';
 import { Form, Button } from 'react-bootstrap';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import md5 from 'md5';
 import Alert from 'react-bootstrap/Alert';
 
@@ -240,58 +240,79 @@ function RegistroEmpresa() {
       )}
       <div className='container'>
         <div className='row'>
-          <div className='col-3 col-sm-0'></div>
+          <div className='col-3 col-sm-0 barfoodL'></div>
           <div className="col-6">
             <Form onSubmit={handleSubmit} className='text-white bg-dark bg-transparent'>
               <Form.Group controlId="nombre">
                 <Form.Label className="textForm">Nombre de la Entidad</Form.Label>
-                <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+                <Form.Control type="text" name="nombre" placeholder='Ingrese el nombre de su empresa'  value={formData.nombre} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="descripcion">
                 <Form.Label className="textForm">Descripción</Form.Label>
-                <Form.Control type="text" name="descripcion" value={formData.descripcion} onChange={handleChange} required />
+                <Form.Control type="text" name="descripcion" placeholder='Ingrese una descripcion de su empresa' value={formData.descripcion} onChange={handleChange} required />
               </Form.Group>
 
-              <Form.Group controlId="tipo_empresa">
-                <Form.Label className="textForm">Tipo de Empresa:</Form.Label>
-                <div>
-                  <select onChange={handleChange} name="tipo_empresa" className='form-select'>
-                    <option value={0}>Seleccione un Tipo de Empresa</option>
-                    {tiposEmpresa.map((tEmpresa) => (
-                      <option key={tEmpresa.id_tipo} value={tEmpresa.id_tipo}>
-                        {tEmpresa.nombre_tipo}
-                      </option>
-                    ))}
-                  </select>
+              <Form.Group controlId="tipo_empresa" className=''>
+                <div className="row mt-3">
+                  <Form.Label className="textForm col-4">Tipo de Empresa:</Form.Label>
+                  <div className="col-1"></div>
+                  <div className='col-7'>
+                    <select onChange={handleChange} name="tipo_empresa" className='form-select'>
+                      <option value={0}>Seleccione un Tipo de Empresa</option>
+                      {tiposEmpresa.map((tEmpresa) => (
+                        <option key={tEmpresa.id_tipo} value={tEmpresa.id_tipo}>
+                          {tEmpresa.nombre_tipo}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
+
               </Form.Group>
+
+
 
               <Form.Group controlId="username">
                 <Form.Label className="textForm">Username</Form.Label>
-                <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} required />
+                <Form.Control
+                  type="text"
+                  name="username"
+                  placeholder='Ingrese el username que tendra su empresa'
+                  value={formData.username}
+                  onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="email">
                 <Form.Label className="textForm">Correo Electrónico</Form.Label>
-                <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} required />
+                <Form.Control type="email" name="email" placeholder='Ingrese un correo electronico'  value={formData.email} onChange={handleChange} required />
               </Form.Group>
-              
+
               <Form.Group controlId="password">
                 <Form.Label className="textForm">Contraseña</Form.Label>
-                <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
+                <Form.Control type="password" name="password" placeholder='Ingrese una contraseña' value={formData.password} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="telefono">
-                <Form.Label className="textForm">Número de Telefono</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="telefono"
-                  value={String(formData.telefono)}
-                  onChange={handleChange}
-                  maxLength={8}
-                  required
-                />
+                <div className="row mt-3">
+                  <div className="col-4">
+                    <Form.Label className="textForm">Número de Telefono</Form.Label>
+                  </div>
+                  <div className="col-1" />
+                  <div className="col-7">
+                    <Form.Control
+                      type="number"
+                      name="telefono"
+                      placeholder='Ingrese un numero de telefono'
+                      value={String(formData.telefono)}
+                      onChange={handleChange}
+                      maxLength={8}
+                      required
+                    />
+                  </div>
+                </div>
+
+
               </Form.Group>
 
               <Form.Group controlId="departamento">
@@ -321,20 +342,29 @@ function RegistroEmpresa() {
                   </Form.Control>
                 </Form.Group>
               )}
-              
+
               <Form.Group controlId="zona">
-                <Form.Label className="numberForm">Zona</Form.Label>
-                <Form.Control type="number" name="zona" value={formData.zona} onChange={handleChange} required />
+                <div className="row mt-3">
+                  <div className="col-4">
+                    <Form.Label className="numberForm">Zona</Form.Label>
+                  </div>
+                  <div className="col-1" />
+                  <div className="col-7">
+                    <Form.Control type="number" name="zona" placeholder='Indique la zona donde se ubica' value={formData.zona} onChange={handleChange} required />
+                  </div>
+                </div>
+
+
               </Form.Group>
-              
+
               <Form.Group controlId="direccion">
                 <Form.Label className="textForm">Direccion</Form.Label>
-                <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
+                <Form.Control type="text" name="direccion" placeholder='Especifique la Dirección' value={formData.direccion} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="file">
                 <Form.Label className="textForm">Documentos</Form.Label>
-                <Form.Control type="file" name="file" onChange={handleChange} accept="application/pdf" />
+                <Form.Control type="file" name="file" onChange={handleChange} accept="application/pdf" required />
               </Form.Group>
 
               <Button className='bg-secondary mt-2 btnEffect' variant="primary" type="submit" >
@@ -342,7 +372,7 @@ function RegistroEmpresa() {
               </Button>
             </Form>
           </div>
-          <div className="col-3 col-sm-0"></div>
+          <div className="col-3 col-sm-0 barfood"></div>
         </div>
       </div>
     </React.Fragment>

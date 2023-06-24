@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext,useEffect} from 'react';
 import { Form, Button } from 'react-bootstrap';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import '../css/Isesion.css'; 
 import md5 from 'md5';
 import {Link,useNavigate} from 'react-router-dom'
@@ -8,7 +8,7 @@ import { useMyContext } from '../context';
 
 const Lema=()=>{
   return (
-    <div id="lema">
+    <div id="lema" className='bg-dark opacity-75'>
       <div className="row">
         <div className="col-1" />
         <div className="col-6 ml-3">
@@ -86,6 +86,15 @@ function InitSesion() {
 
       //console.log(data_res)
       if(data_res.valid){
+        console.log(data_res)
+
+        //En esta parte es donde se puede leer la informacion del token
+        const tokenppayload = data_res.token.split('.')[1];
+        const decodedPayload = atob(tokenppayload);
+        const payloadData = JSON.parse(decodedPayload);
+        console.log("DATAAAAAAA")
+        console.log(payloadData)
+        console.log("DATAAAAAAA")
         if(data_res.data.rol==0){
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/adm",{state:{user:"INFORMACION"}})
@@ -112,7 +121,8 @@ function InitSesion() {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <div className='wallpaper'>
+      <nav className="navbar navbar-expand-lg navbar-light opacity-75">
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Iniciar Sesion</div>
@@ -143,6 +153,8 @@ function InitSesion() {
 
       </div>
 
+      </div>
+      
     </React.Fragment>
   );
 }

@@ -82,10 +82,14 @@ const customStyles = {
     }}
   };
 
-function TopProductos (props){
+function IHistorialPedidos (props){
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
     const [data,SetData] = useState([])
-    const datosdb=async()=>{
-        /*
+    const datosdb=async()=>{/*
       //console.log(process.env.REACT_APP_API_CONSUME)
       const url = `${process.env.REACT_APP_API_CONSUME}/api/get_votos`
       let config = {
@@ -103,29 +107,33 @@ function TopProductos (props){
        
       }catch(e){
         console.log(e)
-      }
-      */
+      }*/
+      
   }
 
-  useEffect(() => {
-   /* const interval = setInterval(() => {
+  useEffect(() => {/*
+    const interval = setInterval(() => {
       datosdb()
     }, 1000);
     return () => clearInterval(interval);*/
   }, []);
 
   
-    return(
-        <DataTable 
+  return (
+    <React.Fragment>
+      <DataTable
         columns={columnas}
         data={data}
-        title="Productos mas Vendidos"
+        title="Historial de Pedidos"
         pagination
         fixedHeader
         fixedHeaderScrollHeight="600px"
         customStyles={customStyles}
         noDataComponent="No hay informacion en la base de datos"
-        /> )
+      />
+    </React.Fragment >
+
+    )
 
 }
-export default TopProductos;
+export default IHistorialPedidos;
