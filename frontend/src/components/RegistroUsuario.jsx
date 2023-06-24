@@ -1,6 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import md5 from 'md5';
 import Alert from 'react-bootstrap/Alert';
 
@@ -204,46 +204,56 @@ function RegistroUsuario() {
       )}
       <div className='container'>
         <div className='row'>
-          <div className='col-3 col-sm-0'>
+          <div className='col-3 col-sm-0 barfoodL'>
 
           </div>
           <div className="col-6">
             <Form onSubmit={handleSubmit} className='text-white bg-dark bg-transparent'>
               <Form.Group controlId="nombre">
                 <Form.Label className="textForm">Nombre</Form.Label>
-                <Form.Control type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+                <Form.Control placeholder='Ingrese su nombre' type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="apellido">
                 <Form.Label className="textForm">Apellidos</Form.Label>
-                <Form.Control type="text" name="apellido" value={formData.apellido} onChange={handleChange} required />
+                <Form.Control placeholder='Ingrese su apellido' type="text" name="apellido" value={formData.apellido} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="username">
                 <Form.Label className="textForm">username</Form.Label>
-                <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} required />
+                <Form.Control placeholder='Ingrese su Username' type="text" name="username" value={formData.username} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="email">
                 <Form.Label className="textForm">Correo Electrónico</Form.Label>
-                <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} required />
+                <Form.Control placeholder='Ingrese su Correo Electronico' type="email" name="email" value={formData.email} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="password">
                 <Form.Label className="textForm">Contraseña</Form.Label>
-                <Form.Control type="password" name="password" value={formData.password} onChange={handleChange} required />
+                <Form.Control placeholder='Ingrese una contraseña' type="password" name="password" value={formData.password} onChange={handleChange} required />
               </Form.Group>
 
               <Form.Group controlId="telefono">
-                <Form.Label className="textForm">Número de Telefono</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="telefono"
-                  value={String(formData.telefono)}
-                  onChange={handleChange}
-                  maxLength={8}
-                  required
-                />
+                <div className="row mt-3">
+                  <div className="col-4">
+                    <Form.Label className="textForm">Número de Telefono</Form.Label>
+                  </div>
+                  <div className="col-1"></div>
+                  <div className="col-7">
+                    <Form.Control
+                      type="number"
+                      name="telefono"
+                      placeholder='Ingrese su numero de telefono'
+                      value={String(formData.telefono)}
+                      onChange={handleChange}
+                      maxLength={8}
+                      required
+                    />
+                  </div>
+                </div>
+
+
               </Form.Group>
 
               <Form.Group controlId="departamento">
@@ -276,7 +286,7 @@ function RegistroUsuario() {
 
               <Form.Group controlId="direccion">
                 <Form.Label className="textForm">Direccion</Form.Label>
-                <Form.Control type="text" name="direccion" value={formData.direccion} onChange={handleChange} required />
+                <Form.Control type="text" name="direccion" placeholder='Especifique su dirección' value={formData.direccion} onChange={handleChange} required />
               </Form.Group>
              
 
@@ -285,7 +295,7 @@ function RegistroUsuario() {
               </Button>
             </Form>
           </div>
-          <div className="col-3 col-sm-0">
+          <div className="col-3 col-sm-0 barfood">
             
           </div>
         </div>
