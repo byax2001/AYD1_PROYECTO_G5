@@ -61,17 +61,30 @@ const customStyles = {
 };
 const data = [
     {
-        nombre: 'Chorizo Argentino',   
+        nombre: 'El messi',   
         id:17,
     },
     {
-        nombre: 'Queso Doble', 
+        nombre: 'Tacos El Brandon', 
         id:7,
     },
     {
-        nombre: 'Bacon',
+        nombre: 'Maradona',
         id:1
     },
+    {
+        
+        nombre: 'Alitas Chapincitas',
+        id: 16,
+        descripcion_empresa: "Deliciosas Alitas",
+        email: "456654@gmail.com",
+        tipo_empresa_id_tipo: 1,
+        telefono: "31778200"
+    },
+    {
+        nombre: "Campero",
+        id: 15
+    }
   ];
 
 
@@ -80,6 +93,9 @@ const Iniciouser = () => {
     const [searchValue, setSearchValue] = useState('');
     const [filteredData, setFilteredData] = useState(data);
     const [suggestions, setSuggestions] = useState([]);
+
+    
+
 
     useEffect(() => {
         //realizar la carga de datos antes del filtro
@@ -108,6 +124,19 @@ const Iniciouser = () => {
         console.log(searchValue)
       };
 
+      const guardarReb = () =>{
+        console.log("AQUIIIII",searchValue);
+        localStorage.setItem("titleres",searchValue);///-----------------------------------------aqui me quede ver mañana
+      }
+
+      const obtenerId = (searchValue) => {
+        const empresa = data.find((item) => item.nombre === searchValue);
+        if (empresa) {
+          return empresa.id;
+        } else {
+          return null; // o el valor que consideres adecuado si no se encuentra el ID
+        }
+      };
 
     return (
         <div>
@@ -130,7 +159,18 @@ const Iniciouser = () => {
                             inputProps={inputProps}
                         />
                     </form> 
-                    <button className="btn btn-outline-success" type="submit" onClick={()=>prueba()}>Search</button>
+                    <button className="btn btn-outline-success" type="submit" onClick={()=>prueba()}>Ir A</button>
+                    <Link 
+                    onClick={guardarReb}
+                    to={  
+                        searchValue === ''
+                        ? { pathname: '/inicioU' }
+                        : {
+                            pathname: `/panelE/${encodeURIComponent(searchValue)}`,
+                            state: { title: searchValue },
+                            }
+                     } 
+                    className="btn textForm text-light">Ir A V2</Link>
                 </div>
             </nav>
 

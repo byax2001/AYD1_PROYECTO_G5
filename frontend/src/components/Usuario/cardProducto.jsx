@@ -6,13 +6,10 @@ import "./card.css";
 
 
 
-const Card = ({imageSource, title, text, id }) => {
+const CardPr = ({imageSource, title, text, id }) => {
 
-  const guardarRes = () =>{
-    console.log("AQUIIIII",title);
-    console.log(id);
-    localStorage.setItem("titleres",title);
-    localStorage.setItem("idres",id);  
+  const AgregarCarrito = () =>{
+    console.log("Aqui ira la logica del Carrito");
   }
 
   
@@ -29,17 +26,11 @@ const Card = ({imageSource, title, text, id }) => {
             : "Texto Provisional Descripcion de empresa"}
         </p>
         <Link 
-          onClick={guardarRes}
-          to={{
-            pathname:`/panelE/${encodeURIComponent(title)}`,
-            state: { title: title }
-          }}
-
-          //target="_blank"  /// este es para que lo abra en otra pestaña
+          onClick={AgregarCarrito}
           className="btn btn-outline-secondary border-0"
           rel="noreferrer"
         >
-          Visitar {title}
+          Agregar {title}
         </Link>
       </div>
     </div>
@@ -47,4 +38,4 @@ const Card = ({imageSource, title, text, id }) => {
 };
 
 
-export default Card;
+export default CardPr;
