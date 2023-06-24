@@ -10,6 +10,7 @@ var REPORTS = require('../controllers/Admin.Reports')
 var PRODUCTS = require('../controllers/Products.Controller')
 var ACEPTREQ = require('../controllers/Acept.Request')
 var ADDR = require('../controllers/Address.Controller')
+var ORDER = require('../controllers/Orders.Controller')
 
 var router = express.Router();
 var baseurl = '/api/';
@@ -71,4 +72,7 @@ router.get(baseurl + 'reports',                                   OAUTH.validate
 router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)
 router.get(baseurl + 'departamento/municipio/:id',                OAUTH.validateToken,ADDR.getInfoMun)
 
+
+//Pedidos
+router.post(baseurl + 'neworder',                                 OAUTH.validateToken,ORDER.neworder)
 module.exports = router;

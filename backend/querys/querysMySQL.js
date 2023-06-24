@@ -87,6 +87,10 @@ module.exports = {
 		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento WHERE m.departamento_id_departamento = ?",
 		list_dep: "SELECT * FROM departamento",
 
+		//Cupones
+		list_used_cupon_by_user: "SELECT * FROM detalle_cupon_usuario WHERE usuario_id_usuario = ? AND utilizado = 1 ",
+		get_id_cupon_by_name :"SELECT id_cupon FROM cupon WHERE codigo_cupon = ?",
+
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */
 	/* ----------------------------------------------------------------------- */
@@ -116,6 +120,7 @@ module.exports = {
 		" (descripcion, documento,solicitud_pendiente_id_solicitud_repartidor ) "+
 		" VALUES (?,?,?);",
 
+
 		ins_product: "INSERT INTO producto "+ 
 		" (nombre_producto, descripcion_producto,imagen_producto,precio_producto,tipo_producto_id_tipo_producto,empresa_id_empresa,combo)"+
 		" VALUES (?,?,?,?,?,?,?);",
@@ -128,6 +133,21 @@ module.exports = {
 		ins_address: "INSERT INTO direccion "+
 		" (direccion, descripcion_direccion, usuario_id_usuario,municipio_id_municipio)"+
 		" VALUES (?,?,?,?);",
+
+
+	// ORDENES
+		ins_order: "INSERT INTO pedido_cliente "+
+		"(fecha_pedido,detalles_repartidor,metodo_pago,calificacion,usuario_id_usuario,estado_pedido_id_estado,usuario_id_usuario2,detalle_cupon_usuario_id_detalle_cupon)"+
+		" VALUES (?,?,?,?,?,?,?,?);",
+
+		ins_order_detail: "INSERT INTO detalle_pedido_cliente "+
+		"(cantidad,producto_id_producto,producto_id_tipo_producto,pedido_cliente_id_pedido_cliente)"+
+		" VALUES (?,?,?,?);",
+
+	//CUPONES
+		ins_cupon: "INSERT INTO cupon "+
+		"(porcentaje_descuento,descripcion,codigo_cupon)"+
+		" VALUES (?,?,?);",
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ DELETE  -------------------------------- */
