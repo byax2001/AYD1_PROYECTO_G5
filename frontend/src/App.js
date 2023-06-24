@@ -32,6 +32,8 @@ import { AuthProvider } from './context';
 
 import Iniciouser from './components/Usuario/InicioUsuario';
 import PanelE from './components/Usuario/PanelEmpresa';
+import PanelCa from './components/Usuario/PanelCategoria';
+
 
 
 function App() {
@@ -62,7 +64,7 @@ function App() {
             <Route path="/registroPro" element={<RegstroEe />} />
             <Route path="/inicioU" element={<Iniciouser />} />
             <Route path="/panelE/:title" element={<PanelE />} />
-
+            <Route path="/panelC/:title" element={<PanelCa />} />
           </Routes>
         </BrowserRouter>
         </Provider>

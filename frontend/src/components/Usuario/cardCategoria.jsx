@@ -5,13 +5,14 @@ import { Link,BrowserRouter  } from 'react-router-dom';
 import "./card.css";
 
 
-// imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} 
 
-const CardPr = ({imageSource, title,id ,text, precio }) => {
+const CardC = ({imageSource, title, id,text }) => {
 
-  const AgregarCarrito = () =>{
-    console.log("Aqui ira la logica del Carrito");
-    console.log("Precio",precio);
+  const guardarRes = () =>{
+    console.log("nombre Categoria",title);
+    console.log(id);
+    localStorage.setItem("categoria",title);
+    localStorage.setItem("idCategoria",id);  
   }
 
   
@@ -25,15 +26,20 @@ const CardPr = ({imageSource, title,id ,text, precio }) => {
         <p className="card-text text-secondary">
           {text
             ? text
-            : "Texto Provisional Descripcion de empresa"}
+            : "Categoria de productos"}
         </p>
-        <h4 className="card-title">Q{precio}</h4>
         <Link 
-          onClick={AgregarCarrito}
+          onClick={guardarRes}
+          to={{
+            pathname:`/panelC/${encodeURIComponent(title)}`,
+            state: { title: title }
+          }}
+
+          //target="_blank"  /// este es para que lo abra en otra pestaña
           className="btn btn-outline-secondary border-0"
           rel="noreferrer"
         >
-          Agregar
+          Visitar {title}
         </Link>
       </div>
     </div>
@@ -41,4 +47,4 @@ const CardPr = ({imageSource, title,id ,text, precio }) => {
 };
 
 
-export default CardPr;
+export default CardC;

@@ -6,7 +6,7 @@ import "./card.css";
 
 
 
-const Card = ({imageSource, title, text, id }) => {
+const Card = ({imageSource, title, id,text }) => {
 
   const guardarRes = () =>{
     console.log("AQUIIIII",title);
