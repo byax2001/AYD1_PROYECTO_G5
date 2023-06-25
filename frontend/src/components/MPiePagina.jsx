@@ -265,11 +265,11 @@ function MPiePagina(props) {
             ) :
               (
                 <React.Fragment>
-                  <div className="col-3"></div>
-                  <div className="col-6 bg-dark bg-transparent">
+                  <div className="col-3 barfood2"></div>
+                  <div className="col-6">
                     <QuienesSomos />
                   </div>
-                  <div className="col-3"></div>
+                  <div className="col-3 barfood2"></div>
                 </React.Fragment>
               )}
         </div>

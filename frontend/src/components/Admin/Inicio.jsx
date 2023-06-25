@@ -6,7 +6,7 @@ import cv from '../../images/cv.png';
 import Modal from 'react-modal';
 import SolicitudEmpresa from './solicitudes/SolicitudEmpresas';
 import SolicitudRepartidor from './solicitudes/SolicitudRepartidores';
-
+import SolicitudCambioArea from './solicitudes/SolicitudCambioArea';
 Modal.setAppElement('#root'); 
 
 const customStyles = {
@@ -89,12 +89,22 @@ const Inicio = () => {
       </div>
       {/* TABLAS */}
       <div className="container mt-4">
-        <div className="my-4">
-          <SolicitudRepartidor />
+        <div className="row">
+          <div className="col-12">
+            <SolicitudRepartidor />
+          </div>
         </div>
-        <div className="my-4">
-          <SolicitudEmpresa />
+        <div className="row">
+          <div className="col-12">
+            <SolicitudEmpresa />
+          </div>
         </div>
+        <div className="row">
+          <div className="col-12">
+            <SolicitudCambioArea/>
+          </div>
+        </div>
+        
       </div>
     </React.Fragment>
   );

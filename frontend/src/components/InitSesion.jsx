@@ -134,7 +134,7 @@ function InitSesion() {
               <Lema/>
           </div>
           <div className="col-3 bg-dark" id="Isesion">
-            <Form onSubmit={handleSubmit} className='text-white bg-dark mt-5' >
+            <Form onSubmit={handleSubmit} className='text-white mt-5' >
               <Form.Group controlId="username">
                 <Form.Label className="textForm">Username:</Form.Label>
                 <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} required />
