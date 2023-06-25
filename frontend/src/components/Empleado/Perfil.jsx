@@ -171,8 +171,9 @@ const Perfil = () => {
 
   return (
     <React.Fragment>
+      <div className="wall3">
       <Link to={"/emp"} className='btn btn-warning btnRT text-light'>Volver a Inicio</Link>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <nav className="navbar navbar-expand-lg navbar-light opacity-75">
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">MiPerfil</div>
@@ -254,6 +255,8 @@ const Perfil = () => {
 
         <button className="btn btn-secondary btnEffect" onClick={() => { openModal() }}>Solicitud de cambio zona departamental</button>
       </div>
+      </div>
+      
     </React.Fragment>
   );
 };
