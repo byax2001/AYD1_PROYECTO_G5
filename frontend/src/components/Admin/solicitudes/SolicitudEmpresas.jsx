@@ -289,6 +289,7 @@ const columnas = [
         <div className="my-4">
           <ReactTable
             title={"Solicitud de Empresas"}
+            noDataComponent={"Sin solicitudes pendientes"}
             columns={columnas}
             data={filteredData}
             customStyles={customStyles}

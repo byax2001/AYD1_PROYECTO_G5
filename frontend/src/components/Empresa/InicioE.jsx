@@ -1,7 +1,7 @@
 
 import React, { useState,useEffect  } from 'react';
 import DataTable from 'react-data-table-component';
-import logo from '../../images/logo.png';
+import logo from '../../images/logo copy.png';
 import edit from '../../images/editv2.png';
 import deleteV from '../../images/delete.png';
 //import Amb from '../../images/quesoB.png';
@@ -264,90 +264,90 @@ const InicioE = () => {
             closeModalv();
 
       }
-    return (
-        <React.Fragment>
-            {/* Navbar*/}
+  return (
+    <div className="wall2">
+      {/* Navbar*/}
 
-            <nav className="navbar navbar-expand-lg navbar-light position-relative">
-                <img id="logoStar" src={logo} alt="Logo" />
-                <a className="navbar-brand" href="/">AlChilazo</a>
-                <div className="h2 text-light">Panel de Control</div>
-                <div className="btn-group d-inline-flex" data-toggle="buttons">
-                    {/*aqui colocaria los link para visitar */}
-                   
-                      <div className="submenu">
-                        <Link to="/registroPro" className="btn textForm text-light">
-                          Registro de Producto
-                        </Link>
-                      </div>
-                    <Link to="/" className="btn textForm text-light">Cerrar Sesion</Link>
+      <nav className="navbar navbar-expand-lg navbar-light position-relative">
+        <img id="logoStar" src={logo} alt="Logo" />
+        <a className="navbar-brand" href="/">AlChilazo</a>
+        <div className="h2 text-light">Panel de Control</div>
+        <div className="justify-content-end d-inline-flex btnRT">
+          <div className="btn-group" data-toggle="buttons">
+            {/*aqui colocaria los link para visitar */}
+            <Link to="/registroPro" className="btn textForm btnEffect text-light">
+              Registro de Producto
+            </Link>
+            <Link className="btn btnEffect text-light" to={"/infEmpresa"}>Informes</Link>
+            <Link to="/" className="btn textForm text-light btnEffect">Cerrar Sesion</Link>
+          </div>
+        </div>
 
-                </div>
-            </nav>
-
-            
-            {/* Aqui colocamos la tabla */}
-
-            <div className="container mt-4">
-                <div className="my-4">
-                <ReactTable
-                    title={"Lista Productos"}
-                    columns={columns}
-                    data={filteredData}
-                    customStyles={customStyles}
-                    pagination
-                    highlightOnHover
-                    striped
-                    responsive
-                    noDataText="No se encontraron registros"
-                />
-                </div>
-            </div>
-
-            <ReactModal
-                isOpen={showModal}
-                onRequestClose={() => setShowModal(false)}
-                contentLabel="Formulario"
-            >
-                <Form selectedRow={selectedRow} closeModal={closeModal} filteredDataV={filteredDataV} />
-            </ReactModal>
+      </nav>
 
 
-            <ReactModal
-                isOpen={showModalv}
-                onRequestClose={() => setShowModalv(false)}
-                contentLabel="Formulario"
-                style={{
-                  content: {
-                    position: 'fixed',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '400px',
-                    height: '200px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '5px',
-                  },
-                  overlay: {
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                  },
-                }}
-            >
-                <h2>¿Esta seguro de eliminar el producto?</h2>
-                <button  className='btn btn-secondary' onClick={()=>deleteRow()} >
-                  Delete
-                </button>
-                <button  className='btn btn-secondary' onClick={() => closeModalv()}>
-                  Cancelar
-                </button>
-            </ReactModal>
-        </React.Fragment>
-    );
+      {/* Aqui colocamos la tabla */}
+
+      <div className="container mt-4">
+        <div className="my-4">
+          <ReactTable
+            title={"Lista Productos"}
+            columns={columns}
+            data={filteredData}
+            customStyles={customStyles}
+            pagination
+            highlightOnHover
+            striped
+            responsive
+            noDataText="No se encontraron registros"
+          />
+        </div>
+      </div>
+
+      <ReactModal
+        isOpen={showModal}
+        onRequestClose={() => setShowModal(false)}
+        contentLabel="Formulario"
+      >
+        <Form selectedRow={selectedRow} closeModal={closeModal} filteredDataV={filteredDataV} />
+      </ReactModal>
+
+
+      <ReactModal
+        isOpen={showModalv}
+        onRequestClose={() => setShowModalv(false)}
+        contentLabel="Formulario"
+        style={{
+          content: {
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '400px',
+            height: '200px',
+            backgroundColor: '#ffffff',
+            borderRadius: '5px',
+          },
+          overlay: {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          },
+        }}
+      >
+        <h2>¿Esta seguro de eliminar el producto?</h2>
+        <button className='btn btn-secondary' onClick={() => deleteRow()} >
+          Delete
+        </button>
+        <button className='btn btn-secondary' onClick={() => closeModalv()}>
+          Cancelar
+        </button>
+      </ReactModal>
+    </div>
+  );
 };
 
 export default InicioE;
