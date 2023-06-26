@@ -10,8 +10,46 @@ import "./card.css";
 const CardPr = ({imageSource, title,id ,text, precio }) => {
 
   const AgregarCarrito = () =>{
-    console.log("Aqui ira la logica del Carrito");
-    console.log("Precio",precio);
+    var objeto = {
+      id: id ,
+      nombre: title,
+      precio: precio,
+      cantidad: 1
+    }
+    var bandera = true;
+    var carrito = [];
+    var storedCarrito = window.localStorage.getItem('carrito');
+    if (storedCarrito == null || storedCarrito =='undefined') {
+        carrito = [];
+    } else {
+        carrito = JSON.parse(storedCarrito);
+    }
+    if (carrito.length > 0)
+    {
+      for (let index = 0; index < carrito.length; index++) {
+        if(carrito[index].id == id){
+          bandera = false;
+          carrito[index].cantidad = carrito[index].cantidad + 1;
+          break;
+        }
+        
+      }
+      if(bandera) {
+        carrito.push(objeto)
+        alert('Se agrego el producto al Carrito');
+      } 
+    }else {
+      carrito.push(objeto)
+      alert('Se agrego el producto al Carrito');
+    }
+    
+    try {
+      console.log(carrito)
+      localStorage.setItem('carrito', JSON.stringify(carrito))
+   } catch (error) {
+       console.error(error)
+   }
+
   }
 
   

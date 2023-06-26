@@ -1,18 +1,40 @@
 import React from 'react'
+import useLocalStorage from './useLocalStorage'
 
-function Form({input,setInput, todos, setTodos}) {
-  
+function Form({input,setInput,lista}) {
   const onInputChange = (event) => {
    // console.log("Se ingres el Input")
     setInput(event.target.value);
 }
 
   const onFormSubmit = (event) => {
+    var objeto = {
+      id: lista.length ,
+      nombre: input,
+      cantidad: 1
+    }
+
+    
     event.preventDefault();
-    setTodos([...todos,{id:todos.length ,title:input,completed:false}]);
+    lista.push(objeto)
+    try {
+      localStorage.setItem('carrito', JSON.stringify(lista))
+   } catch (error) {
+       console.error(error)
+   }
     setInput("");
-    console.log(todos.length)
+    console.log(lista);
 }
+
+const onBorrar = (event) => {
+  var vacia = []
+  try {
+    localStorage.setItem('carrito', JSON.stringify(vacia))
+ } catch (error) {
+     console.error(error)
+ }
+}
+
 
   return (
     <form onSubmit={onFormSubmit}>
@@ -21,6 +43,7 @@ function Form({input,setInput, todos, setTodos}) {
       onChange ={onInputChange}
       />
       <button className='button-add' type='submit'>Add</button>
+      <button className='button-add' onClick={onBorrar}>Borrar</button>
     </form>
   )
 }

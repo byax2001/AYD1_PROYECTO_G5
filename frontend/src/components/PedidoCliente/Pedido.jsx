@@ -1,17 +1,26 @@
-import React ,{useState} from 'react'
+import React, { useState } from 'react'
 import logo from '../../images/logo copy.png';
-import { Link,useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from './Header'
 import Form from './Form'
 import Lista from './Lista'
 import "./lista.css";
+import useLocalStorage from './useLocalStorage'
 
 function Pedido() {
 
-    const [input, setInput] = useState("");
-    const [todos, setTodos] = useState([]);
+    var carrito = [];
+    var storedCarrito = window.localStorage.getItem('carrito');
+    if (storedCarrito == null || storedCarrito =='undefined') {
+        carrito = [];
+    } else {
+        carrito = JSON.parse(storedCarrito);
+    }
 
-    
+    const [input, setInput] = useState("");
+    useLocalStorage('carrito', carrito)
+
+
     return (
         <React.Fragment>
             <nav className="navbar navbar-expand-lg navbar-light position-relative">
@@ -31,13 +40,11 @@ function Pedido() {
                     <div>
                         <Form input={input}
                             setInput={setInput}
-                            todos={todos}
-                            setTodos={setTodos}
-                            
+                            lista={carrito}
                         ></Form>
                     </div>
                     <div>
-                        <Lista todos={todos} setTodos={setTodos}></Lista>
+                        <Lista todos={carrito} ></Lista>
                     </div>
                 </div>
 
