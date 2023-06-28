@@ -75,19 +75,7 @@ const customStyles = {
 };
 
 
-const data = [ {
-    nombre: 'John',
-    apellido: 'Doe',
-    pedido: 'Pizza',
-    email: 'johndoe@example.com',
-    telefono: '123456789',
-    departamento: 'Departamento 1',
-    zona: 'Zona 1',
-    nombre_municipio: 'Municipio 1',
-    direccion: 'Calle 123',
-    fecha_solicitud: '2023-06-01',
-  }
-];
+const data = [];
   
 const PedidosPendientes = () => {
   const [filteredData, setFilteredData] = useState(data);
@@ -107,52 +95,36 @@ const openModal = () => {
 
 const closeModal = () => {
   setModalIsOpen(false);
+
   //getSolicitudes();
 };
 const columnas = [
     {
-      name: 'Nombre',
-      selector: row => row.nombre,
+      name: 'No.Orden',
+      selector: row => row.NoOrden,
       sortable: true,
     },
     {
-      name: 'Apellido',
-      selector: row => row.apellido,
-      sortable: true,
-    },
-    {
-      name: 'Pedido',
-      selector: row => row.pedido,
-      sortable: true,
-    },
-    {
-      name: 'Correo Electronico',
-      selector: row => row.email,
-      sortable: true,
-    },
-    {
-      name: 'Telefono',
-      selector: row => row.telefono,
-      sortable: true,
-    },
-    {
-      name: 'Departamento',
-      selector: row => row.departamento,
-      sortable: true,
-    },
-    {
-      name: 'Municipio',
-      selector: row => row.nombre_municipio,
-      sortable: true,
-    },
-    {
-      name: 'Direccion',
+      name: 'Dirección de entrega',
       selector: row => row.direccion,
       sortable: true,
     },
     {
+      name: 'Municipio',
+      selector: row => row.municipio,
+      sortable: true,
+    },
+    {
+      name: 'Metodo Pago',
+      selector: row => row.metodo,
+      sortable: true,
+    },
+    {
       name: 'Fecha de Pedido',
-      selector: row => row.fecha_solicitud,
+      selector: row => {
+        const fecha = new Date(row.fecha);
+        return fecha.toISOString().split('T')[0];
+      },
       sortable: true,
     },
     {
@@ -185,16 +157,42 @@ const columnas = [
     }
   ];
   
-  const handleActionClick = (row) => {
-      setSelectedRow(row);
-      console.log('Fila seleccionada:', row);
-  };
 
   //VENTANA EMERGENTE PARA ACCIONAR 
   const ActionModal = ({ isOpen, onRequestClose, aceptarSol,id,rechazarSol}) => {
-    const handleAceptarSol = () => {
+    const handleAceptarSol = async () => {
      // aceptarSol(id);
+        const url = `${process.env.REACT_APP_API_CONSUME}/api/selectorder`;
+        console.log(url)
+        let config = {
+          method: "PUT", //ELEMENTOS A ENVIAR
+          body: JSON.stringify({
+            idUser: localStorage.getItem('idUser'),
+            estado: 2,
+            idpedido: selectedRow.NoOrden
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            authorization : localStorage.getItem('token')
+          },
+        };
+        try {
+          const res = await fetch(url, config);
+    
+          const data_res = await res.json();
+          if(data_res.valid){
+            alert(data_res.msg)
+          }else{
+            alert(data_res.msg)
+          }
+        } catch (e) {
+          console.log(e)
+        }
+
       onRequestClose();
+      getSolicitudes();
+      
     };
   
     const handleRechazarSol = () => {
@@ -274,13 +272,14 @@ const columnas = [
   };
 
   const getSolicitudes = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/reqPendingRestaurant`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/orderbyadress/${localStorage.getItem('idUser')}`;
     console.log(url)
     let config = {
       method: "GET", //ELEMENTOS A ENVIAR
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        authorization : localStorage.getItem('token')
       },
     };
     try {
@@ -289,11 +288,6 @@ const columnas = [
       const data_res = await res.json();
 
       setFilteredData(data_res.data)
-      console.log(data_res)
-
-
-      //console.log(votoC)
-      //setVotos(votoC)
     } catch (e) {
       console.log(e)
     }
@@ -386,7 +380,7 @@ const columnas = [
             <ReactTable
               title={"Pedidos Disponibles"}
               columns={columnas}
-              data={data}
+              data={filteredData}
               customStyles={customStyles}
               pagination
               paginationPerPage={10}

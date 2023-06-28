@@ -96,6 +96,10 @@ function InitSesion() {
         console.log("DATAAAAAAA")
         console.log(payloadData)
         console.log("DATAAAAAAA")
+
+        localStorage.setItem('idUser',payloadData.iduser)
+        localStorage.setItem('token',data_res.token)
+        localStorage.setItem('rol',payloadData.rol)
         if(data_res.data.rol==0){
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/adm",{state:{user:"INFORMACION"}})
@@ -105,6 +109,7 @@ function InitSesion() {
           alert("Usuario ingresado con exito");
         }else if (data_res.data.rol==2){
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
+
           navigate("/emp",{state:{user:"INFORMACION"}})
         }else{
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
