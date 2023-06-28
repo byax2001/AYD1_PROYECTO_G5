@@ -70,6 +70,7 @@ function InitSesion() {
     const url = `${process.env.REACT_APP_API_CONSUME}/api/login`;
     const cFormData = { ...formData };
     cFormData["password"] = md5(cFormData["password"])
+    console.log(cFormData);
     let config = {
       method: "POST", //ELEMENTOS A ENVIAR
       body: JSON.stringify(cFormData),

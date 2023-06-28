@@ -68,7 +68,7 @@ exports.login = async function(req, res) {
       }
     } catch (err) {
       // Manejo de errores
-      res.status(400).send({status: "error", message: "Hubo un error en el inicio de sesión", data: e});
+      res.status(400).send({status: "error", message: "Hubo un error en el inicio de sesión", data: err});
     }
   };
 
