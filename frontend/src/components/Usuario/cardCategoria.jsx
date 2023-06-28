@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link,BrowserRouter  } from 'react-router-dom';
 
-import "./card.css";
+import "./css/card.css";
 
 
 

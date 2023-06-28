@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link,BrowserRouter  } from 'react-router-dom';
 
-import "./card.css";
+import "./css/card.css";
 
 
 // imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} 

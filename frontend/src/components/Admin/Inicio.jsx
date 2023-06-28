@@ -74,8 +74,6 @@ const Inicio = () => {
       </nav>
       <div className='d-inline-flex btnRT'>
         <div className="btn-group">
-          <Link to={"/"} className="btn btnEffect">Cerrar Sesion</Link>
-          <Link to={"/adm/users"} className="btn btnEffect">Administrar Usuarios</Link>
           {/* DROPDOWN DE REGISTRARSE*/}
           <li className="nav-item dropdown btn btnEffect">
             <button className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" onClick={toggleReportesDropdown}>Reportes</button>
@@ -85,6 +83,9 @@ const Inicio = () => {
               <Link to={'/infU'} className="dropdown-item">Usuarios</Link>
             </div>
           </li>
+          {/* */}
+          <Link to={"/adm/users"} className="btn btnEffect">Administrar Usuarios</Link>
+          <Link to={"/"} className="btn btnEffect">Cerrar Sesion</Link>
         </div>
       </div>
       {/* TABLAS */}
