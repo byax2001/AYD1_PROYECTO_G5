@@ -39,3 +39,25 @@ exports.getInfoUser = async function (req, res) {
         res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
+
+
+exports.getPopularRestaurants = async function (req, res) {
+    try {
+        
+        database.query(querysMySQL.get_most_selled_product,[req.params.id],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Este es el producto más vendido", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"Aún no hay productos vendidos", valid:true, data:result})
+            return;
+        };
+    });
+
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+    }
+}
