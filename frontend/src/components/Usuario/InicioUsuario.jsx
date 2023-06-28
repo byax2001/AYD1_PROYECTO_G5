@@ -6,6 +6,7 @@ import Card from './cardsEmp';
 import CardsC from './cardsCatego';
 import fondo1 from '../../images/fondoCard.jpg';
 import "./css/inicio.css";
+import Carrito from './Carrito/Carrito';
 
   const data = [
     {
@@ -156,7 +157,7 @@ const Iniciouser = () => {
                     </div>
                 </div>
             </nav>
-
+            <Carrito/>
             <div className='container mt-3'>
                 <div className="row">
                     <div className="col-12" >

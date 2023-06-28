@@ -31,7 +31,7 @@ function Pedido() {
                 <Link to="/inicioU" className="btn textForm text-light btnEffect btnRT">Regresar</Link>
             </nav>
 
-            <div className='container contPedido'>
+            <div className='container contPedido mt-2'>
                 <div className='app-wrapper'>
                     <div>
                         <Header></Header>

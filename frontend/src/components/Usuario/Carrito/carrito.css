@@ -1,0 +1,16 @@
+#icarrito{
+  height: 50px;
+  width: 50px;
+}
+
+#divCarrito{
+    position: fixed;
+    top:65px;
+    right: 10px;
+    z-index: 3;
+}
+
+.brillo {
+    filter: brightness(1.4); /* Ajusta este valor para obtener el nivel de brillo deseado */
+    transition: filter 0.1s;
+  }
