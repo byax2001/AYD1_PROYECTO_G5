@@ -384,7 +384,7 @@ const columnas = [
         <div className="row">
           <div className="col-12">
             <ReactTable
-              title={"Pedidos Pendientes"}
+              title={"Pedidos Disponibles"}
               columns={columnas}
               data={data}
               customStyles={customStyles}
