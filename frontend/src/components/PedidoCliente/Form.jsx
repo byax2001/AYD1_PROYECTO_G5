@@ -38,12 +38,13 @@ const onBorrar = (event) => {
 
   return (
     <form onSubmit={onFormSubmit}>
-      <input type="text" placeholder='Hola Mundo...' className='task-input' value={input}
+      <input type="text" placeholder='Agregar Cupon...' className='task-input' value={input}
       required 
       onChange ={onInputChange}
       />
-      <button className='button-add' type='submit'>Add</button>
+      <button className='button-add' type='submit'>Agregar Cupon</button>
       <button className='button-add' onClick={onBorrar}>Borrar</button>
+      <button className='button-add' onClick={onBorrar}>Aceptar Pedido</button>
     </form>
   )
 }

@@ -84,7 +84,7 @@
     margin: 30px 0;
 }
 
-.header h5 {
+.header h6 {
     color: #000;
     text-align: center;
     margin-right: 50px;
@@ -93,6 +93,29 @@
 .alinea{
     float: right;
     text-align: right;
+}
+
+.button-add {
+    width: 200px;
+    padding: 15px 15px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #1c1716;
+    color: #f9f4ef;
+    cursor: pointer;
+    margin-right: 7px ;
+}
+.task-input{
+    outline: none;
+    width: 260px;
+    padding: 15px;
+    margin-right: 25px;
+    font-size: 20px;
+    color: #1c1716;
+    background-color:#f9f4ef;
+    border: 1px solid #c89666;
+    border-radius: 10px;
 }
 
 input:focus,

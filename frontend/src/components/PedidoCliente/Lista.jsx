@@ -20,11 +20,11 @@ function Lista({ todos }) {
                             onChange={(event) => event.preventDefault()} />
 
                         <div className='header'>
-                            <h5>Precio {todo.precio}</h5>
+                            <h6>Precio {todo.precio}</h6>
                         </div>
 
                         <div className='header'>
-                            <h5>Cantidad {todo.cantidad}</h5>
+                            <h6>Cantidad {todo.cantidad}</h6>
                         </div>
 
                         <div className='alinea'>

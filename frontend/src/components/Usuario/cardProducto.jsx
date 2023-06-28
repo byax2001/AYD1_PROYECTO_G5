@@ -30,6 +30,7 @@ const CardPr = ({imageSource, title,id ,text, precio }) => {
         if(carrito[index].id == id){
           bandera = false;
           carrito[index].cantidad = carrito[index].cantidad + 1;
+          alert('Se agrego el producto al Carrito');
           break;
         }
         
