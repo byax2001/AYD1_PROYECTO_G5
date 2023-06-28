@@ -32,7 +32,7 @@ function Pedido() {
                 </div>
             </nav>
 
-            <div className='container'>
+            <div className='container contPedido'>
                 <div className='app-wrapper'>
                     <div>
                         <Header></Header>
