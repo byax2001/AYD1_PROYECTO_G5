@@ -18,7 +18,14 @@ exports.neworder = async function(req,res){
                         } else {
                             if (result.length>0){
                                 //Si el cupon es valido revisamos que no lo haya utilizado.
+                                console.log("DSFJKADSF")
+                                console.log(req.body.idUser)
+                                console.log(result[0].id_cupon)
+                                console.log("DSFJKADSF")
                                 database.query(querysMySQL.list_used_cupon_by_user, [req.body.idUser,result[0].id_cupon], function(err, result2, fields) {
+                                    console.log("dlskf")
+                                    console.log(result2)
+                                    console.log("dlskf")
                                     if(result2.length>0){
                                         res.status(200).send({ message: "El cupon ingresado ya fue utilizado", valid:false});
                                         return
@@ -61,10 +68,16 @@ exports.neworder = async function(req,res){
                         combo,
                         cantidad
                     } = producto;
-                    database.query(querysMySQL.ins_order_detail, [cantidad, id_producto, tipo_producto_id_tipo_producto, result.insertId], function(err, result, fields) {
+                    database.query(querysMySQL.ins_order_detail, [cantidad, id_producto, tipo_producto_id_tipo_producto, result.insertId], function(err) {
                         if (err) throw err;             
                     });
                     });
+                    //Si hay cupon debo guardarlo, si no, no hago nada
+                    if(usecupon){
+                        database.query(querysMySQL.ins_cupon_user, [1,usecupon,req.body.idUser], function(err) {
+                            if (err) throw err;             
+                        });
+                    }
 
                     res.status(200).send({ message: "Orden ingresada con exito", valid:true});
                     return
@@ -90,4 +103,149 @@ exports.neworder = async function(req,res){
 }
 
 
+exports.getorderbyadress = async function(req,res){
+    try{
+
+        database.query(querysMySQL.get_orders_availabe_by_adrress,[req.params.id],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Estas son las ordenes disponibles en esa area", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"No hay ordenes por el momento", valid:true, data:result})
+            return;
+        };
+    });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+    }
+
+}
+
+exports.changestatusorder = async function(req,res){
+    try{
+        //Primero debo revisar que el usuario qeu quiere seleccionar el pedido no tenga otro pedido seleccionado
+
+        database.query(querysMySQL.get_order_select_by_deliver,[req.body.idUser],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Ya tienes un pedido seleccionado, solo se puede uno por repartidor", valid:false})
+                return;
+
+            }else{
+                database.query(querysMySQL.update_status_order,[req.body.idUser,req.body.estado,req.body.idpedido],async function(err,result,fields){
+                    if (err)throw err;
+                    if (result.affectedRows>0){
+                        res.status(200).send({msg:"Has seleccionado una orden correctamente", valid:true})
+                        return;
+        
+                    }else{
+                        res.status(200).send({msg:"Error al selecionar :c ", valid:false})
+                        return;
+                    };
+            });
+            };
+
+
+        });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+    }
+
+}
+
+exports.getordersbydeliver = async function(req,res){
+    try{
+
+        database.query(querysMySQL.get_orders_availabe_by_adrress,[req.params.id],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Estas son las ordenes disponibles en esa area", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"No hay ordenes por el momento", valid:true, data:result})
+            return;
+        };
+    });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+    }
+
+}
+
+exports.getactiveorder = async function(req,res){
+    try{
+
+        database.query(querysMySQL.get_order_select_by_deliver,[req.params.id],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Esta es la orden activa", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"No hay ordenactiva por el momento", valid:true, data:result})
+            return;
+        };
+    });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+    }
+
+}
+
+
+exports.getallordersbydeliver = async function(req,res){
+    try{
+
+        database.query(querysMySQL.get_orders_by_deliver,[req.params.id],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Estas son todas las ordenes del repartidor", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"No tiene ninguna orden ", valid:true, data:result})
+            return;
+        };
+    });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+    }
+
+}
+
+
+exports.rateOrder = async function(req,res){
+    try{
+
+        database.query(querysMySQL.rate_order,[req.body.calificacion,req.body.idOrder],async function(err,result,fields){
+            if (err)throw err;
+            if (result.affectedRows>0){
+                res.status(200).send({msg:"Has calificado la orden" , valid:true})
+                return;
+
+        }else{
+            res.status(200).send({msg:"error al calificar orden ", valid:true, data:result})
+            return;
+        };
+    });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al calificar ordenes", data: e});
+    }
+
+}
 

@@ -88,8 +88,35 @@ module.exports = {
 		list_dep: "SELECT * FROM departamento",
 
 		//Cupones
-		list_used_cupon_by_user: "SELECT * FROM detalle_cupon_usuario WHERE usuario_id_usuario = ? AND utilizado = 1 ",
+		list_used_cupon_by_user: "SELECT * FROM detalle_cupon_usuario WHERE usuario_id_usuario = ? AND cupon_id_cupon = ? AND utilizado = 1",
 		get_id_cupon_by_name :"SELECT id_cupon FROM cupon WHERE codigo_cupon = ?",
+
+		//Top5 Retaurantes populares
+
+		//Producto más vendido
+		get_most_selled_product: `SELECT p.id_producto , p.nombre_producto , SUM(dpc.cantidad) AS total_vendido , p.descripcion_producto , p.imagen_producto , p.precio_producto
+		FROM detalle_pedido_cliente AS dpc
+		JOIN producto AS p ON dpc.producto_id_producto = p.id_producto 
+		WHERE p.empresa_id_empresa  = ?
+		GROUP BY dpc.producto_id_producto 
+		ORDER BY total_vendido DESC
+		LIMIT 1;`,
+
+		//Ordenes disponibles para entregar
+		get_orders_availabe_by_adrress:`SELECT pc.*
+										FROM pedido_cliente AS pc
+										JOIN direccion AS d ON pc.usuario_id_usuario  = d.usuario_id_usuario 
+										WHERE d.municipio_id_municipio  = ? AND pc.estado_pedido_id_estado = 1;`,
+
+		//Obtener orden de repartidos
+		get_order_select_by_deliver: `SELECT * 
+									  FROM pedido_cliente AS pc 
+									  WHERE pc.usuario_id_usuario2 = ? AND pc.estado_pedido_id_estado = 2; `,	
+									  
+		get_orders_by_deliver: `SELECT * 
+								FROM pedido_cliente AS pc 
+								WHERE pc.usuario_id_usuario2 = ?; `,	
+		
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */
@@ -100,6 +127,13 @@ module.exports = {
 		
 		update_pending_request: "UPDATE solicitud_pendiente SET aprobada=? WHERE id_solicitud_repartidor= ?",
 
+		update_status_order: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=? WHERE id_pedido_cliente=?",
+
+		ban_user: "UPDATE usuario SET estado=0, descripcionBan = ?  WHERE id_usuario=?",
+		
+		rate_order: "UPDATE pedido_cliente SET calificacion= ?  WHERE id_pedido_cliente=?",
+		
+
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ INSERTS -------------------------------- */
 	/* ----------------------------------------------------------------------- */
@@ -109,8 +143,8 @@ module.exports = {
 
 
 		ins_user:"INSERT INTO usuario "+ 
-					" (nombre, apellido, email, username, password,rol,telefono,tipo_licencia,nit,fecha_registro) "+
-					" VALUES (?,?,?,?,?,?,?,?,?,?);",
+					" (nombre, apellido, email, username, password,rol,telefono,tipo_licencia,nit,fecha_registro,estado) "+
+					" VALUES (?,?,?,?,?,?,?,?,?,?,1);",
 
 		ins_sol:"INSERT INTO solicitud_pendiente "+
 				   "(fecha_solicitud,nombre,apellido,email,nit,medio_transporte,usuario_id_usuario,descripcion_empresa,username,password,tipo_empresa,municipio_id_municipio,tipo_licencia,aprobada,telefono,direccion) "+
@@ -148,6 +182,11 @@ module.exports = {
 		ins_cupon: "INSERT INTO cupon "+
 		"(porcentaje_descuento,descripcion,codigo_cupon)"+
 		" VALUES (?,?,?);",
+
+		ins_cupon_user: "INSERT INTO detalle_cupon_usuario "+
+		"(utilizado,cupon_id_cupon,usuario_id_usuario)"+
+		" VALUES (?,?,?);",
+
 
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ DELETE  -------------------------------- */
