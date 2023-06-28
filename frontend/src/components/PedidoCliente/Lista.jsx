@@ -1,13 +1,40 @@
 import React from 'react'
-import edit from '../../images/Editar.png';
-import del from '../../images/delete.png';
+import plus from '../../images/plus.png';
+import minus from '../../images/minus.png';
 
 function Lista({ todos }) {
-    const handleClick = (row) => {
-        //console.log(row)
+    const onPlus = (id) => {
+        //console.log("Plus " + id)
+        var carrito = JSON.parse(window.localStorage.getItem('carrito'));
+        for (let index = 0; index < carrito.length; index++) {
+            if (carrito[index].id_producto == id) {
+                carrito[index].cantidad = carrito[index].cantidad + 1;
+                alert('Se agrego el producto');
+                break;
+            }
 
+        }
+        localStorage.setItem('carrito', JSON.stringify(carrito))
     };
 
+    const onMinus = (id) => {
+        //console.log("MINUS " + id)
+        var carrito = JSON.parse(window.localStorage.getItem('carrito'));
+        for (let index = 0; index < carrito.length; index++) {
+            if (carrito[index].id_producto == id) {
+                if (carrito[index].cantidad > 1) {
+                    carrito[index].cantidad = carrito[index].cantidad - 1;
+                    alert('Se quito un producto');
+                    break;
+                }else{
+                    alert('No se puede reducir mas');
+                    break; 
+                }
+            }
+
+        }
+        localStorage.setItem('carrito', JSON.stringify(carrito))
+    };
     return (
 
         <div>
@@ -15,12 +42,12 @@ function Lista({ todos }) {
             {
 
                 todos.map((todo) => (
-                    <li className='list-item' key={todo.id}>
-                        <input type="text" value={todo.nombre} className='list'
+                    <li className='list-item' key={todo.id_producto}>
+                        <input type="text" value={todo.nombre_producto} className='list'
                             onChange={(event) => event.preventDefault()} />
 
                         <div className='header'>
-                            <h6>Precio {todo.precio}</h6>
+                            <h6>Precio {todo.precio_producto}</h6>
                         </div>
 
                         <div className='header'>
@@ -29,18 +56,17 @@ function Lista({ todos }) {
 
                         <div className='alinea'>
                             <div>
-                                <button className='button-complete task-button'>
-                                    <a >
+                                <button className='button-complete task-button' onClick={() => onPlus(todo.id_producto)} >
+                                    <i >
                                         <img className='button-edit'
-                                            src={edit}
-
+                                            src={plus}
                                         />
-                                    </a>
+                                    </i>
                                 </button>
-                                <button className='button-complete task-button'>
+                                <button className='button-complete task-button' onClick={() => onMinus(todo.id_producto)}>
                                     <a >
                                         <img className='button-edit'
-                                            src={del}
+                                            src={minus}
 
                                         />
                                     </a>

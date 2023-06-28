@@ -38,6 +38,8 @@ import Iniciouser from './components/Usuario/InicioUsuario';
 import PanelE from './components/Usuario/PanelEmpresa';
 import PanelCa from './components/Usuario/PanelCategoria';
 
+//Pedido Cliente
+import Pedido from './components/PedidoCliente/Pedido'
 
 
 function App() {
@@ -71,6 +73,7 @@ function App() {
             <Route path="/inicioU" element={<Iniciouser />} />
             <Route path="/panelE/:title" element={<PanelE />} />
             <Route path="/panelC/:title" element={<PanelCa />} />
+            <Route path="/pedidoCliente" element={<Pedido />} />
           </Routes>
         </BrowserRouter>
         </Provider>

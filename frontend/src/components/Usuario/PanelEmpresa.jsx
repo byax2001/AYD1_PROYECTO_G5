@@ -8,12 +8,13 @@ import image2 from '../../images/quesoB.png';
 
 const data = [
     {
-    id_producto:1,
+    id_producto:14,
 	nombre_producto: "Papas Grandes",
     descripcion_producto: "Muy delicioso",
 	precio_producto:10,
 	nombre_tipo_prod:"Plato Fuerte",
-	imagen_producto:image2
+	imagen_producto:image2,
+    producto_id_producto: 2
     },
     {
 	id_producto:2,
@@ -21,7 +22,8 @@ const data = [
     descripcion_producto: "Muy delicioso",
 	precio_producto:5,
 	nombre_tipo_prod:"Plato chico",
-	imagen_producto:image2
+	imagen_producto:image2,
+    producto_id_producto: 2
     },
     {
 	id_producto:3,
@@ -29,8 +31,8 @@ const data = [
     descripcion_producto: "Muy delicioso",
 	precio_producto:7,
 	nombre_tipo_prod:"Plato Medio",
-	imagen_producto:image2
-
+	imagen_producto:image2,
+    producto_id_producto: 2
     }
   ];
 
@@ -60,9 +62,9 @@ const PanelE = () => {
             <div className="h2 text-light">Productos a la venta</div>
             <div className="container d-flex justify-content-center align-items-center h-100">
                 <div className="row">
-                {data.map(({ nombre_producto, imagen_producto, id_producto, descripcion_producto,precio_producto }) => (
+                {data.map(({ nombre_producto, imagen_producto, id_producto, descripcion_producto,precio_producto,producto_id_producto }) => (
                     <div className="col-md-2" key={id_producto}>
-                    <CardPr imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} />
+                    <CardPr imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} producto_id={producto_id_producto} />
                     </div>
                 ))}
                 </div>

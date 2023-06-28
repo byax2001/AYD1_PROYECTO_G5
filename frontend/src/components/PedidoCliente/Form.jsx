@@ -8,22 +8,9 @@ function Form({input,setInput,lista}) {
 }
 
   const onFormSubmit = (event) => {
-    var objeto = {
-      id: lista.length ,
-      nombre: input,
-      cantidad: 1
-    }
-
-    
     event.preventDefault();
-    lista.push(objeto)
-    try {
-      localStorage.setItem('carrito', JSON.stringify(lista))
-   } catch (error) {
-       console.error(error)
-   }
     setInput("");
-    console.log(lista);
+
 }
 
 const onBorrar = (event) => {
@@ -36,15 +23,53 @@ const onBorrar = (event) => {
 }
 
 
+
+const doOrder =  async() => {
+  var storedCarrito = window.localStorage.getItem('carrito');
+  var carrito = JSON.parse(storedCarrito);
+  var objeto = {
+    idUser: 44 ,
+    cupon: input,
+    productos: carrito
+  }
+
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/neworder`;
+    let config = {
+      method: "POST", //ELEMENTOS A ENVIAR
+      body: JSON.stringify(objeto),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        //agregar tocken
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+  
+      const data_res = await res.json();
+  
+      //console.log(data_res)
+      if(data_res.valid){
+        console.log(data_res)
+        alert(data_res.message)
+        onBorrar();
+      }else{
+        //AVISO CONTRASEÑA
+        alert(data_res.message)
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  
+  
+}
+
   return (
     <form onSubmit={onFormSubmit}>
       <input type="text" placeholder='Agregar Cupon...' className='task-input' value={input}
-      required 
       onChange ={onInputChange}
       />
-      <button className='button-add' type='submit'>Agregar Cupon</button>
-      <button className='button-add' onClick={onBorrar}>Borrar</button>
-      <button className='button-add' onClick={onBorrar}>Aceptar Pedido</button>
+      <button className='button-add' onClick={doOrder}>Crear Pedido</button>
     </form>
   )
 }

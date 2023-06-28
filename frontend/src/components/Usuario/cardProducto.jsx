@@ -7,14 +7,15 @@ import "./card.css";
 
 // imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} 
 
-const CardPr = ({imageSource, title,id ,text, precio }) => {
+const CardPr = ({imageSource, title,id ,text, precio,producto_id }) => {
 
   const AgregarCarrito = () =>{
     var objeto = {
-      id: id ,
-      nombre: title,
-      precio: precio,
-      cantidad: 1
+      id_producto: id ,
+      nombre_producto: title,
+      precio_producto: precio,
+      cantidad: 1,
+      tipo_producto_id_tipo_producto: producto_id
     }
     var bandera = true;
     var carrito = [];
@@ -27,7 +28,7 @@ const CardPr = ({imageSource, title,id ,text, precio }) => {
     if (carrito.length > 0)
     {
       for (let index = 0; index < carrito.length; index++) {
-        if(carrito[index].id == id){
+        if(carrito[index].id_producto == id){
           bandera = false;
           carrito[index].cantidad = carrito[index].cantidad + 1;
           alert('Se agrego el producto al Carrito');
