@@ -249,3 +249,48 @@ exports.rateOrder = async function(req,res){
 
 }
 
+
+exports.cancelorder = async function(req,res){
+    try{
+     
+        database.query(querysMySQL.update_status_order_cancel,[req.body.idUser,req.body.idpedido],async function(err,result,fields){
+            if (err)throw err;
+            if (result.affectedRows>0){
+                res.status(200).send({message:"Se ha cancelado la orden ", valid:true})
+                return;
+
+            }else{
+                res.status(200).send({message:"Error al cancelar la orden :c ", valid:false})
+                return;
+            };
+        });
+            
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al cancelar la orden", data: e});
+    }
+
+}
+
+
+exports.deliverorder = async function(req,res){
+    try{
+      
+        database.query(querysMySQL.update_status_order_delivered,[req.body.idUser,req.body.idpedido],async function(err,result,fields){
+            if (err)throw err;
+            if (result.affectedRows>0){
+                res.status(200).send({message:"Se ha entregado la orden ", valid:true})
+                return;
+
+            }else{
+                res.status(200).send({message:"Error al entregar la orden :c ", valid:false})
+                return;
+            };
+        });
+            
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al entregar la orden", data: e});
+    }
+
+}
