@@ -103,17 +103,23 @@ module.exports = {
 		LIMIT 1;`,
 
 		//Ordenes disponibles para entregar
-		get_orders_availabe_by_adrress:`SELECT pc.*
+		get_orders_availabe_by_adrress:`SELECT pc.id_pedido_cliente AS NoOrden, d.direccion, m.nombre_municipio  AS municipio, pc.fecha_pedido AS fecha, 
+										CASE pc.metodo_pago
+											WHEN 0 THEN 'Efectivo'
+											WHEN 1 THEN 'Tarjeta'
+											ELSE 'Desconocido'
+										END AS metodo
 										FROM pedido_cliente AS pc
-										JOIN direccion AS d ON pc.usuario_id_usuario  = d.usuario_id_usuario 
-										WHERE d.municipio_id_municipio  = ? AND pc.estado_pedido_id_estado = 1;`,
+										JOIN direccion AS d ON pc.usuario_id_usuario = d.usuario_id_usuario
+										JOIN municipio AS m ON d.municipio_id_municipio = m.id_municipio
+										WHERE d.municipio_id_municipio = (SELECT municipio_id_municipio FROM direccion WHERE usuario_id_usuario =?) AND pc.estado_pedido_id_estado = 1;`,
 
 		//Obtener orden de repartidos
-		get_order_select_by_deliver: `SELECT * 
+		get_order_select_by_deliver: `SELECT pc.id_pedido_cliente AS NoOrden, pc.fecha_pedido AS fecha
 									  FROM pedido_cliente AS pc 
 									  WHERE pc.usuario_id_usuario2 = ? AND pc.estado_pedido_id_estado = 2; `,	
 									  
-		get_orders_by_deliver: `SELECT * 
+		get_orders_by_deliver: `SELECT pc.id_pedido_cliente AS NoOrden, pc.fecha_pedido AS fecha
 								FROM pedido_cliente AS pc 
 								WHERE pc.usuario_id_usuario2 = ?; `,	
 		
@@ -126,6 +132,12 @@ module.exports = {
 		update_product: "UPDATE producto SET nombre_producto=?,descripcion_producto=?, imagen_producto=?, precio_producto=?,tipo_producto_id_tipo_producto=?,combo=? WHERE id_producto=?",
 		
 		update_pending_request: "UPDATE solicitud_pendiente SET aprobada=? WHERE id_solicitud_repartidor= ?",
+
+		update_status_order: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=? WHERE id_pedido_cliente=?",
+
+		update_status_order_cancel: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=4 WHERE id_pedido_cliente=?",
+
+		update_status_order_delivered: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=3 WHERE id_pedido_cliente=?",
 
 		update_status_order: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=? WHERE id_pedido_cliente=?",
 
