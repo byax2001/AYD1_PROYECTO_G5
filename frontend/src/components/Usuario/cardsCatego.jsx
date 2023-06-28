@@ -1,7 +1,7 @@
 import React from "react";
 import CardC from "./cardCategoria";
 
-import image1 from '../../images/logo.png';
+import image1 from '../../images/logo copy.png';
 
 
 
@@ -33,9 +33,11 @@ const CardsC = () => {
   return (
 
     <div>
-      <div className="container d-flex justify-content-center align-items-center h-100">
+      <div className=" container-fluid">
         <div className="row">
-            
+          {/* SE DEBE DE MODIFICAR ASI PARA OBTENER EL LINK DE LA IMAGEN DEL PRODUCOT
+            {data.map(({img_producto, id_tipo_producto,nombre_tipo_prod}) => (
+          */}
           {data.map(({id_tipo_producto,nombre_tipo_prod}) => (
             <div className="col-md-2" key={id_tipo_producto}>
               <CardC imageSource={image1} title={nombre_tipo_prod} id={id_tipo_producto} />

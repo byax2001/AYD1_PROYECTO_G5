@@ -23,13 +23,12 @@ function Pedido() {
 
     return (
         <React.Fragment>
+            <div className="wall2">
             <nav className="navbar navbar-expand-lg navbar-light position-relative">
                 <img id="logoLP" src={logo} alt="Logo" />
                 <a className="navbar-brand" >AlChilazo</a>
                 <div className="h2 text-light">Carrito </div>
-                <div className="btn-group d-inline-flex" data-toggle="buttons">
-                    <Link to="/inicioU" className="btn textForm text-light">Regresar</Link>
-                </div>
+                <Link to="/inicioU" className="btn textForm text-light btnEffect btnRT">Regresar</Link>
             </nav>
 
             <div className='container contPedido'>
@@ -49,6 +48,8 @@ function Pedido() {
                 </div>
 
             </div>
+            </div>
+            
         </React.Fragment>
     )
 }
