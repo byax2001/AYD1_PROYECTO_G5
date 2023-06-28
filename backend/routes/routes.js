@@ -10,6 +10,7 @@ var REPORTS = require('../controllers/Admin.Reports')
 var PRODUCTS = require('../controllers/Products.Controller')
 var ACEPTREQ = require('../controllers/Acept.Request')
 var ADDR = require('../controllers/Address.Controller')
+var ORDER = require('../controllers/Orders.Controller')
 
 var router = express.Router();
 var baseurl = '/api/';
@@ -33,13 +34,15 @@ router.post(baseurl + 'user',                                     USER.newuser)
 router.get(baseurl + 'user',                                      OAUTH.validateToken,USER.getuser)
 router.put(baseurl + 'user',                                      OAUTH.validateToken,USER.updateuser)
 router.delete(baseurl + 'user',                                   OAUTH.validateToken,USER.deleteuser)
+router.put(baseurl + 'user/ban',                                  OAUTH.validateToken,USER.banuser)
 
 
 // Repartidores
 router.post(baseurl + 'userdeliver',    upload.single('image'),   USERDELIVER.newdeliveruser)
 router.get(baseurl + 'userdeliver',                               OAUTH.validateToken,USERDELIVER.getdeliveruser)
 router.put(baseurl + 'userdeliver',     upload.single('image'),   OAUTH.validateToken,USERDELIVER.updatedeliveruser)
-router.delete(baseurl + 'userdeliver',                            OAUTH.validateToken,USERDELIVER.deletedeliveruser)
+router.get(baseurl + 'userdeliver/orders/:id',                    OAUTH.validateToken,ORDER.getallordersbydeliver)
+//router.get(baseu)
 
 // Restaurantes
 
@@ -66,9 +69,20 @@ router.get(baseurl + 'reqPendingDelivers',                        OAUTH.validate
 
 // Reportes
 router.get(baseurl + 'reports',                                   OAUTH.validateToken,REPORTS.getInfoUser)
+router.get(baseurl + 'reports/popularproduct/:id',                OAUTH.validateToken,REPORTS.getPopularRestaurants)
+
 
 //Municipio
 router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)
 router.get(baseurl + 'departamento/municipio/:id',                OAUTH.validateToken,ADDR.getInfoMun)
+
+
+
+//Pedidos
+router.post(baseurl + 'neworder',                                 OAUTH.validateToken,ORDER.neworder)
+router.get(baseurl + 'orderbyadress/:id',                         OAUTH.validateToken,ORDER.getorderbyadress)
+router.put(baseurl + 'selectorder',                               OAUTH.validateToken,ORDER.changestatusorder)
+router.get(baseurl + 'order/actual/:id',                          OAUTH.validateToken,ORDER.getactiveorder)
+router.put(baseurl + 'order/rate',                                OAUTH.validateToken,ORDER.rateOrder)
 
 module.exports = router;

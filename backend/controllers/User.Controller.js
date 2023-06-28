@@ -131,3 +131,21 @@ exports.getuser = async function (req,res){
         res.status(400).send({status: "error", message: "Error al obtener usuarios", data: e});
     }
 }
+
+exports.banuser = async function (req,res){
+    try{
+        database.query(querysMySQL.ban_user,[req.body.descripcion,req.body.id ],async function(err,result,fields){    
+            if (result.affectedRows>0){
+    
+                res.status(200).send({status: "success", message: "El Usuario ha sido baneado"});
+            }else{
+                res.status(200).send({msg:"Se produjo un error al banear usuario.", valid:false})
+                return;
+    
+            }
+        }); 
+
+    }catch(e){
+        res.status(400).send({status: "error", message: "Error al banear usuario", data: e});
+    }
+}
