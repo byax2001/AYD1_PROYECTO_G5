@@ -40,8 +40,8 @@ const doOrder =  async() => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        //agregar tocken
-        //authorization : localStorage.getItem('token')
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+        
       },
     };
     try {

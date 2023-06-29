@@ -110,7 +110,7 @@ function InitSesion() {
         }
         else if(data_res.data.rol==1){
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
-          alert("Usuario ingresado con exito");
+          navigate("/inicioU",{state:{user:"INFORMACION"}})
         }else if (data_res.data.rol==2){
           localStorage.setItem('calificacion',payloadData.calificacion)
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})

@@ -57,7 +57,12 @@ const PanelE = () => {
     
       const fetchData = async () => {
         try {
-          const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/rest/${idR}`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+                };
+          const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/rest/${idR}`,config); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
           const data = response.data; // Obtener los datos de la respuesta
           setFilteredData(data.data); // Actualizar los datos del componente
           console.log('Datos Obtenidos:', data.data);

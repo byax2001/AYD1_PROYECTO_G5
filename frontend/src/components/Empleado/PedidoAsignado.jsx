@@ -106,6 +106,7 @@ const PedidoAsignado = ({pedidoAsignadoActivo,setFalsePA}) => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
         // authorization : localStorage.getItem('token')
       },
     };
@@ -134,7 +135,7 @@ const PedidoAsignado = ({pedidoAsignadoActivo,setFalsePA}) => {
          headers: {
            "Content-Type": "application/json",
            Accept: "application/json",
-           authorization : localStorage.getItem('token')
+           Authorization: `Bearer ${localStorage.getItem('token')}`
          },
        };
        try {
@@ -166,7 +167,7 @@ const PedidoAsignado = ({pedidoAsignadoActivo,setFalsePA}) => {
          headers: {
            "Content-Type": "application/json",
            Accept: "application/json",
-           authorization : localStorage.getItem('token')
+           Authorization: `Bearer ${localStorage.getItem('token')}`
          },
        };
        try {

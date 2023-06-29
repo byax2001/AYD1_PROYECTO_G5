@@ -196,6 +196,7 @@ const columnas = [
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -225,7 +226,8 @@ const columnas = [
       body: JSON.stringify(accion),
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -252,7 +254,7 @@ const columnas = [
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        authorization : localStorage.getItem('token')
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {

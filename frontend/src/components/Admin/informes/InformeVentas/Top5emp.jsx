@@ -102,6 +102,7 @@ function Top5Emp(props) {
         headers: {
         "Content-Type": "application/json",
         Accept: "application/json", 
+        Authorization: `Bearer ${localStorage.getItem('token')}`
         },
     };
     try{

@@ -149,7 +149,7 @@ function ListaHistorial() {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        //authorization : localStorage.getItem('token')
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
