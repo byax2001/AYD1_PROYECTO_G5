@@ -213,6 +213,7 @@ const SolicitudRepartidor = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -235,7 +236,6 @@ const SolicitudRepartidor = () => {
   }, []);
   //ACEPTAR SOLICITUD
   const aSolicitud = async (id) => {
-    console.log(localStorage.getItem('token'))
     const url = `${process.env.REACT_APP_API_CONSUME}/api/aceptRequest`;
     const accion = { "id_solicitud": id }
     console.log(`------------------Id mandado a aceptar ${id}`)
@@ -245,7 +245,7 @@ const SolicitudRepartidor = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
-        authorization : localStorage.getItem('token')
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -272,6 +272,7 @@ const SolicitudRepartidor = () => {
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {

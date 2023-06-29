@@ -119,7 +119,14 @@ const InicioE = () => {
   
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/rest/${state.data.idempresa}`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        };
+
+
+        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/rest/${state.data.idempresa}`,config); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
@@ -130,7 +137,12 @@ const InicioE = () => {
 
     const fetchDataV = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/type`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        };
+        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/type`,config); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredDataV(data.data); // Actualizar los datos del componente
         //console.log('Datos Obtenidos:', data.data);
@@ -244,10 +256,15 @@ const InicioE = () => {
       };
 
       const deleteRow = async () => {
+
+   
         const url = `${process.env.REACT_APP_API_CONSUME}/api/products/${selectedRow.id_producto}`; // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
             
             let config = {
-                method: "DELETE"
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
 
             };
             try{

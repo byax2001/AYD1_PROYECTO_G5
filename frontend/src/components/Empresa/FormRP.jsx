@@ -34,7 +34,12 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
   
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/type`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        };
+        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/type`,config); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
@@ -71,6 +76,9 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
             let config = {
                 method: "POST", //ELEMENTOS A ENVIAR
                 body: dataFD,
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
             };
             try{
                 const res = await fetch(url, config);
