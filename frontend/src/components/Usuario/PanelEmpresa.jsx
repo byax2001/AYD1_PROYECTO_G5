@@ -3,8 +3,9 @@ import logo from '../../images/logo copy.png';
 import { Link,useLocation } from 'react-router-dom';
 import CardPr from './cardProducto';
 import image2 from '../../images/quesoB.png';
+import axios from 'axios';
 
-
+/*
 const data = [
     {
     id_producto:14,
@@ -34,7 +35,7 @@ const data = [
     producto_id_producto: 2
     }
   ];
-
+*/
 //<Form selectedRow={selectedRow} closeModal={closeModal} filteredDataV={filteredDataV} />
 const PanelE = () => {
     
@@ -45,6 +46,29 @@ const PanelE = () => {
 
 
     //const { title } = location.state;
+
+    /********************************************** */
+
+    const [filteredData, setFilteredData] = useState([]);
+
+    useEffect(() => {
+        fetchData();
+      }, []);
+    
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/rest/${idR}`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+          const data = response.data; // Obtener los datos de la respuesta
+          setFilteredData(data.data); // Actualizar los datos del componente
+          console.log('Datos Obtenidos:', data.data);
+        } catch (error) {
+          console.error('Error al obtener los datos:', error);
+        }
+      };
+
+
+
+
 
     return (
         <React.Fragment>
@@ -60,7 +84,7 @@ const PanelE = () => {
                     <div className="h2 text-light">Productos a la venta</div>
                     <div className="container d-flex justify-content-center align-items-center h-100">
                         <div className="row">
-                            {data.map(({ nombre_producto, imagen_producto, id_producto, descripcion_producto, precio_producto, producto_id_producto }) => (
+                            {filteredData.map(({ nombre_producto, imagen_producto, id_producto, descripcion_producto, precio_producto, producto_id_producto }) => (
                                 <div className="col-md-2" key={id_producto}>
                                     <CardPr imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} producto_id={producto_id_producto} />
                                 </div>

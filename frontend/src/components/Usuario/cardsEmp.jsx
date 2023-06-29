@@ -1,8 +1,9 @@
-import React from "react";
 import Card from "./cardEmpresa";
 
 import image1 from '../../images/logo.png';
 import image3 from '../../images/star.png';
+import axios from 'axios';
+import React, { useState,useEffect  } from 'react';
 
 
 
@@ -68,6 +69,29 @@ const cards = [
 /// aqui manipulo todas las cartas:
 
 const Cards = () => {
+
+  const [cards, setCards] = useState([]);
+
+
+
+  useEffect(() => {
+    
+    fetchDatav();
+  }, []);
+
+
+  const fetchDatav = async () => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/reports/top5restaurant`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+      const data = response.data; // Obtener los datos de la respuesta
+      setCards(data.data); // Actualizar los datos del componente
+      console.log('Datos Obtenidos:', data.data);
+    } catch (error) {
+      console.error('Error al obtener los datos:', error);
+    }
+  };
+
+
 
 
   return (

@@ -8,7 +8,7 @@ import fondo1 from '../../images/fondoCard.jpg';
 import "./css/inicio.css";
 import Carrito from './Carrito/Carrito';
 import axios from 'axios';
-
+/*
   const data = [
     {
         id_empresa: 16,
@@ -66,7 +66,7 @@ import axios from 'axios';
         tipo_empresa_id_tipo: 2,
         telefono: "01234567"
     }
-];
+];*/
 
 
 
@@ -74,6 +74,9 @@ const Iniciouser = () => {
 
     const [searchValue, setSearchValue] = useState('');
     const [filteredData, setFilteredData] = useState([]);
+
+    const [data, setData] = useState([]);
+
     const [suggestions, setSuggestions] = useState([]);
 
 
@@ -97,7 +100,7 @@ const Iniciouser = () => {
         try {
           const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/reports/top5restaurant`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
           const data = response.data; // Obtener los datos de la respuesta
-          setFilteredData(data.data); // Actualizar los datos del componente
+          setData(data.data); // Actualizar los datos del componente
           console.log('Datos Obtenidos:', data.data);
         } catch (error) {
           console.error('Error al obtener los datos:', error);
