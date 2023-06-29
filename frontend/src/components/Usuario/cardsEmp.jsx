@@ -1,7 +1,7 @@
 import Card from "./cardEmpresa";
 
 import image1 from '../../images/logo.png';
-import image3 from '../../images/star.png';
+import image3 from '../../images/Rest.png';
 import axios from 'axios';
 import React, { useState,useEffect  } from 'react';
 
