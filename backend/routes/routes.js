@@ -70,7 +70,9 @@ router.get(baseurl + 'reqPendingDelivers',                        OAUTH.validate
 // Reportes
 router.get(baseurl + 'reports',                                   OAUTH.validateToken,REPORTS.getInfoUser)
 router.get(baseurl + 'reports/popularproduct/:id',                OAUTH.validateToken,REPORTS.getPopularRestaurants)
-
+router.get(baseurl + 'reports/top5restaurant',                    OAUTH.validateToken,REPORTS.getTop5Restaurants)
+router.get(baseurl + 'reports/top5deliver',                       OAUTH.validateToken,REPORTS.getTop5delivers)
+router.get(baseurl + 'reports/top5restaurant2',                   OAUTH.validateToken,REPORTS.getTop5Restaurants2)
 
 //Municipio
 router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)

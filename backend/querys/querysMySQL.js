@@ -122,6 +122,32 @@ module.exports = {
 		get_orders_by_deliver: `SELECT pc.id_pedido_cliente AS NoOrden, pc.fecha_pedido AS fecha
 								FROM pedido_cliente AS pc 
 								WHERE pc.usuario_id_usuario2 = ?; `,	
+
+		get_top5_restaurants: 	`SELECT e.id_empresa, e.nombre, SUM(dpc.cantidad) AS total_ventas
+								FROM empresa e
+								JOIN producto p ON e.id_empresa = p.empresa_id_empresa
+								JOIN detalle_pedido_cliente dpc ON p.id_producto = dpc.producto_id_producto
+								GROUP BY e.id_empresa, e.nombre
+								ORDER BY total_ventas DESC
+								LIMIT 5; `,	
+
+		get_top5_delivers: 	`SELECT u.id_usuario, u.nombre, AVG(pc.calificacion) AS promedio_calificacion
+								FROM pedido_cliente pc
+								JOIN usuario u ON pc.usuario_id_usuario2 = u.id_usuario
+								WHERE pc.calificacion IS NOT NULL AND pc.estado_pedido_id_estado = 3
+								GROUP BY u.id_usuario, u.nombre
+								ORDER BY promedio_calificacion DESC
+								LIMIT 5; `,	
+
+		get_top5_restaurants2: 	`SELECT e.id_empresa, e.nombre, COUNT(*) AS total_ordenes
+							FROM empresa e
+							JOIN producto p ON e.id_empresa = p.empresa_id_empresa
+							JOIN detalle_pedido_cliente dpc ON p.id_producto  = dpc.producto_id_producto
+							JOIN pedido_cliente pc ON dpc.pedido_cliente_id_pedido_cliente  = pc.id_pedido_cliente 
+							GROUP BY e.id_empresa, e.nombre
+							ORDER BY total_ordenes DESC
+							LIMIT 5; `,	
+		
 		
 
     /* ----------------------------------------------------------------------- */
