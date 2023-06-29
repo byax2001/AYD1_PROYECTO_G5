@@ -88,5 +88,6 @@ router.get(baseurl + 'order/actual/:id',                          OAUTH.validate
 router.put(baseurl + 'order/rate',                                OAUTH.validateToken,ORDER.rateOrder)
 router.put(baseurl + 'order/cancel',                              OAUTH.validateToken,ORDER.cancelorder)
 router.put(baseurl + 'order/deliver',                             OAUTH.validateToken,ORDER.deliverorder)
+router.get(baseurl + 'order/user/:id',                            OAUTH.validateToken,ORDER.getordersbyuser)
 
 module.exports = router;
