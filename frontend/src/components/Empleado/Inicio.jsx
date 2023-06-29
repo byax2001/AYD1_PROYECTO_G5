@@ -10,12 +10,24 @@ import PedidoAsignado from './PedidoAsignado';
 const Inicio = () => {
   //const { infoUser, setInfoUser } = useContext(MyContext);
   const [state, setState] = useMyContext();
+  const [pedidoAsignadoActivo, setPedidoAsignadoActivo] = useState(false)
+
+  const setTruePA = () =>{
+    setPedidoAsignadoActivo(true)
+  }
+  const setFalsePA = () =>{
+    setPedidoAsignadoActivo(false)
+  }
+
   const navigate=useNavigate()
  
   useEffect(() => {
     console.log(state)
     if(state.rol!=2){
       navigate("/")
+    }
+    if(pedidoAsignadoActivo){
+      alert("PEDIDO ASIGNADO")
     }
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   },[]);
@@ -38,10 +50,14 @@ const Inicio = () => {
       <div className="container">
         <div className="row mt-4">
           <div className="col-7">
-            <PedidosPendientes />
+            <PedidosPendientes 
+            pedidoAsignadoActivo={pedidoAsignadoActivo}
+            setTruePA={setTruePA}
+            />
           </div>
           <div className='col-5'>
-            <PedidoAsignado />
+            <PedidoAsignado pedidoAsignadoActivo={pedidoAsignadoActivo}
+            setFalsePA={setFalsePA} />
           </div>
         </div>
       </div>

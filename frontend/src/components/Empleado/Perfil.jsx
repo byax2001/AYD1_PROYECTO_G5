@@ -86,32 +86,62 @@ const data = [
 
 const columns = [
   {
-    name: 'Nombre del producto',
-    selector: row => row.producto,
+    name: 'Orden',
+    selector: row => row.NoOrden,
+    sortable: true,
+  },
+  {
+    name: 'Nombre Cliente',
+    selector: row => row.nombre,
     sortable: true,
   },
   {
     name: 'Fecha de pedido',
-    selector: row => row.fechaPedido,
+    selector: row => String(row.fecha).substring(0, 10),
+    sortable: true,
+  },{
+    name: 'Direccion',
+    selector: row => row.direccion,
     sortable: true,
   },
   {
     name: 'Estado',
-    selector: row => row.estado,
+    selector: row => {
+      switch (Number(row.estado)) {
+        case 1: return "Disponible";
+        case 2: return "En Camino";
+        case 3: return "Entregado";
+        case 4: return "Cancelado";
+        default: return "Desconocido";
+      }
+    },
     sortable: true,
-  },
+  },{
+    name: 'Calificacion',
+    selector: row => row.calificacion,
+    sortable: true,
+  }
 ];
 
 const Perfil = () => {
   const [state, setState] = useMyContext();
-  const [filtraciones, setFiltraciones]=useState([
-    {ft:"Estado",idft:1},
-    {ft:"Fecha",idft:2},
-    {ft:"Nombre de Pedido",idft:3}
+  const [filtraciones, setFiltraciones] = useState([
+    { ft: "Estado", idft: 1 },
+    { ft: "Fecha", idft: 2 },
+    { ft: "Nombre de Pedido", idft: 3 }
+  ])
+  
+  const [testados, setTestados] = useState([
+    { estado: "En Camino", nestado: 2 },
+    { estado: "Desconocido", nestado: -1 },
+    { estado: "Entregado", nestado: 3 },
+    { estado: "Disponible", nestado: 1 },
+    { estado: "Cancelado", nestado: 4 }
   ])
   const[filtroActual,setfiltroActual]=useState(0)
   const[valfiltro, setValFiltro]=useState("")
   const [filteredData, setFilteredData] = useState(data);
+  const [dataRespaldo, setDataRespaldo]=useState([])
   const [puntuacion, setPuntuacion] = useState(3);
   const navigate = useNavigate()
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -133,10 +163,15 @@ const Perfil = () => {
       return
     }*/
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+    getHistorial();
+    console.log()
+    setPuntuacion(localStorage.getItem('calificacion'))
   }, []);
+
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;
     setfiltroActual(value)
+    setFilteredData(dataRespaldo)
     if(value==0){
       setValFiltro("")
     }
@@ -159,15 +194,57 @@ const Perfil = () => {
   };
   //VENTANA EMERGENTE PARA ACCIONAR 
   const filtrar = async()=>{
+    setFilteredData(dataRespaldo) //RELLENAR LA TABLA ANTES DEL FILTRO
+
     if(filtroActual==0){
       alert("Escoja un Tipo de Filtrado")
       return
     }else if(valfiltro==""){
-      alert('Campo del Filtro no puede ir vacio')
+      alert('Campo del Filtro vacio o invalido')
       return
+    }else if (filtroActual ==1 && valfiltro==0){
+      alert('Escoja un tipo de estado')
+      return
+    }
+
+    if(filtroActual==1){
+      //ESTADO DEL PEDIDO
+      setFilteredData(filteredData.filter(item => item.estado == valfiltro)) 
+    }else if (filtroActual==2){
+      //FECHA DEL PEDIDO
+      setFilteredData(filteredData.filter(item => item.fecha.startsWith(valfiltro)))
+    }else if (filtroActual==3){
+      //NOMBRE DEL PEDIDO
+      setFilteredData(filteredData.filter(item => item.NoOrden == valfiltro))
     }
     console.log(filtroActual)
   }
+
+  //LLENAR HISTORIAL DE PEDIDOS DE USUARIO
+  const getHistorial = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/userdeliver/orders/${localStorage.getItem('idUser')}`;
+    let config = {
+      method: "GET", //ELEMENTOS A ENVIAR
+
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setFilteredData(data_res.data)
+      setDataRespaldo(data_res.data)
+      console.log("------------------------------------------------------")
+      console.log(data_res)
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
 
   return (
     <React.Fragment>
@@ -182,7 +259,7 @@ const Perfil = () => {
         <div className='container  text-light rounded'>
           <div className="row textForm">
             <div className="col-3 h5">Nombre del empleado:</div>
-            <div className="col-9 h3">{/*state.data.nombre + ' ' +state.data.apellido*/}</div>
+            <div className="col-9 h3">{localStorage.getItem('nombre')+' '+ localStorage.getItem('apellido')}</div>
           </div>
           <div className="row textForm">
             <div className="col-3 h4"> Puntuacion: </div>
@@ -227,10 +304,23 @@ const Perfil = () => {
           <div className="col-4">
             {filtroActual != 0 && (
               <div className="">
-                {filtroActual == 2 ? (
+                {filtroActual == 1?(
+                  <select  onChange={(e)=>{setValFiltro(e.target.value)}} name="filtro" className='form-select'>
+                  <option value={0}>Seleccione Estado</option>
+                  {testados.map((testados) => (
+                    <option key={testados.nestado} value={testados.nestado}>
+                      {testados.estado}
+                    </option>
+                  ))}
+                </select>
+                ):
+                filtroActual == 2 ? (
                   <input className='form-control' onChange={(e)=>{setValFiltro(e.target.value); console.log(e.target.value)}} type="date" />
                 ) : (
-                  <input className='form-control' onChange={(e)=>{setValFiltro(e.target.value)}} type="text" />
+                  <input className='form-control'
+                  placeholder='Nombre Id de la Orden' 
+                  onChange={(e)=>{setValFiltro(e.target.value)}} 
+                  type="number" />
                 )}
               </div>
             )}
@@ -248,6 +338,7 @@ const Perfil = () => {
               highlightOnHover
               striped
               responsive
+              noDataComponent={"El usuario no tiene ninguna orden realizada"}
             />
           </div>
         </div>

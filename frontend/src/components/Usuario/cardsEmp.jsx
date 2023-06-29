@@ -97,7 +97,7 @@ const Cards = () => {
   return (
 
     <div>
-      <div className="container d-flex justify-content-center align-items-center h-100">
+      <div className="container-fluid justify-content-center align-items-center h-100">
         <div className="row">
           {cards.map(({ nombre, descripcion_empresa, id_empresa }) => (
             <div className="col-md-2" key={id_empresa}>

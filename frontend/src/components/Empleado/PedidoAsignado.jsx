@@ -77,15 +77,27 @@ const columns = [
 ];
 
 
-const PedidoAsignado = () => {
+const PedidoAsignado = ({pedidoAsignadoActivo,setFalsePA}) => {
   //const { infoUser, setInfoUser } = useContext(MyContext);
   const navigate=useNavigate()
+  
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
+    //LA PESTAÑA PADRE ES INICIO, LAS DOS HIJAS SON PEDIDOSPENDIENTES Y PEDIDOS ASIGNADOS
+    //PEDIDOSPENDIENTES CAMBIARA DE VALOR LA VARIABLE: "pedidosAsignadoActivo" de false a true 
+    //cuando se le de en asignar al modal de accion modificando su valor en el padre
+    //cuando eso pase el componente de PedidosAsignados detectara el cambio en el useEffect, 
+    //por que asi lo indique en el array de abajo de este [pedidoAsignadoActivo] y se reiniciara
+    //aprovechare eso para generar la solicitud de volver a llenar solicitudes activas y ademas
+    //volver a colocar en false el pedidoAsignadoActivo
+    if(pedidoAsignadoActivo){ 
+      setFalsePA()
+      getSolicitudesactivas()
+    }
     getSolicitudesactivas()
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL PedidoAsignado DEL PROGRAMA
-  }, []);
+  }, [pedidoAsignadoActivo]);
 
   async function getSolicitudesactivas() {
     const url = `${process.env.REACT_APP_API_CONSUME}/api/order/actual/${localStorage.getItem('idUser')}`;
@@ -187,6 +199,7 @@ const PedidoAsignado = () => {
               highlightOnHover
               striped
               responsive
+              noDataComponent="No hay pedidos asignados por el momento"
             />
           </div>
         </div>
