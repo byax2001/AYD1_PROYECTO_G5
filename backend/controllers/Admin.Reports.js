@@ -61,3 +61,67 @@ exports.getPopularRestaurants = async function (req, res) {
         res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
+
+exports.getTop5Restaurants = async function (req, res) {
+    try {
+        
+        database.query(querysMySQL.get_top5_restaurants,[],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Este es el top5 de restaurantes", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"Aún no hay productos vendidos para obtener el top5", valid:true, data:result})
+            return;
+        };
+    });
+
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+    }
+}
+
+exports.getTop5delivers = async function (req, res) {
+    try {
+        
+        database.query(querysMySQL.get_top5_delivers,[],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Este es el top5 de repartidores", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"Aún no hay ordenes entregadas :c", valid:true, data:result})
+            return;
+        };
+    });
+
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+    }
+}
+
+
+exports.getTop5Restaurants2 = async function (req, res) {
+    try {
+        
+        database.query(querysMySQL.get_top5_restaurants2,[],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Este es el top5 de restaurantes", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"Aún no hay productos vendidos para obtener el top5", valid:true, data:result})
+            return;
+        };
+    });
+
+    } catch (e) {
+        console.log(e)
+        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+    }
+}
