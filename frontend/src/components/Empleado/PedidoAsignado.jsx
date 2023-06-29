@@ -80,6 +80,7 @@ const columns = [
 const PedidoAsignado = ({pedidoAsignadoActivo,setFalsePA}) => {
   //const { infoUser, setInfoUser } = useContext(MyContext);
   const navigate=useNavigate()
+  
   const [filteredData, setFilteredData] = useState(data);
 
   useEffect(() => {
