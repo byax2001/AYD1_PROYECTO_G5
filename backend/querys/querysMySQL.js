@@ -119,11 +119,13 @@ module.exports = {
 									  FROM pedido_cliente AS pc 
 									  WHERE pc.usuario_id_usuario2 = ? AND pc.estado_pedido_id_estado = 2; `,	
 									  
-		get_orders_by_deliver: `SELECT pc.id_pedido_cliente AS NoOrden, pc.fecha_pedido AS fecha
+		get_orders_by_deliver: `SELECT pc.id_pedido_cliente AS NoOrden,CONCAT(u.nombre, " ", u.apellido) as nombre, pc.fecha_pedido AS fecha, d.direccion as direccion, pc.calificacion as calificacion, pc.estado_pedido_id_estado as estado
 								FROM pedido_cliente AS pc 
+								JOIN usuario u ON pc.usuario_id_usuario = u.id_usuario  
+								JOIN direccion d ON d.usuario_id_usuario  = pc.usuario_id_usuario 
 								WHERE pc.usuario_id_usuario2 = ?; `,	
 
-		get_top5_restaurants: 	`SELECT e.id_empresa, e.nombre, SUM(dpc.cantidad) AS total_ventas
+		get_top5_restaurants: 	`SELECT e.id_empresa, e.nombre, SUM(dpc.cantidad) AS total_ventas, e.descripcion_empresa as descripcion
 								FROM empresa e
 								JOIN producto p ON e.id_empresa = p.empresa_id_empresa
 								JOIN detalle_pedido_cliente dpc ON p.id_producto = dpc.producto_id_producto
@@ -148,8 +150,23 @@ module.exports = {
 							ORDER BY total_ordenes DESC
 							LIMIT 5; `,	
 		
-		
+		get_orders_by_user: `SELECT pc.id_pedido_cliente AS NoOrden, pc.fecha_pedido AS fecha, d.direccion  AS direccion	,
+							CASE pc.metodo_pago
+								WHEN 0 THEN 'Efectivo'
+								WHEN 1 THEN 'Tarjeta'
+								ELSE 'Desconocido'
+							END AS metodo, ep.nombre_estado as estado, CONCAT (u.nombre," ",u.apellido ) AS repartidor
+							FROM pedido_cliente pc
+							JOIN direccion d ON pc.usuario_id_usuario = d.usuario_id_usuario
+							JOIN estado_pedido ep ON pc.estado_pedido_id_estado = ep.id_estado 
+							LEFT JOIN usuario u ON pc.usuario_id_usuario2  = u.id_usuario 
+							WHERE pc.usuario_id_usuario = ?;
+						`,	
 
+
+		get_rate_of_deliver: `SELECT AVG(pc.calificacion) AS calificacion
+							  FROM pedido_cliente pc 
+							  WHERE pc.calificacion IS NOT NULL AND pc.estado_pedido_id_estado = 3 AND pc.usuario_id_usuario2 = ?`,
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */
 	/* ----------------------------------------------------------------------- */
