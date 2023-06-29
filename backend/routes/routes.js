@@ -70,7 +70,9 @@ router.get(baseurl + 'reqPendingDelivers',                        OAUTH.validate
 // Reportes
 router.get(baseurl + 'reports',                                   OAUTH.validateToken,REPORTS.getInfoUser)
 router.get(baseurl + 'reports/popularproduct/:id',                OAUTH.validateToken,REPORTS.getPopularRestaurants)
-
+router.get(baseurl + 'reports/top5restaurant',                    OAUTH.validateToken,REPORTS.getTop5Restaurants)
+router.get(baseurl + 'reports/top5deliver',                       OAUTH.validateToken,REPORTS.getTop5delivers)
+router.get(baseurl + 'reports/top5restaurant2',                   OAUTH.validateToken,REPORTS.getTop5Restaurants2)
 
 //Municipio
 router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)
@@ -86,5 +88,6 @@ router.get(baseurl + 'order/actual/:id',                          OAUTH.validate
 router.put(baseurl + 'order/rate',                                OAUTH.validateToken,ORDER.rateOrder)
 router.put(baseurl + 'order/cancel',                              OAUTH.validateToken,ORDER.cancelorder)
 router.put(baseurl + 'order/deliver',                             OAUTH.validateToken,ORDER.deliverorder)
+router.get(baseurl + 'order/user/:id',                            OAUTH.validateToken,ORDER.getordersbyuser)
 
 module.exports = router;
