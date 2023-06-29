@@ -28,7 +28,7 @@ const doOrder =  async() => {
   var storedCarrito = window.localStorage.getItem('carrito');
   var carrito = JSON.parse(storedCarrito);
   var objeto = {
-    idUser: 44 ,
+    idUser: parseInt(localStorage.getItem('idUser')) ,
     cupon: input,
     productos: carrito
   }
@@ -41,6 +41,7 @@ const doOrder =  async() => {
         "Content-Type": "application/json",
         Accept: "application/json",
         //agregar tocken
+        //authorization : localStorage.getItem('token')
       },
     };
     try {
