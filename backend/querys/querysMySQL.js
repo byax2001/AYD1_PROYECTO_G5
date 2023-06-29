@@ -53,6 +53,17 @@ module.exports = {
 						 FROM solicitud_pendiente 
 						 WHERE aprobada = 2`,
 
+		get_sales_value: `select fecha_pedido,sum(precio_producto) as valor FROM 
+		(
+		select pc.id_pedido_cliente,pc.fecha_pedido, dpc.cantidad,dpc.producto_id_producto, p.precio_producto 
+		from pedido_cliente pc , detalle_pedido_cliente dpc, producto p
+		where fecha_pedido >= ?
+		and pc.id_pedido_cliente = dpc.pedido_cliente_id_pedido_cliente 
+		and dpc.producto_id_producto = p.id_producto 
+		) tabla
+		group by fecha_pedido`,
+		
+
 		//Solicitudes pendientes
 		req_pending_restaurant:`SELECT s.id_solicitud_repartidor,s.fecha_solicitud, s.nombre, s.apellido, s.email, s.nit, 
 		CASE WHEN s.medio_transporte = 0 THEN 'NO' ELSE 'SI'  END AS medio_transporte,
