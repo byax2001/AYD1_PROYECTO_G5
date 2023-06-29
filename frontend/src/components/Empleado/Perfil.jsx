@@ -134,6 +134,8 @@ const Perfil = () => {
     }*/
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
     getHistorial();
+    console.log()
+    setPuntuacion(localStorage.getItem('calificacion'))
   }, []);
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;

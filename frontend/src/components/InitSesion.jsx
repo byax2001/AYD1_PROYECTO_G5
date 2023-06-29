@@ -103,6 +103,7 @@ function InitSesion() {
         localStorage.setItem('nombre',payloadData.nombre)
         localStorage.setItem('apellido',payloadData.apellido)
 
+
         if(data_res.data.rol==0){
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/adm",{state:{user:"INFORMACION"}})
@@ -111,8 +112,7 @@ function InitSesion() {
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           alert("Usuario ingresado con exito");
         }else if (data_res.data.rol==2){
-          //localStorage.setItem('calificacion',payloadData.calificacion)
-
+          localStorage.setItem('calificacion',payloadData.calificacion)
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/emp",{state:{user:"INFORMACION"}})
         }else{
