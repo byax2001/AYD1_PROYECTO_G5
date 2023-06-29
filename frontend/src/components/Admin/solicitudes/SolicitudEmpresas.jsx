@@ -252,6 +252,7 @@ const columnas = [
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        authorization : localStorage.getItem('token')
       },
     };
     try {

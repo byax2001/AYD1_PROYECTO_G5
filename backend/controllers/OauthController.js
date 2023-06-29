@@ -36,6 +36,18 @@ exports.login = async function(req, res) {
                 });
               });
               datausesr.idempresa = result2[0].id_empresa;
+            }else if(result[0].rol == 2){
+              const result2 = await new Promise((resolve, reject) => {
+                database.query(querysMySQL.get_rate_of_deliver, [result[0].id_usuario], function(err, result2, fields) {
+            
+                  if (err) {
+                    reject(err);
+                  } else {
+                    resolve(result2);
+                  }
+                });
+              });
+              datausesr.calificacion = result2[0].calificacion;
             }
 
             datausesr.iduser = result[0].id_usuario;
