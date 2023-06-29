@@ -7,7 +7,8 @@ import CardsC from './cardsCatego';
 import fondo1 from '../../images/fondoCard.jpg';
 import "./css/inicio.css";
 import Carrito from './Carrito/Carrito';
-
+import axios from 'axios';
+/*
   const data = [
     {
         id_empresa: 16,
@@ -65,17 +66,20 @@ import Carrito from './Carrito/Carrito';
         tipo_empresa_id_tipo: 2,
         telefono: "01234567"
     }
-];
+];*/
 
 
 
 const Iniciouser = () => {
 
     const [searchValue, setSearchValue] = useState('');
-    const [filteredData, setFilteredData] = useState(data);
+    const [filteredData, setFilteredData] = useState([]);
+
+    const [data, setData] = useState([]);
+
     const [suggestions, setSuggestions] = useState([]);
 
-    
+
 
 
     useEffect(() => {
@@ -85,7 +89,23 @@ const Iniciouser = () => {
               item.nombre.toLowerCase().includes(searchValue.toLowerCase())
             )
           );
+    
+        //Metodos de peticion de Restaurantes:
+        fetchData();
+
     }, [searchValue]);
+
+    //Obtencion de Datos de Empresa:
+    const fetchData = async () => {
+        try {
+          const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/reports/top5restaurant`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+          const data = response.data; // Obtener los datos de la respuesta
+          setData(data.data); // Actualizar los datos del componente
+          console.log('Datos Obtenidos:', data.data);
+        } catch (error) {
+          console.error('Error al obtener los datos:', error);
+        }
+      };
       
     ///Prueba:
 
