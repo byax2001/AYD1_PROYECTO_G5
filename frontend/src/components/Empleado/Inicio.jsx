@@ -27,10 +27,13 @@ const Inicio = () => {
         <img id="logoStar" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">AlChilazo</a>
         <div className="h2 text-light">Inicio</div>
-        <div className="btn-group d-inline-flex" data-toggle="buttons">
-          <Link to="/emp/Miperfil" className="btn textForm text-light">Miperfil</Link>
-          <Link to="/" className="btn textForm text-light">Cerrar Sesion</Link>
+        <div className="btnRT">
+          <div className="btn-group d-inline-flex" data-toggle="buttons">
+            <Link to="/emp/Miperfil" className="btn textForm text-light btnEffect">Miperfil</Link>
+            <Link to="/" className="btn textForm text-light btnEffect">Cerrar Sesion</Link>
+          </div>
         </div>
+
       </nav>
       <div className="container">
         <div className="row mt-4">

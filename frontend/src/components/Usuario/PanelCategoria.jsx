@@ -1,6 +1,6 @@
 import React, { useState,useEffect  } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
-import logo from '../../images/logo.png';
+import logo from '../../images/logo copy.png';
 import { Link,useLocation } from 'react-router-dom';
 import CardPr from './cardProducto';
 import image2 from '../../images/quesoB.png';
@@ -51,10 +51,9 @@ const PanelCa = () => {
             <nav className="navbar navbar-expand-lg navbar-light position-relative">
                             <img id="logoStar" src={logo} alt="Logo" />
                             <a className="navbar-brand" >AlChilazo</a>
-                            <div className="h2 text-light">Categoria de: {categoria} _ {idCate} </div>
-                            <div className="btn-group d-inline-flex" data-toggle="buttons">
-                                <Link to="/inicioU" className="btn textForm text-light">Regresar</Link>
-                            </div>
+                            <div className="h2 text-light">Categoria de: {categoria} {idCate} </div>
+                            <Link to="/inicioU" className="btn textForm text-light btnEffect btnRT">Regresar</Link>
+                        
                         </nav>
             <div className="container">
                         
