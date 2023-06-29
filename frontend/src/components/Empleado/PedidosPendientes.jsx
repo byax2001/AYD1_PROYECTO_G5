@@ -77,18 +77,21 @@ const customStyles = {
 
 const data = [];
   
-const PedidosPendientes = () => {
+const PedidosPendientes = ({pedidoAsignadoActivo,setTruePA}) => {
   const [filteredData, setFilteredData] = useState(data);
   const [selectedRow, setSelectedRow] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showMDP, setShowMDP] = useState(false) //modal detalles pedido
 
+//MODAL DETALLES PEDIDO
 const openMPedidos = ()=>{
     setShowMDP(true)
 }
 const closeMPedidos=() =>{
     setShowMDP(false)
 }
+
+//MODAL ACCION SOBRE EL PEDIDO
 const openModal = () => {
   setModalIsOpen(true);
 };
@@ -159,7 +162,8 @@ const columnas = [
   
 
   //VENTANA EMERGENTE PARA ACCIONAR 
-  const ActionModal = ({ isOpen, onRequestClose, aceptarSol,id,rechazarSol}) => {
+  const ActionModal = ({ isOpen, onRequestClose, PaActivo,handlePaActivo}) => {
+
     const handleAceptarSol = async () => {
      // aceptarSol(id);
         const url = `${process.env.REACT_APP_API_CONSUME}/api/selectorder`;
@@ -183,28 +187,29 @@ const columnas = [
           const data_res = await res.json();
           if(data_res.valid){
             alert(data_res.msg)
+            handlePaActivo(); //HAGO QUE LA VARIABLE PEDIDO ASINGNADO ACTIVO PASE A TRUE
+            getSolicitudes();
           }else{
             alert(data_res.msg)
           }
         } catch (e) {
           console.log(e)
         }
-
-      onRequestClose();
-      getSolicitudes();
+        onRequestClose();
       
     };
   
     const handleRechazarSol = () => {
      // rechazarSol(id);
-      onRequestClose();
+     // ACA SE HARA LA PRUEBA
+      onRequestClose(); //CIERRO EL MODAL
     };
     return (
       <Modal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
-        aceptarsol ={aceptarSol}
-        rechazarSol={rechazarSol}
+        PaActivo ={PaActivo} //ESTADO TRUE O FALSE DE LA VENTANA PADRE INICIO LLAMADA "PEDIDO ASIGNADO ACTIVO"
+        handlePaActivo={handlePaActivo} //PARA HACER UN CAMBIO Y PASAR A TRUE EL "PEDIDO ASIGNADO ACTIVO"
         contentLabel="Aceptar o Rechazar"
         style={StylesModalARPedido}
       >
@@ -294,57 +299,8 @@ const columnas = [
 
   }
 
-  //ACEPTAR SOLICITUD
-  const aSolicitud = async (id) => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/aceptRequest`;
-    const accion = { "id_solicitud": id}
-    console.log(`------------------Id mandado a aceptar ${id}`)
-    let config = {
-      method: "PUT", //ELEMENTOS A ENVIAR
-      body: JSON.stringify(accion),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json"
-      },
-    };
-    try {
-      const res = await fetch(url, config);
-      const data_res = await res.json();
-      console.log(data_res)
-      alert(data_res.message)
-      //console.log(votoC)
-      //setVotos(votoC)
-    } catch (e) {
-      console.log(e)
-    }
-
-  }
 
 
-  //RECHAZAR SOLICITUD
-  const rSolicitud = async (id) => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/denyRequest`;
-    const accion = { "id_solicitud": id}
-    let config = {
-      method: "PUT", //ELEMENTOS A ENVIAR
-      body: JSON.stringify(accion),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    };
-    try {
-      const res = await fetch(url, config);
-      const data_res = await res.json();
-
-      console.log(data_res)
-      alert(data_res.message)
-      //console.log(votoC)
-      //setVotos(votoC)
-    } catch (e) {
-      console.log(e)
-    }
-  }
   useEffect(() => {
     getSolicitudes();
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
@@ -358,9 +314,8 @@ const columnas = [
       <ActionModal
         isOpen={modalIsOpen}  //VARIABLE
         onRequestClose={closeModal}  //FUNCION
-        aceptarSol = {aSolicitud}  // FUNCION
-        id = {selectedRow.id_solicitud_repartidor} //VARIABLE
-        rechazarSol= {rSolicitud} //FUNCION
+        PaActivo = {pedidoAsignadoActivo}  // FUNCION
+        handlePaActivo = {setTruePA} //FUNCION  volver true el estado de "pedido asignado activo"
       />
     )}
     {showMDP && (
@@ -368,9 +323,9 @@ const columnas = [
         isOpen={showMDP}
         openModal={openMPedidos}  //VARIABLE
         closeModal={closeMPedidos}  //FUNCION
-        aceptarSol = {aSolicitud}  // FUNCION
+        //aceptarSol = {aSolicitud}  // FUNCION
         id = {selectedRow.id_solicitud_repartidor} //VARIABLE
-        rechazarSol= {rSolicitud} //FUNCION
+        //rechazarSol= {rSolicitud} //FUNCION
       />
     )}
     {/* CONTENEDOR DE TABLA  */}

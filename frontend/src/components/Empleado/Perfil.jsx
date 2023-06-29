@@ -133,6 +133,7 @@ const Perfil = () => {
       return
     }*/
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+    getHistorial();
   }, []);
   const handleChange = (event) => {
     const { name, value, type, checked, files } = event.target;
@@ -169,6 +170,31 @@ const Perfil = () => {
     console.log(filtroActual)
   }
 
+  //LLENAR HISTORIAL DE PEDIDOS DE USUARIO
+  const getHistorial = async () => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/userdeliver/orders/${localStorage.getItem('idUser')}`;
+    let config = {
+      method: "GET", //ELEMENTOS A ENVIAR
+
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    };
+    try {
+      const res = await fetch(url, config);
+      const data_res = await res.json();
+      setFilteredData(data_res.data)
+      console.log("------------------------------------------------------")
+      console.log(data_res)
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+
+
   return (
     <React.Fragment>
       <div className="wall3">
@@ -182,7 +208,7 @@ const Perfil = () => {
         <div className='container  text-light rounded'>
           <div className="row textForm">
             <div className="col-3 h5">Nombre del empleado:</div>
-            <div className="col-9 h3">{/*state.data.nombre + ' ' +state.data.apellido*/}</div>
+            <div className="col-9 h3">{localStorage.getItem('nombre')+' '+ localStorage.getItem('apellido')}</div>
           </div>
           <div className="row textForm">
             <div className="col-3 h4"> Puntuacion: </div>
@@ -248,6 +274,7 @@ const Perfil = () => {
               highlightOnHover
               striped
               responsive
+              noDataComponent={"El usuario no tiene ninguna orden realizada"}
             />
           </div>
         </div>
