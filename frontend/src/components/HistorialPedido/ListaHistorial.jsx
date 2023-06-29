@@ -87,11 +87,6 @@ function ListaHistorial() {
           sortable: true,
         },
         {
-          name: 'Municipio',
-          selector: row => row.municipio,
-          sortable: true,
-        },
-        {
           name: 'Metodo Pago',
           selector: row => row.metodo,
           sortable: true,
@@ -105,28 +100,38 @@ function ListaHistorial() {
           sortable: true,
         },
         {
+            name: 'Estado',
+            selector: row => row.estado,
+            sortable: true,
+          },
+        {
           name: 'Detalles',
           cell: row => (
+            row.estado ==="Entregado" ?(
             <button className='btn btn-secondary' onClick={() => {
                 setSelectedRow(row);
                 openMPedidos();
               }}>
                 Detalles
               </button>
+                ): null
           ),
           ignoreRowClick: true,
           allowOverflow: true,
-          button: true,
+          button: true,          
         },
         {
           name: 'Accion',
           cell: row => (
-            <button className='btn btn-secondary' onClick={() => {
-                setSelectedRow(row);
-                openModal();
-              }}>
-                Asignar
-              </button>
+            row.estado ==="Entregado" ?(
+                <button className='btn btn-secondary' onClick={() => {
+                    setSelectedRow(row);
+                    openModal();
+                  }}>
+                    Asignar
+                  </button>
+            ): null
+
           ),
           ignoreRowClick: true,
           allowOverflow: true,
@@ -136,7 +141,8 @@ function ListaHistorial() {
       
       
   const getPedidos = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/order/user/${localStorage.getItem('idUser')}`;
+    //const url = `${process.env.REACT_APP_API_CONSUME}/api/order/user/${localStorage.getItem('idUser')}`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/order/user/44`;
     console.log(url)
     let config = {
       method: "GET", //ELEMENTOS A ENVIAR
@@ -150,7 +156,7 @@ function ListaHistorial() {
       const res = await fetch(url, config);
 
       const data_res = await res.json();
-
+        console.log(data_res.data)
       setFilteredData(data_res.data)
     } catch (e) {
       console.log(e)
@@ -158,6 +164,10 @@ function ListaHistorial() {
 
   }
 
+  useEffect(() => {
+    getPedidos();
+    //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
+  }, []);
 
   return (
     <div className="container">
