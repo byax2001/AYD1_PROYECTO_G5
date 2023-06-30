@@ -134,10 +134,23 @@ exports.getuser = async function (req,res){
 
 exports.banuser = async function (req,res){
     try{
-        database.query(querysMySQL.ban_user,[req.body.descripcion,req.body.id ],async function(err,result,fields){    
+        var tipoban
+
+        if(req.body.tipoban ==1){
+            tipoban = 0
+        }else if(req.body.tipoban == 2){
+            tipoban = 3
+        }
+
+
+        database.query(querysMySQL.ban_user,[tipoban, req.body.descripcion,req.body.id ],async function(err,result,fields){    
             if (result.affectedRows>0){
-    
-                res.status(200).send({status: "success", message: "El Usuario ha sido baneado"});
+                if(tipoban == 0){
+                    res.status(200).send({status: "success", message: "El Usuario ha sido baneado"});    
+                }else if(tipoban == 3){
+                    res.status(200).send({status: "success", message: "El Usuario se ha cambiado a mantenimiento"});
+                }
+                
             }else{
                 res.status(200).send({msg:"Se produjo un error al banear usuario.", valid:false})
                 return;
@@ -147,5 +160,33 @@ exports.banuser = async function (req,res){
 
     }catch(e){
         res.status(400).send({status: "error", message: "Error al banear usuario", data: e});
+    }
+}
+
+exports.newchangeadressrequest = async function (req,res){
+    try{
+       
+        var currentDate = new Date();
+
+        var user = {
+      
+            userid: req.body.userid,
+            municipio: req.body.municipio,
+            direccion: req.body.direccion,
+        };
+        database.query(querysMySQL.ins_sol_cambio_departamental, [currentDate,user.userid,0,user.direccion,user.municipio],async function(err,result,fields){
+            if (err)throw err;
+            if (result){ 
+
+                res.status(200).send({valid:true, msg: "Su solicitud de cambio departamental ha sido ingresada"});
+
+            }else{
+                res.status(200).send({msg:"Hubo un error al crear la solicitud de cambio departamental", valid:false})
+            }
+        });       
+        
+    }catch(e){
+        console.log(e)
+        res.status(400).send({status: "error", msg: "Error al crear solicitud de cambio departamental", data: e});
     }
 }
