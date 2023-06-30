@@ -67,6 +67,8 @@ const options = {
     }
   }
 };
+
+
 function Top5Dev(props) {
   const [labelB,setLabelB]=useState(['Sede 1', 'Sede 2', 'Sede 3', 'Sede 4', 'Sede 5'])
   const [dataB,setDataB]=useState([12, 19, 3, 5, 2])
@@ -74,7 +76,7 @@ function Top5Dev(props) {
     labels: labelB,
     datasets: [
       {
-        label: 'Sedes',
+        label: 'Promedio de Calificacion',
         data: dataB,
         backgroundColor: [
           'rgba(144,238,144, 0.8)', // Verde claro
@@ -95,7 +97,7 @@ function Top5Dev(props) {
     ],
   };
   const gBarras=async()=>{
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/top_sedes`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/top5deliver`;
     let config = {
         method: "GET", //ELEMENTOS A ENVIAR
         headers: {
@@ -108,12 +110,14 @@ function Top5Dev(props) {
       const res = await fetch(url, config);
       
       const data_res = await res.json();
+      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+      console.log(data_res)
       const label = []
       const data = []
-      for (let index = 0; index < data_res.length; index++) {
-        const s = data_res[index];
-        label.push(s.sede)
-        data.push(s.votos);
+      for (let index = 0; index < data_res.data.length; index++) {
+        const s = data_res.data[index];
+        label.push(s.nombre)
+        data.push(s.promedio_calificacion);
         /*"sede": 8,
         "municipio": "Amatitlan",
         "departamento": "Guatemala",
@@ -131,10 +135,12 @@ function Top5Dev(props) {
     
 }
   useEffect(() => {
+    gBarras();
+    /*
       const intervalo = setInterval(() => {
        gBarras();
       }, 1000);
-      return () => clearInterval(intervalo);
+      return () => clearInterval(intervalo);*/
       //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   },[]);
   
