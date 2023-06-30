@@ -10,7 +10,7 @@ Modal.setAppElement('#root');
 const customStylesModal = {
     content: {
       width: '500px', // Ancho personalizado del modal
-      height: '400px', // Alto personalizado del modal
+      height: '230px', // Alto personalizado del modal
       top: '50%', // Centrar verticalmente
       left: '50%', // Centrar horizontalmente
       transform: 'translate(-50%, -50%)', // Ajustar la posición al centro
@@ -89,62 +89,32 @@ const columnas = [
       sortable: true,
     },
     {
-      name: 'Descripcion',
-      selector: row => row.descripcion_empresa,
+      name: 'Apellido',
+      selector: row => row.apellido,
       sortable: true,
     },
     {
-      name: 'Categoria',
-      selector: row => row.nombre_tipo,
+      name: 'Municipio Antiguo',
+      selector: row => row.municipioantiguo,
       sortable: true,
     },
     {
-      name: 'Correo Electronico',
-      selector: row => row.email,
+      name: 'Municipio Nuevo',
+      selector: row => row.municipionuevo,
       sortable: true,
     },
     {
-      name: 'Departamento',
-      selector: row => row.departamento,
+      name: 'Direccion Antigua',
+      selector: row => row.direccionantigua,
       sortable: true,
     },
     {
-        name: 'Zona',
-        selector: row => row.zona,
-        sortable: true,
-      },
-    {
-      name: 'Municipio',
-      selector: row => row.nombre_municipio,
+      name: 'Direccion Nueva',
+      selector: row => row.direccionnueva,
       sortable: true,
     },
     {
-      name: 'Direccion',
-      selector: row => row.direccion,
-      sortable: true,
-    },
-    {
-      name: 'Fecha Solicitud',
-      selector: row => row.fecha_solicitud,
-      sortable: true,
-    },
-    
-    {
-      name: 'DocumentoPdf',
-      selector: row=> row.documento,
-      cell: row => (
-        <a href={row.documento} target="_blank" rel="noopener noreferrer">
-          <img
-            src={cv}
-            alt="Documento de Autenticidad"
-            style={{ width: '35px', cursor: 'pointer' }}
-          />
-        </a>
-      )
-      
-    },
-    {
-      name: 'accion_sol',
+      name: 'Accion',
       cell: row => (
         <button className='btn btn-secondary' onClick={() => {
             setSelectedRow(row);
@@ -182,16 +152,25 @@ const columnas = [
         aceptarsol ={aceptarSol}
         rechazarSol={rechazarSol}
         contentLabel="Aceptar o Rechazar"
+        style={customStylesModal}
       >
-        <div className='container'>
-          <h2>Aceptar o Rechazar</h2>
-          <p>Contenido de la fila:</p>
-          <pre>{JSON.stringify(selectedRow, null, 2)}</pre>
+        <div className='container-fluid'>
+          <div className="row justify-content-end mb-4">
+            <div className="col-2">
+              <button className="btn btnEffect btn-danger" onClick={()=>{closeModal()}}>X</button>
+            </div>
+          </div>
+          <div className="row justify-content-center mb-4">
+            <div className="col-12 text-center ">
+            <h2>Aceptar o Rechazar</h2>
+            </div>
+          </div>
+          
           <div className="row">
             <div className="col-2"></div>
-            <button className='btn btn-primary col-2 btnEffect' onClick={handleAceptarSol}>Aceptar</button>
-            <div className="col-4"></div>
-            <button className='btn btn-primary col-2 btnEffect' onClick={handleRechazarSol}>Rechazar</button>
+            <button className='btn btn-primary col-3 btnEffect' onClick={handleAceptarSol}>Aceptar</button>
+            <div className="col-2"></div>
+            <button className='btn btn-primary col-3 btnEffect' onClick={handleRechazarSol}>Rechazar</button>
             <div className="col-2"></div>
           </div>
         </div>
@@ -229,9 +208,8 @@ const columnas = [
 
   //ACEPTAR SOLICITUD
   const aSolicitud = async (id) => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/aceptRequest`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/aceptRequestCAdress`;
     const accion = { "id_solicitud": id}
-    console.log(`------------------Id mandado a aceptar ${id}`)
     let config = {
       method: "PUT", //ELEMENTOS A ENVIAR
       body: JSON.stringify(accion),
@@ -245,7 +223,7 @@ const columnas = [
       const res = await fetch(url, config);
       const data_res = await res.json();
       console.log(data_res)
-      alert(data_res.message)
+      alert(data_res.msg)
       //console.log(votoC)
       //setVotos(votoC)
     } catch (e) {
@@ -279,7 +257,7 @@ const columnas = [
     }
   }
   useEffect(() => {
-    //getSolicitudes();
+    getSolicitudes();
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   }, []);
 
@@ -294,6 +272,7 @@ const columnas = [
                     aceptarSol={aSolicitud}  // FUNCION
                     id={selectedRow.id_solicitud_repartidor} //VARIABLE
                     rechazarSol={rSolicitud} //FUNCION
+                    
                 />
             )}
             {/* CONTENEDOR DE TABLA  */}

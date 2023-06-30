@@ -6,7 +6,7 @@ Modal.setAppElement('#root');
 const StylesModalARPedido = {
   content: {
     width: '400px', // Ancho personalizado del modal
-    height: '175px', // Alto personalizado del modal
+    height: '240px', // Alto personalizado del modal
     top: '50%', // Centrar verticalmente
     left: '50%', // Centrar horizontalmente
     transform: 'translate(-50%, -50%)', // Ajustar la posición al centro
@@ -70,21 +70,19 @@ function ListaHistorial() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [showMDP, setShowMDP] = useState(false) //modal detalles pedido
 
-  const openMPedidos = () => {
-    setShowMDP(true)
-  }
-  const closeMPedidos = () => {
-    setShowMDP(false)
-  }
+
   const openModal = () => {
     setModalIsOpen(true);
   };
 
   const closeModal = () => {
     setModalIsOpen(false);
-
-    //getPedidos();
   };
+
+  const ActPedidos=()=>{
+    setModalIsOpen(false);
+    getPedidos();
+  }
 
   const columnas = [
     {
@@ -136,7 +134,7 @@ function ListaHistorial() {
   ];
 
   //VENTANA EMERGENTE PARA ACCIONAR 
-  const ActionModal = ({ isOpen, onRequestClose, PaActivo,handlePaActivo}) => {
+  const ActionModal = ({ isOpen, onRequestClose, ActPedidos}) => {
 
     const handleAceptarSol = async (cal) => {
      // aceptarSol(id);
@@ -160,15 +158,13 @@ function ListaHistorial() {
           const data_res = await res.json();
           if(data_res.valid){
             alert(data_res.msg)
-            handlePaActivo(); //HAGO QUE LA VARIABLE PEDIDO ASINGNADO ACTIVO PASE A TRUE
-            getPedidos();
           }else{
             alert(data_res.msg)
           }
         } catch (e) {
           console.log(e)
         }
-        onRequestClose();
+        ActPedidos() //CIERRA EL MODAL Y ACTUALIZA LA TABLA DE PEDIDOS
       
     };
   
@@ -181,41 +177,45 @@ function ListaHistorial() {
       <Modal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
-        PaActivo ={PaActivo} //ESTADO TRUE O FALSE DE LA VENTANA PADRE INICIO LLAMADA "PEDIDO ASIGNADO ACTIVO"
-        handlePaActivo={handlePaActivo} //PARA HACER UN CAMBIO Y PASAR A TRUE EL "PEDIDO ASIGNADO ACTIVO"
+        ActPedidos={ActPedidos}
         contentLabel="Aceptar o Rechazar"
         style={StylesModalARPedido}
       >
-         <div className='container'>
-                <div className="row mb-4">
-                    <div className="col-12 text-center">
-                        <h2>Calificar Pedido</h2>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-1"></div>
-                    <div className="col-1 p-0 justify-content-start">
-                        <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(1)}>1</button>
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-1 p-0 justify-content-start">
-                        <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(2)}>2</button>
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-1 p-0 justify-content-start">
-                        <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(3)}>3</button>
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-1 p-0 justify-content-start">
-                        <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(4)}>4</button>
-                    </div>
-                    <div className="col-1"></div>
-                    <div className="col-1 p-0 justify-content-start">
-                        <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(5)}>5</button>
-                    </div>
-                      <div className="col-1"></div>
-                </div>
+        <div className='container'>
+          <div className="row justify-content-end mb-4">
+            <div className="col-2">
+              <button className="btn btnEffect btn-danger" onClick={() => { closeModal() }}>X</button>
             </div>
+          </div>
+          <div className="row mb-4">
+            <div className="col-12 text-center">
+              <h2>Calificar Pedido</h2>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-1"></div>
+            <div className="col-1 p-0 justify-content-start">
+              <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(1)}>1</button>
+            </div>
+            <div className="col-1"></div>
+            <div className="col-1 p-0 justify-content-start">
+              <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(2)}>2</button>
+            </div>
+            <div className="col-1"></div>
+            <div className="col-1 p-0 justify-content-start">
+              <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(3)}>3</button>
+            </div>
+            <div className="col-1"></div>
+            <div className="col-1 p-0 justify-content-start">
+              <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(4)}>4</button>
+            </div>
+            <div className="col-1"></div>
+            <div className="col-1 p-0 justify-content-start">
+              <button className='btn btn-secondary btnEffect' onClick={() => handleAceptarSol(5)}>5</button>
+            </div>
+            <div className="col-1"></div>
+          </div>
+        </div>
       </Modal>
     );
   };
@@ -257,8 +257,7 @@ function ListaHistorial() {
         <ActionModal
           isOpen={modalIsOpen}  //VARIABLE
           onRequestClose={closeModal}  //FUNCION
-          //PaActivo={pedidoAsignadoActivo}  // FUNCION
-          //handlePaActivo={setTruePA} //FUNCION  volver true el estado de "pedido asignado activo"
+          ActPedidos={ActPedidos} //FUNCION PARA ACTUALIZAR PEDIDOS
         />
       )}
 
