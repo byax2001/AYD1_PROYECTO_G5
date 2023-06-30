@@ -104,39 +104,40 @@ function ListaHistorial() {
             selector: row => row.estado,
             sortable: true,
           },
-        {
-          name: 'Detalles',
-          cell: row => (
-            row.estado ==="Entregado" ?(
-            <button className='btn btn-secondary' onClick={() => {
-                setSelectedRow(row);
-                openMPedidos();
-              }}>
-                Detalles
-              </button>
-                ): null
-          ),
-          ignoreRowClick: true,
-          allowOverflow: true,
-          button: true,          
-        },
-        {
-          name: 'Accion',
-          cell: row => (
-            row.estado ==="Entregado" ?(
-                <button className='btn btn-secondary' onClick={() => {
-                    setSelectedRow(row);
-                    openModal();
-                  }}>
-                    Asignar
-                  </button>
-            ): null
-
-          ),
-          ignoreRowClick: true,
-          allowOverflow: true,
-          button: true,
-        }
+          //{
+            // name: 'Detalles',
+             //cell: row => (
+             //  row.estado ==="Entregado" ?(
+             //  <button className='btn btn-secondary' onClick={() => {
+             //      setSelectedRow(row);
+             //      openMPedidos();
+             //    }}>
+             //      Detalles
+             //    </button>
+             //      ): null
+             //),
+             //ignoreRowClick: true,
+             //allowOverflow: true,
+             //button: true,          
+           //},
+          {
+            name: 'Accion',
+            cell: row => (
+              row.estado ==="Entregado" ?(
+                  <button className='btn btn-secondary' onClick={() => {
+                      setSelectedRow(row);
+                      openModal();
+                    }}>
+                      Calificar
+                    </button>
+              ): null
+  
+            ),
+            ignoreRowClick: true,
+            allowOverflow: true,
+            button: true,
+          }        
+        
       ];
       
       
@@ -170,7 +171,7 @@ function ListaHistorial() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container justify-content-center" >
         <div className="row">
           <div className="col-12">
             <ReactTable
