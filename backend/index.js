@@ -41,3 +41,5 @@ databasemysql.connect((err) => {
       console.log(config.messageTerminal, 'host:' + host, 'port:' + port, 'date:' + date);
     });
   });
+
+  module.exports = app;

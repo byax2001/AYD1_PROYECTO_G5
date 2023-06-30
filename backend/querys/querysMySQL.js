@@ -230,7 +230,7 @@ module.exports = {
 
 		ban_user: "UPDATE usuario SET estado=?, descripcionBan = ?  WHERE id_usuario=?",
 		
-		rate_order: "UPDATE pedido_cliente SET calificacion= ?  WHERE id_pedido_cliente=?",
+		rate_order: "UPDATE pedido_cliente SET calificacion= ?, estado_pedido_id_estado = 5 WHERE id_pedido_cliente= ?",
 		
 
     /* ----------------------------------------------------------------------- */
