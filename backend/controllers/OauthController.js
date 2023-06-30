@@ -66,8 +66,10 @@ exports.login = async function(req, res) {
   
           res.status(200).send({ message: "Bienvenido", data: datausesr, valid: true, token:token });
 
+          }else if(result[0].estado == 3){
+            res.status(200).send({ message: "El usuario está en mantenimiento, favor tener paciencia", data: datausesr, valid: false });  
           }else{
-            res.status(200).send({ message: "El usuario está bloquado, favor comunicarse con el administrador", data: datausesr, valid: false });  
+            res.status(200).send({ message: "El usuario está bloqueado, favor comunicarse con el administrador", data: datausesr, valid: false });  
           }
          
           
