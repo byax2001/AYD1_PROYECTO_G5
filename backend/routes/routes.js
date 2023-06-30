@@ -35,6 +35,7 @@ router.get(baseurl + 'user',                                      OAUTH.validate
 router.put(baseurl + 'user',                                      OAUTH.validateToken,USER.updateuser)
 router.delete(baseurl + 'user',                                   OAUTH.validateToken,USER.deleteuser)
 router.put(baseurl + 'user/ban',                                  OAUTH.validateToken,USER.banuser)
+router.post(baseurl + 'user/changeadress',                        OAUTH.validateToken,USER.newchangeadressrequest)
 
 
 // Repartidores
@@ -66,6 +67,8 @@ router.put(baseurl + 'aceptRequest',                              OAUTH.validate
 router.put(baseurl + 'denyRequest',                               OAUTH.validateToken,ACEPTREQ.updateDenyReq)
 router.get(baseurl + 'reqPendingRestaurant',                      OAUTH.validateToken,ACEPTREQ.getInfoReqRestaurant)
 router.get(baseurl + 'reqPendingDelivers',                        OAUTH.validateToken,ACEPTREQ.getInfoReqDelivers)
+router.get(baseurl + 'reqPendingChangeAdress',                    OAUTH.validateToken,ACEPTREQ.getInfoReqChangeAdress)
+router.put(baseurl + 'aceptRequestCAdress',                        OAUTH.validateToken,ACEPTREQ.updateAceptChangeAdressReq)
 
 // Reportes
 router.get(baseurl + 'reports',                                   OAUTH.validateToken,REPORTS.getInfoUser)
@@ -73,7 +76,9 @@ router.get(baseurl + 'reports/popularproduct/:id',                OAUTH.validate
 router.get(baseurl + 'reports/top5restaurant',                    OAUTH.validateToken,REPORTS.getTop5Restaurants)
 router.get(baseurl + 'reports/top5deliver',                       OAUTH.validateToken,REPORTS.getTop5delivers)
 router.get(baseurl + 'reports/top5restaurant2',                   OAUTH.validateToken,REPORTS.getTop5Restaurants2)
-router.get(baseurl + 'reports/salesValue',                        OAUTH.validateToken,REPORTS.getSalesValue)
+router.get(baseurl + 'reports/getglobalproducts',                 OAUTH.validateToken,REPORTS.getglobalproduct)
+router.post(baseurl + 'reports/salesValue',                       OAUTH.validateToken,REPORTS.getSalesValue)
+
 
 //Municipio
 router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)
@@ -90,5 +95,6 @@ router.put(baseurl + 'order/rate',                                OAUTH.validate
 router.put(baseurl + 'order/cancel',                              OAUTH.validateToken,ORDER.cancelorder)
 router.put(baseurl + 'order/deliver',                             OAUTH.validateToken,ORDER.deliverorder)
 router.get(baseurl + 'order/user/:id',                            OAUTH.validateToken,ORDER.getordersbyuser)
+router.get(baseurl + 'order/all',                                 OAUTH.validateToken,ORDER.getordersbyuserglobally)
 
 module.exports = router;

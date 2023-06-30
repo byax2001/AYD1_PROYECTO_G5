@@ -317,3 +317,26 @@ exports.getordersbyuser = async function(req,res){
     }
 
 }
+
+
+exports.getordersbyuserglobally = async function(req,res){
+    try{
+
+        database.query(querysMySQL.get_orders_globally,[],async function(err,result,fields){
+            if (err)throw err;
+            if (result.length>0){
+                res.status(200).send({msg:"Estas son las ordenes", valid:true, data:result})
+                return;
+
+        }else{
+            res.status(200).send({msg:"No hay ordenes por el momento", valid:true, data:result})
+            return;
+        };
+    });
+    
+    }catch (e){
+        console.log(e)
+        res.status(400).send({status: "error", message: "Error al obtener ordenes por usuario", data: e});
+    }
+
+}
