@@ -7,12 +7,17 @@ import { useMyContext } from '../../context';
 import Modal from 'react-modal';
 
 //VENTANA EMERGENTE PARA ACCIONAR 
-const CambioZona = ({ onRequestClose, idUser }) => {
+const CambioZona = ({ onRequestClose}) => {
     const [state, setState] = useMyContext();
     const navigate = useNavigate()
     const [depCambio, setDepCambio] = useState(0)
     const [munCambio, setMunCambio] = useState(0)
-    const [formData, setFormData] = useState({ municipio: 0, departamento: 0 })
+    const [formData, setFormData] = useState({
+        municipio: 0,
+        departamento: 0,
+        userid:0,
+        direccion:""
+    })
 
     const [showMunicipios, setShowMunicipios] = useState(false)
     const [municipios, setMunicipios] = useState([])
@@ -21,14 +26,30 @@ const CambioZona = ({ onRequestClose, idUser }) => {
     useEffect(() => {
         //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
         getDepartamentos()
+        setFormData((formData)=>({
+            ...formData,
+            ["userid"]:localStorage.getItem('idUser')
+        }))
+        
     }, []);
 
 
-    const handleAceptarSol = () => {
-        onRequestClose();
+    const CambiarZona = () => {
+        if(formData.departamento==0 || formData.municipio==0){
+            alert("Falta ingresar departamento o Municipio")
+        }else if(formData.direccion==""){
+            alert("Debe de ingresar una direccion")
+        }else if (formData.userid==0){
+            alert("Id de User Invalido")
+        }else{
+            //SI NO EXISTE ALGUN INCONVENIENTE REALIZAR LA SOLICITUD DE CAMBIO Y CERRAR VENTANA
+            changeZonaTrabajo()
+            onRequestClose();
+        }
+        
     };
 
-    const handleRechazarSol = () => {
+    const CerrarModal = () => {
         onRequestClose();
     };
 
@@ -100,39 +121,71 @@ const CambioZona = ({ onRequestClose, idUser }) => {
         }
     }
 
+    const changeZonaTrabajo = async () => {
+
+        const url = `${process.env.REACT_APP_API_CONSUME}/api/user/changeadress`;
+        let config = {
+            method: "POST",
+            body:JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            },
+        };
+
+        try {
+            const res = await fetch(url, config);
+            const data_res = await res.json();
+            console.log(data_res)
+            alert(data_res.msg)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+
     return (
 
         <div className='container'>
             <div className="text-center row mb-5"><h2 className=''>Cambiar Area de Trabajo</h2></div>
             <div className="row mb-3">
-                
-                    <select onChange={handleChange} name="departamento" className='form-select'>
-                        <option value={0}>Seleccione Departamento</option>
-                        {departamentos.map((departamento) => (
-                            <option key={departamento.id_departamento} value={departamento.id_departamento}>
-                                {departamento.nombre_dep}
-                            </option>
-                        ))}
-                    </select>
+
+                <select onChange={handleChange} name="departamento" className='form-select'>
+                    <option value={0}>Seleccione Departamento</option>
+                    {departamentos.map((departamento) => (
+                        <option key={departamento.id_departamento} value={departamento.id_departamento}>
+                            {departamento.nombre_dep}
+                        </option>
+                    ))}
+                </select>
             </div>
             {showMunicipios && (<div className="row mb-3">
-                    <select onChange={handleChange} name="municipio" className='form-select'>
-                        <option value={0}>Seleccione Municipio</option>
-                        {municipios.map((municipio) => (
-                            <option key={municipio.id_municipio} value={municipio.id_municipio}>
-                                {municipio.nombre_municipio}
-                            </option>
-                        ))}
-                    </select>
+                <select onChange={handleChange} name="municipio" className='form-select'>
+                    <option value={0}>Seleccione Municipio</option>
+                    {municipios.map((municipio) => (
+                        <option key={municipio.id_municipio} value={municipio.id_municipio}>
+                            {municipio.nombre_municipio}
+                        </option>
+                    ))}
+                </select>
             </div>)}
-            
+
+            <div className="row mb-3">
+                <input type="text"
+                    name="direccion"
+                    onChange={handleChange}
+                    placeholder='Ingrese Nueva Direccion'
+                    className="form-control" />
+            </div>
+
             <div className="row">
                 <div className="col-2"></div>
-                <button className='btn btn-primary col-3 btnEffect btn-secondary' onClick={handleAceptarSol}>
+                <button className='btn btn-primary col-3 btnEffect btn-secondary' onClick={CambiarZona}>
                     Cambiar
                 </button>
                 <div className="col-2"></div>
-                <button className='btn btn-primary col-3 btnEffect btn-secondary' onClick={handleRechazarSol}>
+                <button className='btn btn-primary col-3 btnEffect btn-secondary' onClick={CerrarModal}>
                     Cancelar
                 </button>
                 <div className="col-2"></div>

@@ -40,6 +40,7 @@ import PanelCa from './components/Usuario/PanelCategoria';
 
 //Pedido Cliente
 import Pedido from './components/PedidoCliente/Pedido'
+import HistorialPedido from './components/HistorialPedido/Historial'
 
 
 function App() {
@@ -74,6 +75,7 @@ function App() {
           <Route path="/panelE/:title" element={<PanelE />} />
           <Route path="/panelC/:title" element={<PanelCa />} />
           <Route path="/pedidoCliente" element={<Pedido />} />
+          <Route path="/historialPedidos" element={<HistorialPedido />} />
         </Routes>
       </BrowserRouter>
     </Provider>

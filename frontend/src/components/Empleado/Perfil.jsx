@@ -71,16 +71,6 @@ const customStyles = {
 };
 
 const data = [
-  {
-    producto: 'Producto 1',
-    fechaPedido: '2023-06-01',
-    estado: 'En progreso',
-  },
-  {
-    producto: 'Producto 2',
-    fechaPedido: '2023-06-05',
-    estado: 'Entregado',
-  },
   // Agrega más filas según tus necesidades
 ];
 
@@ -112,6 +102,7 @@ const columns = [
         case 2: return "En Camino";
         case 3: return "Entregado";
         case 4: return "Cancelado";
+        case 5: return "Calificado";
         default: return "Desconocido";
       }
     },
@@ -136,7 +127,8 @@ const Perfil = () => {
     { estado: "Desconocido", nestado: -1 },
     { estado: "Entregado", nestado: 3 },
     { estado: "Disponible", nestado: 1 },
-    { estado: "Cancelado", nestado: 4 }
+    { estado: "Cancelado", nestado: 4 },
+    { estado: "Calificado", nestado: 5 }
   ])
   const[filtroActual,setfiltroActual]=useState(0)
   const[valfiltro, setValFiltro]=useState("")

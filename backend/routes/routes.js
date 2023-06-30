@@ -81,8 +81,8 @@ router.post(baseurl + 'reports/salesValue',                       OAUTH.validate
 
 
 //Municipio
-router.get(baseurl + 'departamento',                              OAUTH.validateToken,ADDR.getInfoDep)
-router.get(baseurl + 'departamento/municipio/:id',                OAUTH.validateToken,ADDR.getInfoMun)
+router.get(baseurl + 'departamento',                              ADDR.getInfoDep)
+router.get(baseurl + 'departamento/municipio/:id',                ADDR.getInfoMun)
 
 
 
