@@ -94,6 +94,13 @@ module.exports = {
 		inner join documento_solicitud ds on s.id_solicitud_repartidor = ds.solicitud_pendiente_id_solicitud_repartidor
 		where s.aprobada = 0 and s.descripcion_empresa is null OR s.descripcion_empresa = '' `,
 
+		req_pending_address_change:`SELECT s.id_solicitud_repartidor, s.fecha_solicitud ,u.nombre , u.apellido, m.nombre_municipio  as municipioantiguo, m2.nombre_municipio  as municipionuevo, m.id_municipio as idmunicipio, d.direccion as direccionantigua, s.direccion as direccionnueva FROM solicitud_pendiente s
+		inner join municipio m on s.municipio_id_municipio  = m.id_municipio
+		inner join usuario u on u.id_usuario = s.usuario_id_usuario
+		inner join direccion d on u.id_usuario = d.usuario_id_usuario
+		inner join municipio m2 ON d.municipio_id_municipio = m2.id_municipio
+		WHERE s.usuario_id_usuario != 1 and s.aprobada = 0;`,
+
 		//Municipios
 		list_municipios: "SELECT m.id_municipio,m.nombre_municipio , d.* FROM municipio m inner join departamento d  on m.departamento_id_departamento = d.id_departamento WHERE m.departamento_id_departamento = ?",
 		list_dep: "SELECT * FROM departamento",
@@ -112,6 +119,15 @@ module.exports = {
 		GROUP BY dpc.producto_id_producto 
 		ORDER BY total_vendido DESC
 		LIMIT 1;`,
+
+		get_most_global_selled_product:`SELECT  p.id_producto, e.nombre, p.nombre_producto, SUM(dpc.cantidad) AS total_vendido, p.descripcion_producto, p.imagen_producto, p.precio_producto
+		FROM detalle_pedido_cliente AS dpc
+		JOIN producto AS p ON dpc.producto_id_producto = p.id_producto 
+		JOIN empresa as e on p.empresa_id_empresa = e.id_empresa
+		GROUP BY dpc.producto_id_producto 
+		ORDER BY total_vendido DESC
+		LIMIT 5;
+		`,
 
 		//Ordenes disponibles para entregar
 		get_orders_availabe_by_adrress:`SELECT pc.id_pedido_cliente AS NoOrden, d.direccion, m.nombre_municipio  AS municipio, pc.fecha_pedido AS fecha, 
@@ -174,10 +190,23 @@ module.exports = {
 							WHERE pc.usuario_id_usuario = ?;
 						`,	
 
+		get_orders_globally: `SELECT pc.id_pedido_cliente AS NoOrden, pc.fecha_pedido AS fecha, d.direccion  AS direccion	,
+						CASE pc.metodo_pago
+							WHEN 0 THEN 'Efectivo'
+							WHEN 1 THEN 'Tarjeta'
+							ELSE 'Desconocido'
+						END AS metodo, ep.nombre_estado as estado, CONCAT (u.nombre," ",u.apellido ) AS repartidor
+						FROM pedido_cliente pc
+						JOIN direccion d ON pc.usuario_id_usuario = d.usuario_id_usuario
+						JOIN estado_pedido ep ON pc.estado_pedido_id_estado = ep.id_estado 
+						LEFT JOIN usuario u ON pc.usuario_id_usuario2  = u.id_usuario;
+						
+					`,	
+
 
 		get_rate_of_deliver: `SELECT AVG(pc.calificacion) AS calificacion
 							  FROM pedido_cliente pc 
-							  WHERE pc.calificacion IS NOT NULL AND pc.estado_pedido_id_estado = 3 AND pc.usuario_id_usuario2 = ?`,
+							  WHERE pc.calificacion IS NOT NULL AND pc.estado_pedido_id_estado = 5 AND pc.usuario_id_usuario2 = ?`,
     /* ----------------------------------------------------------------------- */
 	/* ------------------------------ UPDATES -------------------------------- */
 	/* ----------------------------------------------------------------------- */
@@ -194,8 +223,12 @@ module.exports = {
 		update_status_order_delivered: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=3 WHERE id_pedido_cliente=?",
 
 		update_status_order: "UPDATE pedido_cliente SET usuario_id_usuario2=?, estado_pedido_id_estado=? WHERE id_pedido_cliente=?",
+		
+		update_adrress: "UPDATE direccion SET direccion=?, municipio_id_municipio=? WHERE usuario_id_usuario=?",
 
-		ban_user: "UPDATE usuario SET estado=0, descripcionBan = ?  WHERE id_usuario=?",
+		update_pending_request_change_adrress: "UPDATE solicitud_pendiente SET aprobada=? WHERE id_solicitud_repartidor= ?",
+
+		ban_user: "UPDATE usuario SET estado=?, descripcionBan = ?  WHERE id_usuario=?",
 		
 		rate_order: "UPDATE pedido_cliente SET calificacion= ?  WHERE id_pedido_cliente=?",
 		
@@ -215,6 +248,10 @@ module.exports = {
 		ins_sol:"INSERT INTO solicitud_pendiente "+
 				   "(fecha_solicitud,nombre,apellido,email,nit,medio_transporte,usuario_id_usuario,descripcion_empresa,username,password,tipo_empresa,municipio_id_municipio,tipo_licencia,aprobada,telefono,direccion) "+
 				   "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+
+		ins_sol_cambio_departamental:"INSERT INTO solicitud_pendiente "+
+				   "(fecha_solicitud,usuario_id_usuario,aprobada,direccion,municipio_id_municipio) "+
+				   "VALUES (?,?,?,?,?);",
 				   
 		ins_sol_image: "INSERT INTO documento_solicitud "+ 
 		" (descripcion, documento,solicitud_pendiente_id_solicitud_repartidor ) "+
