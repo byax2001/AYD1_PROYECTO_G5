@@ -88,16 +88,21 @@ exports.login = async function(req, res) {
 
   exports.validateToken = async (req,res,next) =>{
     
-    try{
-      // const headers = req.headers
-      // const authCode = headers.authorization
-      // const basic = authCode.split(' ')
-
-      // const decode = JWT.verify(authCode,process.env.JWT_TOKEN)
-      // req.body.auth = decode
+    try {
+      const { authorization } = req.headers;
+      if (!authorization || !authorization.startsWith('Bearer ')) {
+        throw new Error('Invalid token');
+      }
+    
+      const token = authorization.split(' ')[1];
+      const decoded = JWT.verify(token, process.env.JWT_TOKEN);
+      req.body.auth = decoded;
       next();
-    }catch(error){
-      res.status(200).send({ message: "Token Invalido",valid: false });
+    } catch (error) {
+      console.log(error);
+      res.status(401).json({ message: 'Invalid token' });
     }
+
+
   }
   

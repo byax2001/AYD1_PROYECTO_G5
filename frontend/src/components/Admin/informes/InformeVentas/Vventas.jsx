@@ -1,6 +1,6 @@
 import { Component, useEffect } from "react"
 import React,{useState,useRef} from 'react';
-import {Link,useNavigate} from 'react-router-dom'
+import {Link,json,useNavigate} from 'react-router-dom'
 import DataTable from 'react-data-table-component'
 const datoprueba=[
 ]
@@ -89,25 +89,28 @@ function Vventas (props){
     setSelectedDate(event.target.value);
   };
     const [data,SetData] = useState([])
-    const datosdb=async()=>{/*
-      //console.log(process.env.REACT_APP_API_CONSUME)
-      const url = `${process.env.REACT_APP_API_CONSUME}/api/get_votos`
+    
+    const hventas=async()=>{
+      let fecha ={"fecha":selectedDate}
+      const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/salesValue`
       let config = {
           method: "GET", //ELEMENTOS A ENVIAR
+          body: JSON.stringify(fecha),
           headers: {
           "Content-Type": "application/json",
           Accept: "application/json", 
+          Authorization: `Bearer ${localStorage.getItem('token')}`
           },
       };
       try{
         const res = await fetch(url, config);
         
         const data_res = await res.json();
-        SetData(data_res)  //se envian los datos a la tabla para ser mostrados.
+        //console.log(data_res)
        
       }catch(e){
         console.log(e)
-      }*/
+      }
       
   }
 
@@ -132,7 +135,7 @@ function Vventas (props){
           />
         </div>
         <div className="col-2 mb-3 p-0 justify-content-center d-flex">
-          <button className="btn btn-secondary btnEffect" onClick={datosdb()}>
+          <button className="btn btn-secondary btnEffect" onClick={()=>{hventas()}}>
             Filtrar
           </button>
         </div>
@@ -146,7 +149,7 @@ function Vventas (props){
         fixedHeader
         fixedHeaderScrollHeight="600px"
         customStyles={customStyles}
-        noDataComponent="No hay informacion en la base de datos"
+        noDataComponent="Indique la fecha para mostrar valor de ventas"
       />
     </React.Fragment >
 

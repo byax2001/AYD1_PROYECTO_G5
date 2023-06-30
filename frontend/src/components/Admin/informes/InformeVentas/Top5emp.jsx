@@ -94,13 +94,15 @@ function Top5Emp(props) {
       },
     ],
   };
+
   const gBarras=async()=>{
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/top_sedes`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/top5restaurant2`;
     let config = {
         method: "GET", //ELEMENTOS A ENVIAR
         headers: {
         "Content-Type": "application/json",
         Accept: "application/json", 
+        Authorization: `Bearer ${localStorage.getItem('token')}`
         },
     };
     try{
@@ -109,16 +111,15 @@ function Top5Emp(props) {
       const data_res = await res.json();
       const label = []
       const data = []
-      for (let index = 0; index < data_res.length; index++) {
-        const s = data_res[index];
-        label.push(s.sede)
-        data.push(s.votos);
-        /*"sede": 8,
-        "municipio": "Amatitlan",
-        "departamento": "Guatemala",
-        "papeleta": "Rosada",
-        "partido": "UNE*/
+
+
+      for (let index = 0; index < data_res.data.length; index++) {
+        const s = data_res.data[index];
+        label.push(s.nombre)
+        data.push(s.total_ordenes);
       }
+
+      console.log(data)
       setDataB(data)
       setLabelB(label)
       //console.log(votoC)
@@ -130,10 +131,12 @@ function Top5Emp(props) {
     
 }
   useEffect(() => {
+      gBarras()
+      /*
       const intervalo = setInterval(() => {
        gBarras();
       }, 1000);
-      return () => clearInterval(intervalo);
+      return () => clearInterval(intervalo);*/
       //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   },[]);
   

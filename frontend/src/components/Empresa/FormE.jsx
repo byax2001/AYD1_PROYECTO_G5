@@ -55,6 +55,11 @@ const Form = ({ selectedRow, closeModal ,filteredDataV }) => {
           let config = {
               method: "PUT", //ELEMENTOS A ENVIAR
               body: dataFD,
+        
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+              }
+             
           };
           try{
             const res = await fetch(url, config);

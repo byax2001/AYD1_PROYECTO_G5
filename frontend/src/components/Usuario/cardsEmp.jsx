@@ -82,7 +82,12 @@ const Cards = () => {
 
   const fetchDatav = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/reports/top5restaurant`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      };
+      const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/reports/top5restaurant`,config); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
       const data = response.data; // Obtener los datos de la respuesta
       setCards(data.data); // Actualizar los datos del componente
       console.log('Datos Obtenidos:', data.data);
@@ -97,7 +102,7 @@ const Cards = () => {
   return (
 
     <div>
-      <div className="container d-flex justify-content-center align-items-center h-100">
+      <div className="container-fluid justify-content-center align-items-center h-100">
         <div className="row">
           {cards.map(({ nombre, descripcion_empresa, id_empresa }) => (
             <div className="col-md-2" key={id_empresa}>
