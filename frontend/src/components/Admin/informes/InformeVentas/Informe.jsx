@@ -17,6 +17,7 @@ const Informe = () => {
   };
   return (
     <React.Fragment>
+      <div className="wall2">
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
         <img id="logoStar" src={logo} alt="Logo" />
         <div className="navbar-brand">AlChilazo</div>
@@ -34,18 +35,24 @@ const Informe = () => {
           <div className="col-2"></div>
         </div>
         <div className="row mt-2">
-          <div className="col-5">
+          {/* TOP 5 EMPRESAS */}
+          <div className="col-3"/>
+          <div className="col-6 d-flex justify-content-center bg-dark" style={{ height: '300px' }}>
+            <Top5Emp />
+          </div>
+          <div className="col-3"/>
+        </div>
+        <div className="row mt-2">
+          <div className="col-12">
             {/* TABLA PRODUCTOS MAS VENDIDOS */}
             <TopProductos />
           </div>
-          <div className="col-1"></div>
-          <div className="col-6 bg-dark">
-            {/* BARRA PARA LAS VENTAS */}
-            <Top5Emp />
-
-          </div>
         </div>
+
+
       </div>
+      </div>
+      
     </React.Fragment>
   );
 };

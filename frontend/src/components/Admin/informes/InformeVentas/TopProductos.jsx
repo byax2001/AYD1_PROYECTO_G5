@@ -2,32 +2,47 @@ import { Component, useEffect } from "react"
 import React,{useState,useRef} from 'react';
 import {Link,useNavigate} from 'react-router-dom'
 import DataTable from 'react-data-table-component'
+import ReactTable from 'react-data-table-component';
 const datoprueba=[
 ]
 
 const columnas=[
     {
         name:'Id',
-        selector: row => row.id_voto,
+        selector: row => row.id_producto,
         sortable:true
     },
     {
-        name:'Municipio',
-        selector: row => row.municipio,
+        name:'Descripcion',
+        selector: row => row.descripcion_producto,
         sortable:true,
         grow:2
     },{
-        name:'Departamento',
-        selector: row => row.departamento,
+        name:'nombre',
+        selector: row => row.nombre_producto,
         sortable:true,
         grow:2
-    },{
-        name:'Papeleta',
-        selector: row => row.papeleta,
+    },
+    {
+      name: 'Imagen',
+      cell: row => (
+        <img style={{ width: '45px', height:'45px' }} src={row.imagen_producto} className="img-thumbnail"/>
+      ),
+      width: "120px",
+      style: { whiteSpace: 'nowrap'} ,
+      // style: { whiteSpace: 'nowrap',height:'22px', width: '300px', backgroundColor:"red"} ,
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+    
+    {
+        name:'Precio',
+        selector: row => row.precio_producto,
         sortable:true
     },{
-      name:'Partido',
-      selector: row => row.partido,
+      name:'Total Vendidos',
+      selector: row => row.total_vendido,
       sortable:true
   }
 ]
@@ -84,30 +99,32 @@ const customStyles = {
 
 function TopProductos (props){
     const [data,SetData] = useState([])
-    const datosdb=async()=>{
-        /*
-      //console.log(process.env.REACT_APP_API_CONSUME)
-      const url = `${process.env.REACT_APP_API_CONSUME}/api/get_votos`
+
+    const getTproductos=async()=>{
+      const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/getglobalproducts`
       let config = {
           method: "GET", //ELEMENTOS A ENVIAR
           headers: {
           "Content-Type": "application/json",
           Accept: "application/json", 
+          Authorization: `Bearer ${localStorage.getItem('token')}`
           },
       };
       try{
         const res = await fetch(url, config);
         
-        const data_res = await res.json();
-        SetData(data_res)  //se envian los datos a la tabla para ser mostrados.
+        const data_res = await res.json()
+        console.log(data_res)
+        SetData(data_res.data)
        
       }catch(e){
         console.log(e)
       }
-      */
+    
   }
 
   useEffect(() => {
+    getTproductos()
    /* const interval = setInterval(() => {
       datosdb()
     }, 1000);
@@ -116,7 +133,7 @@ function TopProductos (props){
 
   
     return(
-        <DataTable 
+        <ReactTable 
         columns={columnas}
         data={data}
         title="Productos mas Vendidos"
