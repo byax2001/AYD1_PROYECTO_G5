@@ -97,6 +97,7 @@ function PedidosEntregados (props){
           headers: {
           "Content-Type": "application/json",
           Accept: "application/json", 
+          Authorization: `Bearer ${localStorage.getItem('token')}`
           },
       };
       try{
@@ -132,7 +133,7 @@ function PedidosEntregados (props){
           />
         </div>
         <div className="col-2 mb-3 p-0 justify-content-center d-flex">
-          <button className="btn btn-secondary btnEffect" onClick={datosdb()}>
+          <button className="btn btn-secondary btnEffect" onClick={()=>{datosdb()}}>
             Filtrar
           </button>
         </div>

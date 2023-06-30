@@ -32,7 +32,11 @@ module.exports = {
 		WHEN rol=2 THEN 'REPARTIDOR'
 		WHEN rol =3 THEN 'EMPRESA'
 		END AS rol,
-		telefono, tipo_licencia,nit,fecha_registro 
+		telefono, tipo_licencia,nit,fecha_registro, 
+		CASE WHEN  estado=0 THEN 'BANEADO'
+		WHEN estado = 1 THEN 'ACTIVO'
+		WHEN estado = 3 THEN 'MANTENIMIENTO'
+		END AS estado
 		from usuario`,
 		total_users: "SELECT COUNT(*) AS TOTAL FROM usuario",
 		total_users_byday: `SELECT AVG(tabla.cuenta) AS Promedio_Dia
@@ -163,7 +167,7 @@ module.exports = {
 		get_top5_delivers: 	`SELECT u.id_usuario, u.nombre, AVG(pc.calificacion) AS promedio_calificacion
 								FROM pedido_cliente pc
 								JOIN usuario u ON pc.usuario_id_usuario2 = u.id_usuario
-								WHERE pc.calificacion IS NOT NULL AND pc.estado_pedido_id_estado = 3
+								WHERE pc.calificacion IS NOT NULL AND (pc.estado_pedido_id_estado = 3 OR pc.estado_pedido_id_estado = 5)
 								GROUP BY u.id_usuario, u.nombre
 								ORDER BY promedio_calificacion DESC
 								LIMIT 5; `,	
@@ -230,7 +234,7 @@ module.exports = {
 
 		ban_user: "UPDATE usuario SET estado=?, descripcionBan = ?  WHERE id_usuario=?",
 		
-		rate_order: "UPDATE pedido_cliente SET calificacion= ?  WHERE id_pedido_cliente=?",
+		rate_order: "UPDATE pedido_cliente SET calificacion= ?, estado_pedido_id_estado = 5 WHERE id_pedido_cliente= ?",
 		
 
     /* ----------------------------------------------------------------------- */

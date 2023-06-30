@@ -70,8 +70,8 @@ const options = {
 
 
 function Top5Dev(props) {
-  const [labelB,setLabelB]=useState(['Sede 1', 'Sede 2', 'Sede 3', 'Sede 4', 'Sede 5'])
-  const [dataB,setDataB]=useState([12, 19, 3, 5, 2])
+  const [labelB,setLabelB]=useState([])
+  const [dataB,setDataB]=useState([])
   const data = {
     labels: labelB,
     datasets: [
@@ -110,7 +110,7 @@ function Top5Dev(props) {
       const res = await fetch(url, config);
       
       const data_res = await res.json();
-      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+      console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ TOP 5 DELIVERYS")
       console.log(data_res)
       const label = []
       const data = []
@@ -145,7 +145,7 @@ function Top5Dev(props) {
   },[]);
   
   return (
-    <Bar data={data} options={options} />)
+    <Bar data={data} options={options}  />)
 
 }
 export default Top5Dev;
