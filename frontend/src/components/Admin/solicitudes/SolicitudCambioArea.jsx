@@ -200,7 +200,7 @@ const columnas = [
   };
 
   const getSolicitudes = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/reqPendingRestaurant`;
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/reqPendingChangeAdress`;
     console.log(url)
     let config = {
       method: "GET", //ELEMENTOS A ENVIAR
@@ -214,7 +214,7 @@ const columnas = [
       const res = await fetch(url, config);
 
       const data_res = await res.json();
-
+      console.log("DATOS DE CAMBIO DE AREA")
       setFilteredData(data_res.data)
       console.log(data_res)
 
@@ -274,14 +274,12 @@ const columnas = [
 
       console.log(data_res)
       alert(data_res.message)
-      //console.log(votoC)
-      //setVotos(votoC)
     } catch (e) {
       console.log(e)
     }
   }
   useEffect(() => {
-    getSolicitudes();
+    //getSolicitudes();
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   }, []);
 

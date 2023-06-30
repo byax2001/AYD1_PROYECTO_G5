@@ -9,7 +9,7 @@ Modal.setAppElement('#root');
 const customStylesModal = {
     content: {
       width: '500px', // Ancho personalizado del modal
-      height: '200px', // Alto personalizado del modal
+      height: '350px', // Alto personalizado del modal
       top: '50%', // Centrar verticalmente
       left: '50%', // Centrar horizontalmente
       transform: 'translate(-50%, -50%)', // Ajustar la posición al centro
@@ -67,33 +67,9 @@ const customStyles = {
 };
 
 
-const data = [
-  {
-    nombre: 'John',
-    apellido: 'Doe',
-    email: 'johndoe@example.com',
-    celular: '1234567890',
-    departamento: 'Departamento 1',
-    municipio: 'Municipio 1',
-    tipolicencia: 'Tipo A',
-    tp: 'Sí',
-    documento: 'https://ayd1-grupo5.s3.amazonaws.com/3e62c6d4688a8135cb32ad8ba96872eced3b9a77238afe5b1169a849617e8208',
-  },
-  {
-    nombre: 'Jane',
-    apellido: 'Smith',
-    email: 'janesmith@example.com',
-    celular: '9876543210',
-    departamento: 'Departamento 2',
-    municipio: 'Municipio 2',
-    tipolicencia: 'Tipo B',
-    tp: 'No',
-    documento: 'https://ruta-hoja-de-vida2.com/hoja-de-vida.pdf',
-  },
-];
 
 const DeshabilitarUsuario = () => {
-  const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -103,74 +79,53 @@ const DeshabilitarUsuario = () => {
 
   const closeModal = () => {
     setModalIsOpen(false);
-    getSolicitudes();
   };
   const colsUsuarios = [
     {
       name: 'Nombre',
       selector: row => row.nombre,
-      sortable: true,
-      width: "110px"
+      sortable: true
     },
     {
       name: 'Apellido',
       selector: row => row.apellido,
       sortable: true,
-      width: "110px"
-    },
-    {
-      name: 'Correo Electronico',
+      grow: 2
+    }, {
+      name: 'Email',
       selector: row => row.email,
       sortable: true,
-      style: { whiteSpace: 'nowrap' } ,
-      width: "180px" ,                      // added line here
-        HeaderStyle: (selector, id) => {
-    return { textAlign: "center" };   // removed partial line here
-  },
-    },
-    {
+      grow: 2
+    }, {
+      name: 'UserName',
+      selector: row => row.username,
+      sortable: true
+    }, {
       name: 'Telefono',
       selector: row => row.telefono,
-      sortable: true,
-      width: "110px"
-    },
-    {
-      name: 'Departamento',
-      selector: row => row.departamento,
-      sortable: true,
-      width: "150px"
-    },
-    {
-      name: 'Municipio',
-      selector: row => row.nombre_municipio,
-      sortable: true,
-      width: "130px"
-    },
-    {
-      name: 'Licencia',
+      sortable: true
+    }, {
+      name: 'Tipo de Licencia',
       selector: row => row.tipo_licencia,
-      sortable: true,
+      sortable: true
+    },{
+      name:'Nit',
+      selector: row => row.nit,
+      sortable:true
+    },{
+      name:'Rol',
+      selector: row => row.rol,
+      sortable:true
     },
     {
-      name: 'Transporte Propio',
-      selector: row => row.medio_transporte,
-      sortable: true,
-      width: "180px"
+      name:'Fecha Registro',
+      selector: row => row.fecha_registro,
+      sortable:true
     },
     {
-      name: 'Documento',
-      selector: row => row.documento,
-      cell: row => (
-        <a className='' href={row.documento} target="_blank" rel="noopener noreferrer">
-          <img
-            src={cv}
-            alt="Hoja de Vida"
-            style={{ width: '35px', cursor: 'pointer' }}
-          />
-        </a>
-      ),
-      width: "110px"
-
+      name:'Estado',
+      selector: row => row.estado,
+      sortable:true
     },
     {
       name: 'Acción',
@@ -197,96 +152,86 @@ const DeshabilitarUsuario = () => {
   };
 
   //VENTANA EMERGENTE PARA ACCIONAR 
-  const ActionModal = ({ isOpen, onRequestClose, aceptarSol,id,rechazarSol}) => {
-    const handleAceptarSol = () => {
+  const ActionModal = ({ isOpen, onRequestClose, BanMantenerU,id, getInfo}) => {
+    const [valTextA, setValTextA]=useState("")
+    const Manenimiento = () => {
       //aceptarSol(id);
+      BanMantenerU(2,id,valTextA)
+      getInfo()
       onRequestClose();
     };
   
-    const handleRechazarSol = () => {
+    const Baneo = () => {
       //rechazarSol(id);
+      BanMantenerU(1,id,valTextA)
+      getInfo()
       onRequestClose();
     };
-      return (
-          <Modal
-              isOpen={isOpen} Inicio
-              onRequestClose={onRequestClose}
-              aceptarsol={aceptarSol}
-              rechazarSol={rechazarSol}
-              contentLabel="Aceptar o Rechazar"
-              style={customStylesModal}
-          >
-              <div className='container'>
-                  <div className="row mb-4">
-                      <div className="col-12 text-center"><h3>Deshabilitar Usuario o Dar Mantenimiento</h3></div>
-                  </div>
-                  <div className="row">
-                      <div className="row">
-                          <div className="col-1"/>
-                          <div className="col-3 p-0">
-                              <button className='btn btn-secondary btnEffect' onClick={handleAceptarSol}>Deshabilitar</button>
-                          </div>
-                          <div className="col-4">
-                             <button className="btn btn-secondary btnEffect">Mantenimiento</button>
-                          </div>
-                          <div className="col-3 p-0 justify-content-end d-flex">
-                              <button className='btn btn-secondary btnEffect' onClick={handleRechazarSol}>Cancelar</button>
-                          </div>
-                          <div className="col-1"/>
-                      </div>
-                  </div>
+    return (
+      <Modal
+        isOpen={isOpen} Inicio
+        onRequestClose={onRequestClose}
+        BanMantenerU={BanMantenerU}
+        contentLabel="Aceptar o Rechazar"
+        style={customStylesModal}
+      >
+        <div className='container'>
+          <div className="row mb-4">
+            <div className="col-12 text-center"><h3>Deshabilitar Usuario o Dar Mantenimiento</h3></div>
+          </div>
+          <div className="row mb-4">
+            <textarea
+              onChange={(e)=>{setValTextA(e.target.value)}}
+              placeholder='Ingrese motivo de su decision'
+              className='container-fluid form-control'
+              rows="3">{valTextA}</textarea>
+          </div>
+          <div className="row">
+            <div className="row">
+              <div className="col-1" />
+              <div className="col-3 p-0">
+                <button className='btn btn-secondary btnEffect' onClick={Baneo}>Deshabilitar</button>
               </div>
-          </Modal>
-      );
+              <div className="col-4">
+                <button className="btn btn-secondary btnEffect" onClick={Manenimiento}>Mantenimiento</button>
+              </div>
+              <div className="col-3 p-0 justify-content-end d-flex">
+                <button className='btn btn-secondary btnEffect' onClick={()=>{onRequestClose()}}>Cancelar</button>
+              </div>
+              <div className="col-1" />
+            </div>
+          </div>
+        </div>
+      </Modal>
+    );
   };
 
-  const getSolicitudes = async () => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/reqPendingDelivers`;
-    let config = {
-      method: "GET", //ELEMENTOS A ENVIAR
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    };
-    try {
-      const res = await fetch(url, config);
-
-      const data_res = await res.json();
-      setFilteredData(data_res.data)
-      console.log(data_res)
-      //console.log(votoC)
-      //setVotos(votoC)
-    } catch (e) {
-      console.log(e)
-    }
-
-  }
+  
 
   useEffect(() => {
+    getInfo()
     //getSolicitudes();
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   }, []);
-  //ACEPTAR SOLICITUD
-  const aSolicitud = async (id) => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/aceptRequest`;
-    const accion = { "id_solicitud": id }
-    console.log(`------------------Id mandado a aceptar ${id}`)
+
+  //LLENAR LA TABLA CON LOS USUARIOS
+  const getInfo = async (departamento) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/reports`;
     let config = {
-      method: "PUT", //ELEMENTOS A ENVIAR
-      body: JSON.stringify(accion),
+      method: "GET", 
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
+    
     try {
       const res = await fetch(url, config);
       const data_res = await res.json();
+      console.log("#$$$$$$$$$$$$$$$$$$$$$$######")
       console.log(data_res)
-      alert(data_res.message)
-      //console.log(votoC)
-      //setVotos(votoC)
+      setFilteredData(data_res.data)
     } catch (e) {
       console.log(e)
     }
@@ -294,22 +239,25 @@ const DeshabilitarUsuario = () => {
   }
 
 
-  //RECHAZAR SOLICITUD
-  const rSolicitud = async (id) => {
-    const url = `${process.env.REACT_APP_API_CONSUME}/api/denyRequest`;
-    const accion = { "id_solicitud": id }
+
+  //ACEPTAR SOLICITUD
+  const BanMantU = async (bm,id,motivo) => {
+    const url = `${process.env.REACT_APP_API_CONSUME}/api/user/ban`;
+    alert(bm)
+    const accion = { tipoban:Number(bm),id:id,descripcion:motivo}
     let config = {
       method: "PUT", //ELEMENTOS A ENVIAR
       body: JSON.stringify(accion),
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
+      
     };
     try {
       const res = await fetch(url, config);
       const data_res = await res.json();
-
       console.log(data_res)
       alert(data_res.message)
       //console.log(votoC)
@@ -317,7 +265,11 @@ const DeshabilitarUsuario = () => {
     } catch (e) {
       console.log(e)
     }
+
   }
+
+
+  
   return (
     <React.Fragment>
       {/* PARA MOSTRAR LA VENTANA EMERGENTE */}
@@ -325,9 +277,9 @@ const DeshabilitarUsuario = () => {
         <ActionModal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
-          aceptarSol={aSolicitud}  // FUNCION
-          id={selectedRow.id_solicitud_repartidor} //VARIABLE
-          rechazarSol={rSolicitud} //FUNCION
+          BanMantenerU={BanMantU}  // FUNCION
+          id={selectedRow.id_usuario} //VARIABLE
+          getInfo={getInfo}
         />
       )}
       {/* CONTENEDOR DE TABLA  */}
@@ -337,7 +289,7 @@ const DeshabilitarUsuario = () => {
                       <ReactTable
                           title={"Deshabilitar Usuarios  o Dar Mantenimiento"}
                           columns={colsUsuarios}
-                          data={data}
+                          data={filteredData}
                           customStyles={customStyles}
                           pagination
                           paginationPerPage={10}
@@ -346,7 +298,6 @@ const DeshabilitarUsuario = () => {
                           responsive
                       />
                   </div>
-          
         </div>
       </div>
     </React.Fragment>

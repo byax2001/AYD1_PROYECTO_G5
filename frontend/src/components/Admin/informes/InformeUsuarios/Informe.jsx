@@ -48,6 +48,11 @@ const columnas = [
     name:'Fecha Registro',
     selector: row => row.fecha_registro,
     sortable:true
+  },
+  {
+    name:'Estado',
+    selector: row => row.estado,
+    sortable:true
   }
 ]
 const customStyles = {
