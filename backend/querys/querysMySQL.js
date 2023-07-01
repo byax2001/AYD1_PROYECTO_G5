@@ -98,7 +98,7 @@ module.exports = {
 		inner join documento_solicitud ds on s.id_solicitud_repartidor = ds.solicitud_pendiente_id_solicitud_repartidor
 		where s.aprobada = 0 and s.descripcion_empresa is null OR s.descripcion_empresa = '' `,
 
-		req_pending_address_change:`SELECT s.id_solicitud_repartidor, s.fecha_solicitud ,u.nombre , u.apellido, m.nombre_municipio  as municipioantiguo, m2.nombre_municipio  as municipionuevo, m.id_municipio as idmunicipio, d.direccion as direccionantigua, s.direccion as direccionnueva FROM solicitud_pendiente s
+		req_pending_address_change:`SELECT s.id_solicitud_repartidor, s.fecha_solicitud ,u.nombre , u.apellido,  m2.nombre_municipio as municipioantiguo,  m.nombre_municipio  as municipionuevo, m.id_municipio as idmunicipio, d.direccion as direccionantigua, s.direccion  as direccionnueva FROM solicitud_pendiente s
 		inner join municipio m on s.municipio_id_municipio  = m.id_municipio
 		inner join usuario u on u.id_usuario = s.usuario_id_usuario
 		inner join direccion d on u.id_usuario = d.usuario_id_usuario
