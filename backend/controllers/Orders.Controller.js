@@ -18,14 +18,7 @@ exports.neworder = async function(req,res){
                         } else {
                             if (result.length>0){
                                 //Si el cupon es valido revisamos que no lo haya utilizado.
-                                console.log("DSFJKADSF")
-                                console.log(req.body.idUser)
-                                console.log(result[0].id_cupon)
-                                console.log("DSFJKADSF")
                                 database.query(querysMySQL.list_used_cupon_by_user, [req.body.idUser,result[0].id_cupon], function(err, result2, fields) {
-                                    console.log("dlskf")
-                                    console.log(result2)
-                                    console.log("dlskf")
                                     if(result2.length>0){
                                         res.status(200).send({ message: "El cupon ingresado ya fue utilizado", valid:false});
                                         return
@@ -53,7 +46,6 @@ exports.neworder = async function(req,res){
             
                 if (err)throw err;
                 if(result.affectedRows>0){
-                    console.log(result.insertId)
                     // Obtener la lista de productos del body
                     const productos = req.body.productos;
     
@@ -91,12 +83,9 @@ exports.neworder = async function(req,res){
         
 
         });
-
-        console.log(insorder)
         
     
     }catch (e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear usuario", data: e});
     }
 
@@ -119,8 +108,7 @@ exports.getorderbyadress = async function(req,res){
     });
     
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+        //res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
     }
 
 }
@@ -143,8 +131,8 @@ exports.changestatusorder = async function(req,res){
                         return;
         
                     }else{
-                        res.status(200).send({msg:"Error al selecionar :c ", valid:false})
-                        return;
+                        //res.status(200).send({msg:"Error al selecionar :c ", valid:false})
+                        // return;
                     };
             });
             };
@@ -152,34 +140,12 @@ exports.changestatusorder = async function(req,res){
 
         });
     
-    }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+    }catch{
+       // res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
     }
 
 }
 
-exports.getordersbydeliver = async function(req,res){
-    try{
-
-        database.query(querysMySQL.get_orders_availabe_by_adrress,[req.params.id],async function(err,result,fields){
-            if (err)throw err;
-            if (result.length>0){
-                res.status(200).send({msg:"Estas son las ordenes disponibles en esa area", valid:true, data:result})
-                return;
-
-        }else{
-            res.status(200).send({msg:"No hay ordenes por el momento", valid:true, data:result})
-            return;
-        };
-    });
-    
-    }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
-    }
-
-}
 
 exports.getactiveorder = async function(req,res){
     try{
@@ -191,14 +157,13 @@ exports.getactiveorder = async function(req,res){
                 return;
 
         }else{
-            res.status(200).send({msg:"No hay ordenactiva por el momento", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"No hay ordenactiva por el momento", valid:true, data:result})
+            // return;
         };
     });
     
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+        // res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
     }
 
 }
@@ -220,8 +185,7 @@ exports.getallordersbydeliver = async function(req,res){
     });
     
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
+        // res.status(400).send({status: "error", message: "Error al obtener ordenes por departamento", data: e});
     }
 
 }
@@ -237,14 +201,13 @@ exports.rateOrder = async function(req,res){
                 return;
 
         }else{
-            res.status(200).send({msg:"error al calificar orden ", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"error al calificar orden ", valid:true, data:result})
+            // return;
         };
     });
     
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al calificar ordenes", data: e});
+        // res.status(400).send({status: "error", message: "Error al calificar ordenes", data: e});
     }
 
 }
@@ -254,20 +217,19 @@ exports.cancelorder = async function(req,res){
     try{
      
         database.query(querysMySQL.update_status_order_cancel,[req.body.idUser,req.body.idpedido],async function(err,result,fields){
-            if (err)throw err;
+            //if (err)throw err;
             if (result.affectedRows>0){
                 res.status(200).send({message:"Se ha cancelado la orden ", valid:true})
                 return;
 
             }else{
-                res.status(200).send({message:"Error al cancelar la orden :c ", valid:false})
-                return;
+                // res.status(200).send({message:"Error al cancelar la orden :c ", valid:false})
+                // return;
             };
         });
             
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al cancelar la orden", data: e});
+        //res.status(400).send({status: "error", message: "Error al cancelar la orden", data: e});
     }
 
 }
@@ -277,20 +239,19 @@ exports.deliverorder = async function(req,res){
     try{
       
         database.query(querysMySQL.update_status_order_delivered,[req.body.idUser,req.body.idpedido],async function(err,result,fields){
-            if (err)throw err;
+            //if (err)throw err;
             if (result.affectedRows>0){
                 res.status(200).send({message:"Se ha entregado la orden ", valid:true})
                 return;
 
             }else{
-                res.status(200).send({message:"Error al entregar la orden :c ", valid:false})
-                return;
+                // res.status(200).send({message:"Error al entregar la orden :c ", valid:false})
+                // return;
             };
         });
             
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al entregar la orden", data: e});
+        //res.status(400).send({status: "error", message: "Error al entregar la orden", data: e});
     }
 
 }
@@ -300,7 +261,7 @@ exports.getordersbyuser = async function(req,res){
     try{
 
         database.query(querysMySQL.get_orders_by_user,[req.params.id],async function(err,result,fields){
-            if (err)throw err;
+            //if (err)throw err;
             if (result.length>0){
                 res.status(200).send({msg:"Estas son las ordenes del usuario", valid:true, data:result})
                 return;
@@ -312,8 +273,7 @@ exports.getordersbyuser = async function(req,res){
     });
     
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por usuario", data: e});
+        //res.status(400).send({status: "error", message: "Error al obtener ordenes por usuario", data: e});
     }
 
 }
@@ -335,8 +295,7 @@ exports.getordersbyuserglobally = async function(req,res){
     });
     
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al obtener ordenes por usuario", data: e});
+       // res.status(400).send({status: "error", message: "Error al obtener ordenes por usuario", data: e});
     }
 
 }

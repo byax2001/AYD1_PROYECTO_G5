@@ -33,7 +33,6 @@ router.post(baseurl + 'login',                                    OAUTH.login)
 router.post(baseurl + 'user',                                     USER.newuser)
 router.get(baseurl + 'user',                                      OAUTH.validateToken,USER.getuser)
 router.put(baseurl + 'user',                                      OAUTH.validateToken,USER.updateuser)
-router.delete(baseurl + 'user',                                   OAUTH.validateToken,USER.deleteuser)
 router.put(baseurl + 'user/ban',                                  OAUTH.validateToken,USER.banuser)
 router.post(baseurl + 'user/changeadress',                        OAUTH.validateToken,USER.newchangeadressrequest)
 
@@ -41,7 +40,7 @@ router.post(baseurl + 'user/changeadress',                        OAUTH.validate
 // Repartidores
 router.post(baseurl + 'userdeliver',    upload.single('image'),   USERDELIVER.newdeliveruser)
 router.get(baseurl + 'userdeliver',                               OAUTH.validateToken,USERDELIVER.getdeliveruser)
-router.put(baseurl + 'userdeliver',     upload.single('image'),   OAUTH.validateToken,USERDELIVER.updatedeliveruser)
+//router.put(baseurl + 'userdeliver',     upload.single('image'),   OAUTH.validateToken,USERDELIVER.updatedeliveruser)
 router.get(baseurl + 'userdeliver/orders/:id',                    OAUTH.validateToken,ORDER.getallordersbydeliver)
 //router.get(baseu)
 
@@ -49,8 +48,8 @@ router.get(baseurl + 'userdeliver/orders/:id',                    OAUTH.validate
 
 router.post(baseurl + 'restaurants',    upload.single('image'),   RESTAURANTS.newrestaurant)
 router.get(baseurl + 'restaurants',                               OAUTH.validateToken,RESTAURANTS.getrestaurant)
-router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
-router.delete(baseurl + 'restaurants',                            OAUTH.validateToken,RESTAURANTS.deleterestaurant)
+//router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
+//router.delete(baseurl + 'restaurants',                            OAUTH.validateToken,RESTAURANTS.deleterestaurant)
 router.get(baseurl + 'restaurants/type',                          RESTAURANTS.getrestauranttype)
 
 //Productos

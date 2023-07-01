@@ -57,33 +57,12 @@ exports.newuser = async function (req,res){
         });       
         
     }catch(e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear usuario", data: e});
     }
 }
 
 
 
-exports.deleteuser = async function (req,res){
-    try{
-        var user = {
-            iduser: req.body.iduser,
-        };
-        database.query(querysMySQL.del_user,[user.iduser],async function(err,result,fields){    
-            if (result){
-    
-                res.status(200).send({status: "success", message: "El usuario fue eliminado con exito:", data: result});
-            }else{
-                res.status(200).send({msg:"Se produjo un error al eliminar usuario.", valid:false})
-                return;
-    
-            }
-        }); 
-
-    }catch(e){
-        res.status(400).send({status: "error", message: "Error al eliminar usuario", data: e});
-    }
-}
 
 exports.updateuser = async function (req,res){
     try{
@@ -109,7 +88,6 @@ exports.updateuser = async function (req,res){
         })
 
     }catch(e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al actualizar usuario", data: e});
     }
 }
@@ -186,7 +164,6 @@ exports.newchangeadressrequest = async function (req,res){
         });       
         
     }catch(e){
-        console.log(e)
         res.status(400).send({status: "error", msg: "Error al crear solicitud de cambio departamental", data: e});
     }
 }

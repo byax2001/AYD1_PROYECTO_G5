@@ -101,7 +101,6 @@ exports.login = async function(req, res) {
       req.body.auth = decoded;
       next();
     } catch (error) {
-      console.log(error);
       res.status(401).json({ message: 'Invalid token' });
     }
 
