@@ -1,4 +1,4 @@
-**<h1 align="center"> PROYECTO 1 - Al chilazo </h1>**
+**<h1 align="center"> PROYECTO - Al chilazo </h1>**
 
 
 <div align="center">
