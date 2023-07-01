@@ -18,8 +18,8 @@ exports.getInfoUser = async function (req, res) {
                                         //devuelve los 5 resultados en un JSON
                                         res.status(200).send({ status: "success", message: "Estos son los usuarios:", data: result, total: result1, regDia: result2, regMonth: result3, regYear: result4, totalAprob: result5, totalDeny: result6 });
                                     } else {
-                                        res.status(200).send({ msg: "Se produjo un error al obtener usuarios.", valid: false })
-                                        return;
+                                        // res.status(200).send({ msg: "Se produjo un error al obtener usuarios.", valid: false })
+                                        // return;
 
                                     }
                                 });
@@ -36,7 +36,7 @@ exports.getInfoUser = async function (req, res) {
         });
 
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -51,14 +51,13 @@ exports.getPopularRestaurants = async function (req, res) {
                 return;
 
         }else{
-            res.status(200).send({msg:"Aún no hay productos vendidos", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"Aún no hay productos vendidos", valid:true, data:result})
+            // return;
         };
     });
 
     } catch (e) {
-        console.log(e)
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -72,14 +71,14 @@ exports.getTop5Restaurants = async function (req, res) {
                 return;
 
         }else{
-            res.status(200).send({msg:"Aún no hay productos vendidos para obtener el top5", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"Aún no hay productos vendidos para obtener el top5", valid:true, data:result})
+            // return;
         };
     });
 
     } catch (e) {
-        console.log(e)
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+       
+        // res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -93,14 +92,13 @@ exports.getTop5delivers = async function (req, res) {
                 return;
 
         }else{
-            res.status(200).send({msg:"Aún no hay ordenes entregadas :c", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"Aún no hay ordenes entregadas :c", valid:true, data:result})
+            // return;
         };
     });
 
     } catch (e) {
-        console.log(e)
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+       // res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -115,13 +113,12 @@ exports.getTop5Restaurants2 = async function (req, res) {
                 return;
 
         }else{
-            res.status(200).send({msg:"Aún no hay productos vendidos para obtener el top5", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"Aún no hay productos vendidos para obtener el top5", valid:true, data:result})
+            // return;
         };
     });
 
     } catch (e) {
-        console.log(e)
         res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
@@ -142,31 +139,10 @@ exports.getSalesValue = async function (req, res) {
     });
 
     } catch (e) {
-        console.log(e)
         res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
-exports.getSalesValue = async function (req, res) {
-    try {
-        
-        database.query(querysMySQL.get_sales_value,[req.body.fecha],async function(err,result,fields){
-            if (err)throw err;
-            if (result.length>0){
-                res.status(200).send({msg:"Este es el valor de ventas por fecha", valid:true, data:result})
-                return;
-
-        }else{
-            res.status(200).send({msg:"Aún no hay productos vendidos para obtener el valor", valid:true, data:result})
-            return;
-        };
-    });
-
-    } catch (e) {
-        console.log(e)
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
-    }
-}
 
 
 exports.getglobalproduct = async function (req, res) {
@@ -179,13 +155,12 @@ exports.getglobalproduct = async function (req, res) {
                 return;
 
         }else{
-            res.status(200).send({msg:"Aún no hay productos vendidos", valid:true, data:result})
-            return;
+            // res.status(200).send({msg:"Aún no hay productos vendidos", valid:true, data:result})
+            // return;
         };
     });
 
     } catch (e) {
-        console.log(e)
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        // res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }

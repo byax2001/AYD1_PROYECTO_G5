@@ -86,55 +86,53 @@ exports.newrestaurant = async function (req,res){
         });       
         
     }catch(e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear usuario", data: e});
     }
 }
 
 
 
-exports.deleterestaurant = async function (req,res){
-    try{
-        var user = {
-            idrestaurant: req.body.iduser,
-        };
-        database.query(querysMySQL.del_restaurant,[user.idrestaurant],async function(err,result,fields){    
-            if (result){
+// exports.deleterestaurant = async function (req,res){
+//     try{
+//         var user = {
+//             idrestaurant: req.body.iduser,
+//         };
+//         database.query(querysMySQL.del_restaurant,[user.idrestaurant],async function(err,result,fields){    
+//             if (result){
     
-                res.status(200).send({status: "success", message: "El restaurante fue eliminado con exito:", data: result});
-            }else{
-                res.status(200).send({msg:"Se produjo un error al eliminar restaurante.", valid:false})
-                return;
+//                 res.status(200).send({status: "success", message: "El restaurante fue eliminado con exito:", data: result});
+//             }else{
+//                 res.status(200).send({msg:"Se produjo un error al eliminar restaurante.", valid:false})
+//                 return;
     
-            }
-        }); 
+//             }
+//         }); 
 
-    }catch(e){
-        res.status(400).send({status: "error", message: "Error al eliminar restaurante", data: e});
-    }
-}
+//     }catch(e){
+//         res.status(400).send({status: "error", message: "Error al eliminar restaurante", data: e});
+//     }
+// }
 
-exports.updaterestaurant = async function (req,res){
-    try{
-        var user = {
-            nombre: req.body.nombre,
-            descripcion: req.body.descripcion,
-            email: req.body.email,
-            tipo_empresa_id_tipo: req.body.tipo_empresa_id_tipo,
-            telefono: req.body.telefono,
-            iduser: req.body.iduser
-        };
-        database.query(querysMySQL.update_datosuser,[user.nombre,user.apellido,user.password,user.rol,user.telefono,user.tipo_licencia,user.nit,user.iduser],function(err,result,fields){    
-            if (err)throw err;
+// exports.updaterestaurant = async function (req,res){
+//     try{
+//         var user = {
+//             nombre: req.body.nombre,
+//             descripcion: req.body.descripcion,
+//             email: req.body.email,
+//             tipo_empresa_id_tipo: req.body.tipo_empresa_id_tipo,
+//             telefono: req.body.telefono,
+//             iduser: req.body.iduser
+//         };
+//         database.query(querysMySQL.update_datosuser,[user.nombre,user.apellido,user.password,user.rol,user.telefono,user.tipo_licencia,user.nit,user.iduser],function(err,result,fields){    
+//             if (err)throw err;
                 
-            res.status(200).send({status: "success", message: "Restaurante actualizado con exito"});
-        })
+//             res.status(200).send({status: "success", message: "Restaurante actualizado con exito"});
+//         })
 
-    }catch(e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al modificar restaurante", data: e});
-    }
-}
+//     }catch(e){
+//         res.status(400).send({status: "error", message: "Error al modificar restaurante", data: e});
+//     }
+// }
 
 exports.getrestaurant = async function (req,res){
     try{
@@ -143,14 +141,14 @@ exports.getrestaurant = async function (req,res){
     
                 res.status(200).send({status: "success", message: "Estos son los restaurantes:", data: result});
             }else{
-                res.status(200).send({msg:"Se produjo un error al obtener restaurantes.", valid:false})
-                return;
+                // res.status(200).send({msg:"Se produjo un error al obtener restaurantes.", valid:false})
+                // return;
     
             }
         }); 
 
     }catch(e){
-        res.status(400).send({status: "error", message: "Error al crear restaurante", data: e});
+        //res.status(400).send({status: "error", message: "Error al crear restaurante", data: e});
     }
       
 }
@@ -162,14 +160,14 @@ exports.getrestauranttype = async function (req,res){
     
                 res.status(200).send({status: "success", message: "Estos son los tipos de empresa:", data: result});
             }else{
-                res.status(200).send({msg:"Se produjo un error al obtener restaurantes.", valid:false})
-                return;
+                // res.status(200).send({msg:"Se produjo un error al obtener restaurantes.", valid:false})
+                // return;
     
             }
         }); 
 
     }catch(e){
-        res.status(400).send({status: "error", message: "Error al crear restaurante", data: e});
+        //res.status(400).send({status: "error", message: "Error al crear restaurante", data: e});
     }
       
 }
