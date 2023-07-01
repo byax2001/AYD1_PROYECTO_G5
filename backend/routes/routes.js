@@ -51,7 +51,7 @@ router.post(baseurl + 'restaurants',    upload.single('image'),   RESTAURANTS.ne
 router.get(baseurl + 'restaurants',                               OAUTH.validateToken,RESTAURANTS.getrestaurant)
 router.put(baseurl + 'restaurants',     upload.single('image'),   RESTAURANTS.updaterestaurant) 
 router.delete(baseurl + 'restaurants',                            OAUTH.validateToken,RESTAURANTS.deleterestaurant)
-router.get(baseurl + 'restaurants/type',                          OAUTH.validateToken,RESTAURANTS.getrestauranttype)
+router.get(baseurl + 'restaurants/type',                          RESTAURANTS.getrestauranttype)
 
 //Productos
 router.post(baseurl + 'products',       upload.single('image'),   OAUTH.validateToken,PRODUCTS.newproduct)
