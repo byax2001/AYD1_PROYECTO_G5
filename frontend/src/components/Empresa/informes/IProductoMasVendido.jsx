@@ -2,32 +2,47 @@ import { Component, useEffect } from "react"
 import React,{useState,useRef} from 'react';
 import {Link,useNavigate} from 'react-router-dom'
 import DataTable from 'react-data-table-component'
+import ReactTable from 'react-data-table-component';
 const datoprueba=[
 ]
 
 const columnas=[
     {
         name:'Id',
-        selector: row => row.id_voto,
+        selector: row => row.id_producto,
         sortable:true
     },
     {
-        name:'Municipio',
-        selector: row => row.municipio,
+        name:'Descripcion',
+        selector: row => row.descripcion_producto,
         sortable:true,
         grow:2
     },{
-        name:'Departamento',
-        selector: row => row.departamento,
+        name:'nombre',
+        selector: row => row.nombre_producto,
         sortable:true,
         grow:2
-    },{
-        name:'Papeleta',
-        selector: row => row.papeleta,
+    },
+    {
+      name: 'Imagen',
+      cell: row => (
+        <img style={{ width: '45px', height:'45px' }} src={row.imagen_producto} className="img-thumbnail"/>
+      ),
+      width: "120px",
+      style: { whiteSpace: 'nowrap'} ,
+      // style: { whiteSpace: 'nowrap',height:'22px', width: '300px', backgroundColor:"red"} ,
+      ignoreRowClick: true,
+      allowOverflow: true,
+      button: true,
+    },
+    
+    {
+        name:'Precio',
+        selector: row => row.precio_producto,
         sortable:true
     },{
-      name:'Partido',
-      selector: row => row.partido,
+      name:'Total Vendidos',
+      selector: row => row.total_vendido,
       sortable:true
   }
 ]
@@ -82,95 +97,53 @@ const customStyles = {
     }}
   };
 
+function TopProductos (props){
+    const [data,SetData] = useState([])
 
+    const getTproductos=async()=>{
+      const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/popularproduct/${localStorage.getItem('idempresa')}`
+      let config = {
+          method: "GET", //ELEMENTOS A ENVIAR
+          headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json", 
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+          },
+      };
+      try{
+        const res = await fetch(url, config);
+        
+        const data_res = await res.json()
+        console.log(data_res)
+        SetData(data_res.data)
+       
+      }catch(e){
+        console.log(e)
+      }
+    
+  }
 
-function IProductoMasVendido(props) {
-    const [filtraciones, setFiltraciones] = useState([
-        { ft: "Nombre de Pedido", idft: 1 },
-        { ft: "Fecha", idft: 2 }
-    ])
-    const [filtroActual, setfiltroActual] = useState(0)
-    const [valfiltro, setValFiltro] = useState("")
-
-    const handleChange = (event) => {
-        const { name, value, type, checked, files } = event.target;
-        setfiltroActual(value)
-        if (value == 0) {
-            setValFiltro("")
-        }
-
-    };
-    const [data, SetData] = useState([])
-
-    const filtrar = async () => {
-        if (filtroActual == 0) {
-            alert("Escoja un Tipo de Filtrado")
-            return
-        } else if (valfiltro == "") {
-            alert('Campo del Filtro no puede ir vacio')
-            return
-        }
-
-
-    }
-
-  useEffect(() => {/*
-    const interval = setInterval(() => {
+  useEffect(() => {
+    console.log(localStorage.getItem('idempresa'))
+    getTproductos()
+   /* const interval = setInterval(() => {
       datosdb()
     }, 1000);
     return () => clearInterval(interval);*/
   }, []);
 
   
-    return (
-        <React.Fragment>
-            <div className="row mb-2">
-                <div className="col-4">
-                    <select onChange={handleChange} name="filtro" className='form-select'>
-                        <option value={0}>Seleccione Tipo de Filtro</option>
-                        {filtraciones.map((filtracion) => (
-                            <option key={filtracion.idft} value={filtracion.idft}>
-                                {filtracion.ft}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div className="col-5 ">
-                    {filtroActual != 0 && (
-                        <div className="">
-                            {filtroActual == 2 ? (
-                                <input className='form-control' onChange={(e) => { setValFiltro(e.target.value); console.log(e.target.value) }} type="date" />
-                            ) : (
-                                <input className='form-control' onChange={(e) => { setValFiltro(e.target.value) }} type="text" />
-                            )}
-                        </div>
-                    )}
-                </div>
-                <div className="col-3">
-                    <button className="btn btnEffect btn-secondary" onClick={()=>{filtrar()}}>
-                        Filtrar
-                    </button>
-                </div>
-            </div>
-            <div className="row">
-                <div className="col-12">
-                    <DataTable
-                        columns={columnas}
-                        data={data}
-                        title="Historial de Pedidos"
-                        pagination
-                        fixedHeader
-                        fixedHeaderScrollHeight="600px"
-                        customStyles={customStyles}
-                        noDataComponent="No hay informacion en la base de datos"
-                    />
-                </div>
-            </div>
-
-        </React.Fragment >
-
-    
-    )
+    return(
+        <ReactTable 
+        columns={columnas}
+        data={data}
+        title="Producto mas Vendido"
+        pagination
+        fixedHeader
+        fixedHeaderScrollHeight="600px"
+        customStyles={customStyles}
+        noDataComponent="No hay informacion en la base de datos"
+        /> )
 
 }
-export default IProductoMasVendido;
+export default TopProductos;
