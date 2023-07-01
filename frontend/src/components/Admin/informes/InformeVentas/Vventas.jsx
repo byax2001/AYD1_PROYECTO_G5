@@ -7,29 +7,17 @@ const datoprueba=[
 
 const columnas=[
     {
-        name:'Id',
-        selector: row => row.id_voto,
+        name:'Fecha de pedido',
+        selector: row => row.fecha_pedido,
         sortable:true
+        
     },
     {
-        name:'Municipio',
-        selector: row => row.municipio,
+        name:'Valor',
+        selector: row => row.valor,
         sortable:true,
-        grow:2
-    },{
-        name:'Departamento',
-        selector: row => row.departamento,
-        sortable:true,
-        grow:2
-    },{
-        name:'Papeleta',
-        selector: row => row.papeleta,
-        sortable:true
-    },{
-      name:'Partido',
-      selector: row => row.partido,
-      sortable:true
-  }
+        //grow:2 HACE QUE ESTA COLUMNA OCUPA EL VALOR DE DOS COLUMNA EN LUGAR DE UNA
+    }
 ]
 const customStyles = {
     noData: {
@@ -91,10 +79,10 @@ function Vventas (props){
     const [data,SetData] = useState([])
     
     const hventas=async()=>{
-      let fecha ={"fecha":selectedDate}
+      let fecha ={fecha:selectedDate}
       const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/salesValue`
       let config = {
-          method: "GET", //ELEMENTOS A ENVIAR
+          method: "POST", //ELEMENTOS A ENVIAR
           body: JSON.stringify(fecha),
           headers: {
           "Content-Type": "application/json",
@@ -104,8 +92,9 @@ function Vventas (props){
       };
       try{
         const res = await fetch(url, config);
-        
         const data_res = await res.json();
+        console.log(data_res)
+        SetData(data_res.data)
         //console.log(data_res)
        
       }catch(e){
@@ -114,12 +103,15 @@ function Vventas (props){
       
   }
 
-  useEffect(() => {/*
-    const interval = setInterval(() => {
-      datosdb()
-    }, 1000);
-    return () => clearInterval(interval);*/
+  useEffect(() => {
+    setSelectedDate('2023-06-01');
   }, []);
+  
+  useEffect(() => {
+    if (selectedDate === '2023-06-01') {
+      hventas();
+    }
+  }, [selectedDate]);
 
   
   return (
@@ -149,7 +141,7 @@ function Vventas (props){
         fixedHeader
         fixedHeaderScrollHeight="600px"
         customStyles={customStyles}
-        noDataComponent="Indique la fecha para mostrar valor de ventas"
+        noDataComponent="_"
       />
     </React.Fragment >
 

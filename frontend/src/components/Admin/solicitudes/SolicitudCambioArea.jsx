@@ -80,8 +80,14 @@ const openModal = () => {
 
 const closeModal = () => {
   setModalIsOpen(false);
-  getSolicitudes();
 };
+
+const onRequestClose = ()=>{
+  setModalIsOpen(false);
+  getSolicitudes();
+}
+
+
 const columnas = [
     {
       name: 'Nombre',
@@ -135,20 +141,21 @@ const columnas = [
   };
 
   //VENTANA EMERGENTE PARA ACCIONAR 
-  const ActionModal = ({ isOpen, onRequestClose, aceptarSol,id,rechazarSol}) => {
-    const handleAceptarSol = () => {
-      aceptarSol(id);
-      onRequestClose();
+  const ActionModal = ({ isOpen, onRequestClose,closeModal, aceptarSol,id,rechazarSol}) => {
+    const handleAceptarSol = async() => {
+      await aceptarSol(id);
+      onRequestClose()
     };
   
-    const handleRechazarSol = () => {
-      rechazarSol(id);
-      onRequestClose();
+    const handleRechazarSol = async() => {
+      await rechazarSol(id);
+      onRequestClose()
     };
     return (
       <Modal
         isOpen={isOpen} Inicio
-        onRequestClose={onRequestClose}
+        onRequestClose={onRequestClose}  //FUNCION
+        closeModal = {closeModal}  //FUNCION
         aceptarsol ={aceptarSol}
         rechazarSol={rechazarSol}
         contentLabel="Aceptar o Rechazar"
@@ -191,11 +198,11 @@ const columnas = [
     };
     try {
       const res = await fetch(url, config);
-
       const data_res = await res.json();
       console.log("DATOS DE CAMBIO DE AREA")
       setFilteredData(data_res.data)
-      console.log(data_res)
+      console.log(data_res.data)
+      console.log(filteredData)
 
 
       //console.log(votoC)
@@ -268,7 +275,8 @@ const columnas = [
             {selectedRow && (
                 <ActionModal
                     isOpen={modalIsOpen}  //VARIABLE
-                    onRequestClose={closeModal}  //FUNCION
+                    onRequestClose={onRequestClose}  //FUNCION
+                    closeModal = {closeModal}  //FUNCION
                     aceptarSol={aSolicitud}  // FUNCION
                     id={selectedRow.id_solicitud_repartidor} //VARIABLE
                     rechazarSol={rSolicitud} //FUNCION
