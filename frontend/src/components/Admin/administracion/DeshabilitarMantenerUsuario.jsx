@@ -243,7 +243,6 @@ const DeshabilitarUsuario = () => {
   //ACEPTAR SOLICITUD
   const BanMantU = async (bm,id,motivo) => {
     const url = `${process.env.REACT_APP_API_CONSUME}/api/user/ban`;
-    alert(bm)
     const accion = { tipoban:Number(bm),id:id,descripcion:motivo}
     let config = {
       method: "PUT", //ELEMENTOS A ENVIAR
