@@ -120,6 +120,7 @@ function InitSesion() {
           navigate("/emp",{state:{user:"INFORMACION"}})
         }else if(data_res.data.rol==3){
           //INICIO DE EMPRESA
+          localStorage.setItem('idempresa',payloadData.idempresa)
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/inicioe",{state:{user:"INFORMACION"}})
         }
