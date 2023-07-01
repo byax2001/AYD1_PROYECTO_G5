@@ -53,7 +53,6 @@ exports.newproduct = async function(req,res){
         });
   
     }catch (e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear usuario", data: e});
     }
 
@@ -67,14 +66,14 @@ exports.getproducts = async function(req,res){
     
                 res.status(200).send({status: "success", message: "Estos son los productos:", data: result});
             }else{
-                res.status(200).send({msg:"Se produjo un error al obtener los productos.", valid:false})
-                return;
+                // res.status(200).send({msg:"Se produjo un error al obtener los productos.", valid:false})
+                // return;
     
             }
         }); 
 
     }catch(e){
-        res.status(400).send({status: "error", message: "Error al obtener productos", data: e});
+        //res.status(400).send({status: "error", message: "Error al obtener productos", data: e});
     }
 
 }
@@ -83,7 +82,6 @@ exports.getproducts = async function(req,res){
 //     try{
 //         res.status(200).send({ message: "Bienvenido",valid:true});  
 //     }catch (e){
-//         console.log(e)
 //         res.status(400).send({status: "error", message: "Error al crear usuario", data: e});
 //     }
 
@@ -134,7 +132,6 @@ exports.updateproduct = async function(req,res){
         
 
     }catch (e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear eliminar producto", data: e});
     }
 }    
@@ -155,8 +152,7 @@ exports.deleteproduct = async function(req,res){
         });
 
     }catch (e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al crear eliminar producto", data: e});
+        //res.status(400).send({status: "error", message: "Error al crear eliminar producto", data: e});
     }
 }
 
@@ -169,14 +165,14 @@ exports.getproductsbytype = async function(req,res){
     
                 res.status(200).send({status: "success", message: "Estos son los productos en esta categoria:", data: result});
             }else{
-                res.status(200).send({msg:"Se produjo un error al obtener los productos de esa categoria.", valid:false})
-                return;
+                // res.status(200).send({msg:"Se produjo un error al obtener los productos de esa categoria.", valid:false})
+                // return;
     
             }
         }); 
 
     }catch(e){
-        res.status(400).send({status: "error", message: "Error al obtener productos por categoria", data: e});
+        //res.status(400).send({status: "error", message: "Error al obtener productos por categoria", data: e});
     }
 
 }
@@ -189,14 +185,14 @@ exports.getproductsbyrestaurant = async function(req,res){
     
                 res.status(200).send({status: "success", message: "Estos son los productos de esta empresa:", data: result});
             }else{
-                res.status(200).send({msg:"Se produjo un error al obtener los productos de esa empresa.", valid:false})
-                return;
+                // res.status(200).send({msg:"Se produjo un error al obtener los productos de esa empresa.", valid:false})
+                // return;
     
             }
         }); 
 
     }catch(e){
-        res.status(400).send({status: "error", message: "Error al obtener productos por empresa", data: e});
+        //res.status(400).send({status: "error", message: "Error al obtener productos por empresa", data: e});
     }
 
 }
@@ -210,14 +206,14 @@ exports.gettyproducts = async function(req,res){
                 
                 res.status(200).send({status: "success", message: "Estos son los tipos de producto:", data: result});
             }else{
-                res.status(200).send({msg:"Se produjo un error al obtener los productos de esa categoria.", valid:false})
-                return;
+                // res.status(200).send({msg:"Se produjo un error al obtener los productos de esa categoria.", valid:false})
+                // return;
     
             }
         }); 
 
     }catch(e){
-        res.status(400).send({status: "error", message: "Error al obtener productos por categoria", data: e});
+        //res.status(400).send({status: "error", message: "Error al obtener productos por categoria", data: e});
     }
 
 }

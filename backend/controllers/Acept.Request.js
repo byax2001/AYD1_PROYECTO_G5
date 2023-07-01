@@ -68,7 +68,6 @@ exports.updateAceptReq = async function (req, res) {
                                     if (err) {
                                         reject(err);
                                     } else {
-                                        console.log(result2)
                                         database.query(querysMySQL.ins_address,[datausesr.direccion,"",result2.insertId,datausesr.municipio],function(err,result,fields){
                                             if (err)throw err;
 
@@ -106,7 +105,7 @@ exports.updateDenyReq = async function (req, res) {
             res.status(200).send({ status: "success", message: "Update Deny Request" });
         });
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -120,8 +119,8 @@ exports.getInfoReqRestaurant = async function (req, res) {
                 //devuelve los 5 resultados en un JSON
                 res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes de restaurantes:", data: result});
             } else {
-                res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
-                return;
+                //res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
+                //return;
 
             }
 
@@ -129,7 +128,7 @@ exports.getInfoReqRestaurant = async function (req, res) {
         });
 
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -143,8 +142,8 @@ exports.getInfoReqDelivers = async function (req, res) {
                 //devuelve los 5 resultados en un JSON
                 res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes de repartidores:", data: result});
             } else {
-                res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
-                return;
+                //res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
+                //return;
 
             }
 
@@ -152,7 +151,7 @@ exports.getInfoReqDelivers = async function (req, res) {
         });
 
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -166,8 +165,8 @@ exports.getInfoReqChangeAdress = async function (req, res) {
                 //devuelve los 5 resultados en un JSON
                 res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes de cambio departamental:", data: result});
             } else {
-                res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes de cambio departamental.", valid: false })
-                return;
+                // res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes de cambio departamental.", valid: false })
+                // return;
 
             }
 
@@ -175,7 +174,7 @@ exports.getInfoReqChangeAdress = async function (req, res) {
         });
 
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener las solicitudes de cambio departamental", data: e });
+       // res.status(400).send({ status: "error", message: "Error al obtener las solicitudes de cambio departamental", data: e });
     }
 }
 
@@ -196,18 +195,18 @@ exports.updateAceptChangeAdressReq = async function (req, res) {
                             if(result3.affectedRows>0){
                                 res.status(200).send({status: "success", msg: "se hizo el cambio de forma correcta"});
                             }else{
-                                res.status(200).send({msg:"No se pudo hacer el cambio de dirección", valid:false})
+                          //      res.status(200).send({msg:"No se pudo hacer el cambio de dirección", valid:false})
                             }
                             
                         });
                     }else{
-                        res.status(200).send({msg:"No se pudo hacer el cambio de dirección", valid:false})
+                        //res.status(200).send({msg:"No se pudo hacer el cambio de dirección", valid:false})
                     }
                 });
             }
             
         });
     } catch (e) {
-        res.status(400).send({ status: "error", msg: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", msg: "Error al obtener informacion de usuarios", data: e });
     }
 }
