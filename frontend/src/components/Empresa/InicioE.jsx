@@ -5,7 +5,7 @@ import logo from '../../images/logo copy.png';
 import edit from '../../images/editv2.png';
 import deleteV from '../../images/delete.png';
 //import Amb from '../../images/quesoB.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from './FormE';
 import ReactTable from 'react-data-table-component';
 import ReactModal from 'react-modal';
@@ -103,6 +103,7 @@ const customStyles = {
 
 
 const InicioE = () => {
+    const navigate = useNavigate()
     const [state, setState] = useMyContext();
     const [filteredData, setFilteredData] = useState([]);
     const [filteredDataV, setFilteredDataV] = useState([]);
@@ -112,7 +113,10 @@ const InicioE = () => {
     
 
     useEffect(() => {
-      console.log(state)
+      if(localStorage.getItem('rol')!=3){
+        navigate("/")
+        return
+      }
       fetchData(); // Realizar la petición al cargar el componente
       fetchDataV();
     }, []);

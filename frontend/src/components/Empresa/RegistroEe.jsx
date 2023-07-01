@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Form, Button } from 'react-bootstrap';
 import logo from '../../images/logo copy.png';
@@ -13,6 +13,13 @@ const FormRe = () => {
   const RInicio = () =>{
       navigate("/inicioe")
   } 
+
+  useEffect(() => {
+    if(localStorage.getItem('rol')!=3){
+      navigate("/")
+      return
+    }
+  },[])
 
   return (
     <div className="wall2">

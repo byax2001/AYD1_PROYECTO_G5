@@ -105,17 +105,21 @@ function InitSesion() {
 
 
         if(data_res.data.rol==0){
+          //INICIO ADMIN
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/adm",{state:{user:"INFORMACION"}})
         }
         else if(data_res.data.rol==1){
+          //INICIO USUARIO
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/inicioU",{state:{user:"INFORMACION"}})
         }else if (data_res.data.rol==2){
+          //INICIO DE EMPLEADO
           localStorage.setItem('calificacion',payloadData.calificacion)
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/emp",{state:{user:"INFORMACION"}})
-        }else{
+        }else if(data_res.data.rol==3){
+          //INICIO DE EMPRESA
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/inicioe",{state:{user:"INFORMACION"}})
         }

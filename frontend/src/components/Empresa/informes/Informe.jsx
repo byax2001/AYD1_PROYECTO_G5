@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from './images/Logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import IHistorialPedidos from './IHistorialPedidos';
 import IProductoMasVendido from './IProductoMasVendido';
 
 const Informe = () => {
+  const navigate = useNavigate()
   const [isReportesDropdownOpen, setIsReportesDropdownOpen] = useState(false);
 
   const toggleReportesDropdown = () => {
     setIsReportesDropdownOpen(!isReportesDropdownOpen);
   };
+
+  useEffect(() => {
+    if(localStorage.getItem('rol')!=3){
+      navigate("/")
+      return
+    }
+  },[])
   return (
 
     <div className="wall2">

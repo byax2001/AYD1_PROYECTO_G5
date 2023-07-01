@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from '../images/Logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
 import Top5Emp from './Top5emp';
 import TopProductos from './TopProductos';
@@ -10,11 +10,17 @@ import Vventas from './Vventas';
 
 
 const Informe = () => {
+  const navigate = useNavigate()
   const [isReportesDropdownOpen, setIsReportesDropdownOpen] = useState(false);
 
   const toggleReportesDropdown = () => {
     setIsReportesDropdownOpen(!isReportesDropdownOpen);
   };
+  useEffect(()=>{
+    if(localStorage.getItem('rol')!=0){
+      navigate("/")
+    }
+  },[])
   return (
     <React.Fragment>
       <div className="wall2">

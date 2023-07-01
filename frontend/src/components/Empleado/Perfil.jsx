@@ -149,14 +149,12 @@ const Perfil = () => {
   };
 
   useEffect(() => {
-    /*console.log(state)
-    if(state.rol!=2){
+    if(localStorage.getItem('rol')!=2){
       navigate("/")
       return
-    }*/
+    }
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
     getHistorial();
-    console.log()
     setPuntuacion(localStorage.getItem('calificacion'))
   }, []);
 

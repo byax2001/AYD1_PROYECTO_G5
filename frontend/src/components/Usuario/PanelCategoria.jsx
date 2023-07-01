@@ -1,44 +1,15 @@
 import React, { useState,useEffect  } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import logo from '../../images/logo copy.png';
-import { Link,useLocation } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import CardPr from './cardProducto';
 import image2 from '../../images/quesoB.png';
 import axios from 'axios';
 
 
-/*
-const data = [
-    {
-    id_producto:1,
-	nombre_producto: "Papas Grandes",
-    descripcion_producto: "Muy delicioso",
-	precio_producto:10,
-	nombre_tipo_prod:"Plato Fuerte",
-	imagen_producto:image2
-    },
-    {
-	id_producto:2,
-    nombre_producto: "Papas chicas",
-    descripcion_producto: "Muy delicioso",
-	precio_producto:5,
-	nombre_tipo_prod:"Plato chico",
-	imagen_producto:image2
-    },
-    {
-	id_producto:3,
-    nombre_producto: "Papas Medianas",
-    descripcion_producto: "Muy delicioso",
-	precio_producto:7,
-	nombre_tipo_prod:"Plato Medio",
-	imagen_producto:image2
-
-    }
-  ];*/
-
 //<Form selectedRow={selectedRow} closeModal={closeModal} filteredDataV={filteredDataV} />
 const PanelCa = () => {
-
+    const navigate = useNavigate()
     const categoria = localStorage.getItem("categoria");
     console.log(localStorage.getItem("categoria"));
     const idCate = localStorage.getItem("idCategoria");
@@ -53,6 +24,10 @@ const PanelCa = () => {
     const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
+        if(localStorage.getItem('rol')!=1){
+            navigate("/")
+            return
+        }
         fetchData();
       }, []);
     
@@ -76,31 +51,39 @@ const PanelCa = () => {
 
 
     return (
-
-        <React.Fragment>   
+        <div className="wall2">
             <nav className="navbar navbar-expand-lg navbar-light position-relative">
-                            <img id="logoStar" src={logo} alt="Logo" />
-                            <a className="navbar-brand" >AlChilazo</a>
-                            <div className="h2 text-light">Categoria de: {categoria} {idCate} </div>
-                            <Link to="/inicioU" className="btn textForm text-light btnEffect btnRT">Regresar</Link>
-                        
-                        </nav>
+                <img id="logoStar" src={logo} alt="Logo" />
+                <a className="navbar-brand" >AlChilazo</a>
+                <div className="h2 text-light">Categoria de: {categoria} </div>
+                <Link to="/inicioU" className="btn textForm text-light btnEffect btnRT">Regresar</Link>
+
+            </nav>
             <div className="container">
-                        
-                        <div className="h2 text-light">Productos a la venta</div>
-                        <div className="container d-flex justify-content-center align-items-center h-100">
-                            <div className="row">
-                            {filteredData.map(({ nombre_producto, imagen_producto, id_producto, descripcion_producto,precio_producto }) => (
-                                <div className="col-md-2" key={id_producto}>
-                                <CardPr imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} />
-                                </div>
-                            ))}
+                <div className="h2 text-light row">
+                    <div className="col-12 bg-dark rounded">
+                        Productos a la venta
+                    </div>
+                </div>
+                <div className="container d-flex justify-content-center align-items-center h-100">
+                    <div className="row">
+                        {filteredData.length === 0 ? (
+                            <div className='bg-dark rounded'>
+                                <h2 className='textForm text-light'>Sin productos para esta categoria</h2>
                             </div>
-                        </div>
+                        ) : (
 
+                            filteredData.map(({ nombre_producto, imagen_producto, id_producto, descripcion_producto, precio_producto }) => (
+                                <div className="col-md-2" key={id_producto}>
+                                    <CardPr imageSource={imagen_producto} title={nombre_producto} id={id_producto} text={descripcion_producto} precio={precio_producto} />
+                                </div>
+                            ))
 
+                        )}
+                    </div>
+                </div>
             </div>
-        </React.Fragment>
+        </div>
 
 
     );

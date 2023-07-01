@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from './images/Logo.png';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import DeshabilitarMantenerUsuario from './DeshabilitarMantenerUsuario';
 
@@ -59,11 +59,20 @@ const customStyles = {
 
 
 const AdministracionDeUsuarios = () => {
+  const navigate = useNavigate()
   const [isReportesDropdownOpen, setIsReportesDropdownOpen] = useState(false);
 
   const toggleReportesDropdown = () => {
     setIsReportesDropdownOpen(!isReportesDropdownOpen);
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('rol')!=0){
+      navigate("/")
+      return
+    }
+  },[])
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
