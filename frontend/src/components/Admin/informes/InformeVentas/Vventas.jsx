@@ -1,35 +1,23 @@
 import { Component, useEffect } from "react"
 import React,{useState,useRef} from 'react';
-import {Link,useNavigate} from 'react-router-dom'
+import {Link,json,useNavigate} from 'react-router-dom'
 import DataTable from 'react-data-table-component'
 const datoprueba=[
 ]
 
 const columnas=[
     {
-        name:'Id',
-        selector: row => row.id_voto,
+        name:'Fecha de pedido',
+        selector: row => row.fecha_pedido,
         sortable:true
+        
     },
     {
-        name:'Municipio',
-        selector: row => row.municipio,
+        name:'Valor',
+        selector: row => row.valor,
         sortable:true,
-        grow:2
-    },{
-        name:'Departamento',
-        selector: row => row.departamento,
-        sortable:true,
-        grow:2
-    },{
-        name:'Papeleta',
-        selector: row => row.papeleta,
-        sortable:true
-    },{
-      name:'Partido',
-      selector: row => row.partido,
-      sortable:true
-  }
+        //grow:2 HACE QUE ESTA COLUMNA OCUPA EL VALOR DE DOS COLUMNA EN LUGAR DE UNA
+    }
 ]
 const customStyles = {
     noData: {
@@ -89,39 +77,47 @@ function Vventas (props){
     setSelectedDate(event.target.value);
   };
     const [data,SetData] = useState([])
-    const datosdb=async()=>{/*
-      //console.log(process.env.REACT_APP_API_CONSUME)
-      const url = `${process.env.REACT_APP_API_CONSUME}/api/get_votos`
+    
+    const hventas=async()=>{
+      let fecha ={fecha:selectedDate}
+      const url = `${process.env.REACT_APP_API_CONSUME}/api/reports/salesValue`
       let config = {
-          method: "GET", //ELEMENTOS A ENVIAR
+          method: "POST", //ELEMENTOS A ENVIAR
+          body: JSON.stringify(fecha),
           headers: {
           "Content-Type": "application/json",
           Accept: "application/json", 
+          Authorization: `Bearer ${localStorage.getItem('token')}`
           },
       };
       try{
         const res = await fetch(url, config);
-        
         const data_res = await res.json();
-        SetData(data_res)  //se envian los datos a la tabla para ser mostrados.
+        console.log(data_res)
+        SetData(data_res.data)
+        //console.log(data_res)
        
       }catch(e){
         console.log(e)
-      }*/
+      }
       
   }
 
-  useEffect(() => {/*
-    const interval = setInterval(() => {
-      datosdb()
-    }, 1000);
-    return () => clearInterval(interval);*/
+  useEffect(() => {
+    setSelectedDate('2023-06-01');
   }, []);
+  
+  useEffect(() => {
+    if (selectedDate === '2023-06-01') {
+      hventas();
+    }
+  }, [selectedDate]);
 
   
   return (
     <React.Fragment>
       <div className="row">
+        <div className="col-5"></div>
         <div className="col-5">
           <input
             type="date"
@@ -130,9 +126,9 @@ function Vventas (props){
             onChange={handleDateChange}
           />
         </div>
-        <div className="col-4">
-          <button className="btn btn-primary btnEffect" onClick={datosdb()}>
-            Enviar
+        <div className="col-2 mb-3 p-0 justify-content-center d-flex">
+          <button className="btn btn-secondary btnEffect" onClick={()=>{hventas()}}>
+            Filtrar
           </button>
         </div>
       </div>
@@ -145,7 +141,7 @@ function Vventas (props){
         fixedHeader
         fixedHeaderScrollHeight="600px"
         customStyles={customStyles}
-        noDataComponent="No hay informacion en la base de datos"
+        noDataComponent="_"
       />
     </React.Fragment >
 

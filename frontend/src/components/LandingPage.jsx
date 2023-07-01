@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import '../css/LandingPage.css'; 
 
 function LandingPage(props) {
@@ -17,9 +17,15 @@ function LandingPage(props) {
     setIsLoginDropdownOpen(false);
   };
 
+  useEffect(()=>{
+    //SE SETEA DE ESTA FORMA PARA QUE SU VALOR NO SEA POR DEFAULT 0 Y SE PUEDA INGRESAR AL USUARIO ADMIN
+    localStorage.setItem('rol',-1)
+  },[])
+
+
   const Lema=()=>{
     return (
-      <div id="lema">
+      <div id="lemaLanding">
         <div className="row">
           <div className="col-1" />
           <div className="col-6 ml-3">
@@ -46,6 +52,7 @@ function LandingPage(props) {
       </div>
     )
   }
+
 
   return (
     <React.Fragment>

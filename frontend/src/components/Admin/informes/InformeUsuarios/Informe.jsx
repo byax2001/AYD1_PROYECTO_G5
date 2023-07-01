@@ -48,6 +48,11 @@ const columnas = [
     name:'Fecha Registro',
     selector: row => row.fecha_registro,
     sortable:true
+  },
+  {
+    name:'Estado',
+    selector: row => row.estado,
+    sortable:true
   }
 ]
 const customStyles = {
@@ -109,48 +114,32 @@ Promedio de usuarios registrados por dias
 Promedio de usuarios registrados por mes
 5. 
 Promedio de usuarios registrados por año */
-function TopProductos (props){
-    const [usersAcep,setUsersAcep] = useState(0)
-    const [usersRec,setUsersRec] = useState(0)
+function TopProductos(props) {
+  const navigate = useNavigate()
+  const [usersAcep, setUsersAcep] = useState(0)
+  const [usersRec, setUsersRec] = useState(0)
 
-    const [data,SetData] = useState([])
-    const datosdb=async()=>{
-        /*
-      //console.log(process.env.REACT_APP_API_CONSUME)
-      const url = `${process.env.REACT_APP_API_CONSUME}/api/get_votos`
-      let config = {
-          method: "GET", //ELEMENTOS A ENVIAR
-          headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json", 
-          },
-      };
-      try{
-        const res = await fetch(url, config);
-        
-        const data_res = await res.json();
-        SetData(data_res)  //se envian los datos a la tabla para ser mostrados.
-       
-      }catch(e){
-        console.log(e)
-      }
-      */
-  }
+  const [data, SetData] = useState([])
 
   useEffect(() => {
-   getInfo()
+    if (localStorage.getItem('rol') != 0) {
+      navigate("/")
+      return
+    }
+    getInfo()
   }, []);
 
   const getInfo = async (departamento) => {
     const url = `${process.env.REACT_APP_API_CONSUME}/api/reports`;
     let config = {
-      method: "GET", 
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
-    
+
     try {
       const res = await fetch(url, config);
       const data_res = await res.json();
@@ -163,7 +152,7 @@ function TopProductos (props){
     }
 
   }
-  
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light position-relative">

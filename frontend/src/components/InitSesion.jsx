@@ -1,6 +1,6 @@
 import React, { useState, useContext, createContext,useEffect} from 'react';
 import { Form, Button } from 'react-bootstrap';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import '../css/Isesion.css'; 
 import md5 from 'md5';
 import {Link,useNavigate} from 'react-router-dom'
@@ -8,7 +8,7 @@ import { useMyContext } from '../context';
 
 const Lema=()=>{
   return (
-    <div id="lema">
+    <div id="lema" className='bg-dark opacity-75'>
       <div className="row">
         <div className="col-1" />
         <div className="col-6 ml-3">
@@ -70,6 +70,7 @@ function InitSesion() {
     const url = `${process.env.REACT_APP_API_CONSUME}/api/login`;
     const cFormData = { ...formData };
     cFormData["password"] = md5(cFormData["password"])
+    console.log(cFormData);
     let config = {
       method: "POST", //ELEMENTOS A ENVIAR
       body: JSON.stringify(cFormData),
@@ -86,17 +87,40 @@ function InitSesion() {
 
       //console.log(data_res)
       if(data_res.valid){
+        console.log(data_res)
+
+        //En esta parte es donde se puede leer la informacion del token
+        const tokenppayload = data_res.token.split('.')[1];
+        const decodedPayload = atob(tokenppayload);
+        const payloadData = JSON.parse(decodedPayload);
+        console.log("DATAAAAAAA")
+        console.log(payloadData)
+        console.log("DATAAAAAAA")
+
+        localStorage.setItem('idUser',payloadData.iduser)
+        localStorage.setItem('token',data_res.token)
+        localStorage.setItem('rol',payloadData.rol)
+        localStorage.setItem('nombre',payloadData.nombre)
+        localStorage.setItem('apellido',payloadData.apellido)
+
+
         if(data_res.data.rol==0){
+          //INICIO ADMIN
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/adm",{state:{user:"INFORMACION"}})
         }
         else if(data_res.data.rol==1){
+          //INICIO USUARIO
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
-          alert("Usuario ingresado con exito");
+          navigate("/inicioU",{state:{user:"INFORMACION"}})
         }else if (data_res.data.rol==2){
+          //INICIO DE EMPLEADO
+          localStorage.setItem('calificacion',payloadData.calificacion)
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/emp",{state:{user:"INFORMACION"}})
-        }else{
+        }else if(data_res.data.rol==3){
+          //INICIO DE EMPRESA
+          localStorage.setItem('idempresa',payloadData.idempresa)
           setState({ ...state, rol:data_res.data.rol, data:data_res.data})
           navigate("/inicioe",{state:{user:"INFORMACION"}})
         }
@@ -112,7 +136,8 @@ function InitSesion() {
 
   return (
     <React.Fragment>
-      <nav className="navbar navbar-expand-lg navbar-light">
+      <div className='wallpaper'>
+      <nav className="navbar navbar-expand-lg navbar-light opacity-75">
         <img id="logoLP" src={logo} alt="Logo" />
         <a className="navbar-brand" href="/">Home</a>
         <div className="h2 text-light">Iniciar Sesion</div>
@@ -124,7 +149,7 @@ function InitSesion() {
               <Lema/>
           </div>
           <div className="col-3 bg-dark" id="Isesion">
-            <Form onSubmit={handleSubmit} className='text-white bg-dark mt-5' >
+            <Form onSubmit={handleSubmit} className='text-white mt-5' >
               <Form.Group controlId="username">
                 <Form.Label className="textForm">Username:</Form.Label>
                 <Form.Control type="text" name="username" value={formData.username} onChange={handleChange} required />
@@ -143,6 +168,8 @@ function InitSesion() {
 
       </div>
 
+      </div>
+      
     </React.Fragment>
   );
 }

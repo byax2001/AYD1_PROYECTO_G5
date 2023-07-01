@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-data-table-component';
-import logo from '../../images/logo.png';
-import { Link } from 'react-router-dom';
+import logo from '../../images/logo copy.png';
+import { Link,useNavigate } from 'react-router-dom';
 import cv from '../../images/cv.png';
 import Modal from 'react-modal';
 import SolicitudEmpresa from './solicitudes/SolicitudEmpresas';
 import SolicitudRepartidor from './solicitudes/SolicitudRepartidores';
-
+import SolicitudCambioArea from './solicitudes/SolicitudCambioArea';
 Modal.setAppElement('#root'); 
 
 const customStyles = {
@@ -60,11 +60,20 @@ const customStyles = {
 
 
 const Inicio = () => {
+  const navigate = useNavigate()
   const [isReportesDropdownOpen, setIsReportesDropdownOpen] = useState(false);
 
   const toggleReportesDropdown = () => {
     setIsReportesDropdownOpen(!isReportesDropdownOpen);
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('rol')!=0){
+      navigate("/")
+    }
+
+  },[])
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light position-relative">
@@ -74,7 +83,6 @@ const Inicio = () => {
       </nav>
       <div className='d-inline-flex btnRT'>
         <div className="btn-group">
-          <Link to={"/"} className="btn btnEffect">Cerrar Sesion</Link>
           {/* DROPDOWN DE REGISTRARSE*/}
           <li className="nav-item dropdown btn btnEffect">
             <button className="nav-link dropdown-toggle" id="navbarDropdown1" role="button" onClick={toggleReportesDropdown}>Reportes</button>
@@ -84,16 +92,29 @@ const Inicio = () => {
               <Link to={'/infU'} className="dropdown-item">Usuarios</Link>
             </div>
           </li>
+          {/* */}
+          <Link to={"/adm/users"} className="btn btnEffect">Administrar Usuarios</Link>
+          <Link to={"/"} className="btn btnEffect">Cerrar Sesion</Link>
         </div>
       </div>
       {/* TABLAS */}
       <div className="container mt-4">
-        <div className="my-4">
-          <SolicitudRepartidor />
+        <div className="row">
+          <div className="col-12">
+            <SolicitudRepartidor />
+          </div>
         </div>
-        <div className="my-4">
-          <SolicitudEmpresa />
+        <div className="row">
+          <div className="col-12">
+            <SolicitudEmpresa />
+          </div>
         </div>
+        <div className="row">
+          <div className="col-12">
+            <SolicitudCambioArea/>
+          </div>
+        </div>
+        
       </div>
     </React.Fragment>
   );

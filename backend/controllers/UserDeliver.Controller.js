@@ -89,7 +89,6 @@ exports.newdeliveruser = async function (req,res){
         });       
         
     }catch(e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear usuario", data: e});
     }
 }
@@ -97,67 +96,33 @@ exports.newdeliveruser = async function (req,res){
 
 exports.getdeliveruser = async function (req,res){
     try{
-        const params = {
-            Bucket: process.env.BUCKET_NAME,
-            Key: randomImageName(),
-            Body: req.file.buffer,
-            ContentType: req.file.mimetype,
-        }
-
-        const command = new PutObjectCommand(params)
-
-        await s3.send(command)
-        const objectUrl = `https://${process.env.BUCKET_NAME}.s3.amazonaws.com/${params.Key}`;
-
+        
         //Aca irá la parte de guardar en la base de datos
         res.status(200).send({status: "success", message: "Datos del repartidor", objectUrl: objectUrl});
     }catch(e){
-        console.log(e)
         res.status(400).send({status: "error", message: "Error al crear repartidor", data: e});
     }
 }
 
-exports.updatedeliveruser = async function (req,res){
-    try{
-        const params = {
-            Bucket: process.env.BUCKET_NAME,
-            Key: randomImageName(),
-            Body: req.file.buffer,
-            ContentType: req.file.mimetype,
-        }
+// exports.updatedeliveruser = async function (req,res){
+//     try{
+//         const params = {
+//             Bucket: process.env.BUCKET_NAME,
+//             Key: randomImageName(),
+//             Body: req.file.buffer,
+//             ContentType: req.file.mimetype,
+//         }
 
-        const command = new PutObjectCommand(params)
+//         const command = new PutObjectCommand(params)
 
-        await s3.send(command)
-        const objectUrl = `https://${process.env.BUCKET_NAME}.s3.amazonaws.com/${params.Key}`;
+//         await s3.send(command)
+//         const objectUrl = `https://${process.env.BUCKET_NAME}.s3.amazonaws.com/${params.Key}`;
 
-        //Aca irá la parte de guardar en la base de datos
-        res.status(200).send({status: "success", message: "Repartidor modificado", objectUrl: objectUrl});
-    }catch(e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al crear repartidor", data: e});
-    }
-}
+//         //Aca irá la parte de guardar en la base de datos
+//         res.status(200).send({status: "success", message: "Repartidor modificado", objectUrl: objectUrl});
+//     }catch(e){
+//         res.status(400).send({status: "error", message: "Error al crear repartidor", data: e});
+//     }
+// }
 
-exports.deletedeliveruser = async function (req,res){
-    try{
-        const params = {
-            Bucket: process.env.BUCKET_NAME,
-            Key: randomImageName(),
-            Body: req.file.buffer,
-            ContentType: req.file.mimetype,
-        }
-
-        const command = new PutObjectCommand(params)
-
-        await s3.send(command)
-        const objectUrl = `https://${process.env.BUCKET_NAME}.s3.amazonaws.com/${params.Key}`;
-
-        //Aca irá la parte de guardar en la base de datos
-        res.status(200).send({status: "success", message: "Repartidor eliminado", objectUrl: objectUrl});
-    }catch(e){
-        console.log(e)
-        res.status(400).send({status: "error", message: "Error al crear repartidor", data: e});
-    }
-}
 

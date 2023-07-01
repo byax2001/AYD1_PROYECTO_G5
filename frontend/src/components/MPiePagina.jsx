@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../images/logo.png';
+import logo from '../images/logo copy.png';
 import DataTable from 'react-data-table-component';
 import '../css/LandingPage.css';
 
@@ -265,11 +265,11 @@ function MPiePagina(props) {
             ) :
               (
                 <React.Fragment>
-                  <div className="col-3"></div>
-                  <div className="col-6 bg-dark bg-transparent">
+                  <div className="col-3 barfood2"></div>
+                  <div className="col-6">
                     <QuienesSomos />
                   </div>
-                  <div className="col-3"></div>
+                  <div className="col-3 barfood2"></div>
                 </React.Fragment>
               )}
         </div>

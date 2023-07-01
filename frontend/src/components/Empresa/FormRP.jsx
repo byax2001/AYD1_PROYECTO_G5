@@ -34,7 +34,12 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
   
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/type`); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
+        const config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        };
+        const response = await axios.get(`${process.env.REACT_APP_API_CONSUME}/api/products/type`,config); // Reemplaza 'URL_DEL_SERVIDOR' con la URL correcta
         const data = response.data; // Obtener los datos de la respuesta
         setFilteredData(data.data); // Actualizar los datos del componente
         console.log('Datos Obtenidos:', data.data);
@@ -71,6 +76,9 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
             let config = {
                 method: "POST", //ELEMENTOS A ENVIAR
                 body: dataFD,
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
             };
             try{
                 const res = await fetch(url, config);
@@ -124,15 +132,29 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
   return (
 
     <div>
-        <div className='container' style={{ backgroundColor: '#f8f8f8', padding: '20px', borderRadius: '5px' }}>
-            <p>Valores:</p>
-            {/* <pre>{JSON.stringify(selectedRow, null, 2)}</pre>*/}
-            
-            {/*Formulario: */}
+      <div className='container' style={{ backgroundColor: '#f8f8f8', padding: '20px', borderRadius: '5px' }}>
 
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Producto</label>
-              <input id="idp" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setNameR(e.target.value)}></input>
+        {/*Formulario: */}
+        <div className="row">
+          <div className="col-2" />
+          <div className="col-8">
+            <div className="row">
+              <div className="col-12">
+                <h4 className='textForm'>Valores:</h4>
+              </div>
+            </div>
+
+            <div className="row mb-3 textForm">
+              <div className="col-2">
+                <label htmlFor="exampleFormControlInput1" className="form-label">Producto:</label>
+              </div>
+              <div className="col-10">
+                <input id="idp"
+                  className="form-control form-control-lg"
+                  type="text" aria-label=".form-control-lg example"
+                  placeholder='Ingrese el nombre del producto'
+                  onChange={(e) => setNameR(e.target.value)}></input>
+              </div>
             </div>
             {/*
             <div className="mb-3">
@@ -147,7 +169,7 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
               <input id="idt" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setCombo(e.target.value)}></input>
             </div>*/}
 
-            <div className="mb-3">
+            <div className="row mb-3">
               <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChangeC}>
                 <option value="default">Indique si el Producto es Combo o Individual</option>
                 {comboInfo.map((item) => (
@@ -157,42 +179,57 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
             </div>
 
 
-            <div className="mb-3">
+            <div className="mb-3 row textForm">
               <label htmlFor="exampleFormControlInput1" className="form-label">Descripcion</label>
-              <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setDescR(e.target.value)}></input>
+              <input id="idd"
+                placeholder='Ingrese una descripción para el producto'
+                className="form-control form-control-lg"
+                type="text" aria-label=".form-control-lg example"
+                onChange={(e) => setDescR(e.target.value)}></input>
             </div>
 
-            <div className="mb-3">
-              <label htmlFor="image" className="form-label">
+            <div className="mb-3 row">
+              <label htmlFor="image" className="form-label textForm">
                 Imagen:
               </label>
-              <input id="image" className="form-control" type="file" accept="image/*" onChange={handleImageChange} />
+              <input id="image" className="form-control" type="file" accept="image/*" onChange={handleImageChange} required />
             </div>
-            <div className="mb-3">
-               <label htmlFor="exampleFormControlInput1" className="form-label">Precio</label>
-              <input id="idd" className="form-control form-control-lg" type="text" aria-label=".form-control-lg example" onChange={(e) => setPrecio(e.target.value)}></input>
+            <div className="row mb-3 textForm">
+              <div className="col-2">
+                <label htmlFor="exampleFormControlInput1" className="form-label">Precio:</label>
+              </div>
+              <div className="col-10">
+                <input id="idd"
+                  placeholder='Ingrese precio del producto'
+                  className="form-control form-control-lg"
+                  type="text" aria-label=".form-control-lg example"
+                  onChange={(e) => setPrecio(e.target.value)}></input>
+              </div>
+
+
             </div>
 
-            <div className="mb-3">
-            <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChange}>
-              <option value="default">Seleccione el Tipo</option>
-              {filteredData.map((item) => (
-                <option key={item.id_tipo_producto} value={item.id_tipo_producto}>{item.nombre_tipo_prod}</option>
-              ))}
-            </select>
+            <div className="row mb-3">
+              <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChange}>
+                <option value="default">Seleccione el Tipo</option>
+                {filteredData.map((item) => (
+                  <option key={item.id_tipo_producto} value={item.id_tipo_producto}>{item.nombre_tipo_prod}</option>
+                ))}
+              </select>
+            </div>
+
+
+            <div className="row p-0">
+              <div className="col-2 p-0 " >
+                <button className='btn btn-secondary btnEffect' onClick={() => handleClick()}>
+                  Guardar
+                </button>
+              </div>
+            </div>
+
           </div>
-
-
-            <div className="mb-3">
-              <button  className='btn btn-secondary' onClick={() => handleClick()}>
-                Guardar
-              </button>
-            </div>
-            
-
-            
-        
         </div>
+      </div>
     </div>
     
   );

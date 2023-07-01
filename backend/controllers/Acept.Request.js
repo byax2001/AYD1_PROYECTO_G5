@@ -68,7 +68,6 @@ exports.updateAceptReq = async function (req, res) {
                                     if (err) {
                                         reject(err);
                                     } else {
-                                        console.log(result2)
                                         database.query(querysMySQL.ins_address,[datausesr.direccion,"",result2.insertId,datausesr.municipio],function(err,result,fields){
                                             if (err)throw err;
 
@@ -106,7 +105,7 @@ exports.updateDenyReq = async function (req, res) {
             res.status(200).send({ status: "success", message: "Update Deny Request" });
         });
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -120,8 +119,8 @@ exports.getInfoReqRestaurant = async function (req, res) {
                 //devuelve los 5 resultados en un JSON
                 res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes de restaurantes:", data: result});
             } else {
-                res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
-                return;
+                //res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
+                //return;
 
             }
 
@@ -129,7 +128,7 @@ exports.getInfoReqRestaurant = async function (req, res) {
         });
 
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
     }
 }
 
@@ -143,8 +142,8 @@ exports.getInfoReqDelivers = async function (req, res) {
                 //devuelve los 5 resultados en un JSON
                 res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes de repartidores:", data: result});
             } else {
-                res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
-                return;
+                //res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes.", valid: false })
+                //return;
 
             }
 
@@ -152,6 +151,62 @@ exports.getInfoReqDelivers = async function (req, res) {
         });
 
     } catch (e) {
-        res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+        //res.status(400).send({ status: "error", message: "Error al obtener informacion de usuarios", data: e });
+    }
+}
+
+
+exports.getInfoReqChangeAdress = async function (req, res) {
+    try {
+        database.query(querysMySQL.req_pending_address_change, [], async function (err, result, fields) {
+
+            //Luego de ejecutar todos los querys se validan si fueron exitos
+            if (result) {
+                //devuelve los 5 resultados en un JSON
+                res.status(200).send({ status: "success", message: "Estos son las solicitudes pendientes de cambio departamental:", data: result});
+            } else {
+                // res.status(200).send({ msg: "Se produjo un error al obtener las solicitudes de cambio departamental.", valid: false })
+                // return;
+
+            }
+
+
+        });
+
+    } catch (e) {
+       // res.status(400).send({ status: "error", message: "Error al obtener las solicitudes de cambio departamental", data: e });
+    }
+}
+
+
+exports.updateAceptChangeAdressReq = async function (req, res) {
+    try {
+        var pendingReq = {
+            id_solicitud: req.body.id_solicitud
+        };
+        database.query(querysMySQL.list_emp_request, [pendingReq.id_solicitud], async function (err, result, fields) {
+            if(result.length>0){
+                database.query(querysMySQL.update_adrress,[result[0].direccion,result[0].municipio_id_municipio,result[0].usuario_id_usuario, ] , async function (err, result2, fields) {
+                    if (err)throw err;
+                    if(result2.affectedRows>0){
+                        database.query(querysMySQL.update_pending_request_change_adrress,[2,pendingReq.id_solicitud],async function(err,result3,fields){
+
+                            if(err)throw err;
+                            if(result3.affectedRows>0){
+                                res.status(200).send({status: "success", msg: "se hizo el cambio de forma correcta"});
+                            }else{
+                          //      res.status(200).send({msg:"No se pudo hacer el cambio de dirección", valid:false})
+                            }
+                            
+                        });
+                    }else{
+                        //res.status(200).send({msg:"No se pudo hacer el cambio de dirección", valid:false})
+                    }
+                });
+            }
+            
+        });
+    } catch (e) {
+        //res.status(400).send({ status: "error", msg: "Error al obtener informacion de usuarios", data: e });
     }
 }

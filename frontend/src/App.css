@@ -71,8 +71,17 @@ body{
 
 #lema{
   position:relative;
-  top:125px;
+  top:400px;
 }
+#lema{
+  position:relative;
+  top:400px;
+}
+#lemaLanding{
+  position:relative;
+  top:150px;
+}
+
 
 
 .slide-enter {
@@ -91,4 +100,61 @@ body{
 .slide-exit-active {
   transform: translateY(-100%);
   transition: transform 500ms ease-in-out;
+}
+
+.wallpaper{
+  background-image: url('./images//fondo4.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 1);
+ 
+}
+
+.wall2{
+  background-image: url('./images//fondo5.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.wall3{
+  background-image: url('./images//fondo6.jpg');
+  height: 100vh;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.barfood{
+  background-image: url('./images//barfood.png');
+  height: 100vh;
+  background-size: cover;
+  border-radius: 10px;
+  opacity: 0.3;
+ 
+}
+.barfoodL{
+  background-image: url('./images//barfoodL.png');
+  height: 100vh;
+  background-size: cover;
+  border-radius: 10px;
+  opacity: 0.3;
+ 
+}
+.barfood2{
+  background-image: url('./images//barfood2.jpg');
+  height: 100vh;
+  background-size: cover;
+  border-radius: 10px;
+  opacity: 0.3;
+ 
+}
+
+.rfood{
+  background-image: url('./images//rfood.png');
+  height: 100vh;
+  background-size: cover;
+
+  position: inherit;
+  border-radius: 10px;
+  opacity: 0.2;
 }

@@ -18,6 +18,8 @@ import Perfil from './components/Empleado/Perfil';
 import InicioEmp from './components/Empleado/Inicio';
 //ADMIN
 import InicioAdm from './components/Admin/Inicio';
+import AdministracionDeUsuarios from './components/Admin/administracion/AdministracionDeUsuarios';
+
 //INFORMES
 import InformeVentas from './components/Admin/informes/InformeVentas/Informe';
 import InformeRepartidores from './components/Admin/informes/InformeRepartidores/Informe';
@@ -26,7 +28,21 @@ import InformeUsuarios from './components/Admin/informes/InformeUsuarios/Informe
 //Empresa:
 import InicioE from './components/Empresa/InicioE';
 import RegstroEe from './components/Empresa/RegistroEe';
+import InformeEmpresa from './components/Empresa/informes/Informe';
+
 import { AuthProvider } from './context';
+
+//Todo lo de Usuario
+
+import Iniciouser from './components/Usuario/InicioUsuario';
+import PanelE from './components/Usuario/PanelEmpresa';
+import PanelCa from './components/Usuario/PanelCategoria';
+
+//Pedido Cliente
+import Pedido from './components/PedidoCliente/Pedido'
+import HistorialPedido from './components/HistorialPedido/Historial'
+
+
 function App() {
   const [infoUser, setInfoUser] = useState({
     iduser:'',
@@ -36,28 +52,35 @@ function App() {
   })
 
   return (
-        <Provider>
-            <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/ru" element={<RegistroUsuario />} />
-            <Route path="/re" element={<RegistroEmpleado />} />
-            <Route path="/rempresa" element={<RegistroEmpresa />} />
-            <Route path="/isesion" element={<InitSesion />} />
-            <Route path="/emp/Miperfil" element={<Perfil />} />
-            <Route path="/emp" element={<InicioEmp />} />
-            <Route path="/infoP" element={<MPiePagina />} />
-            <Route path="/adm" element={<InicioAdm />} />
-            <Route path="/infV" element={<InformeVentas />} />
-            <Route path="/infU" element={<InformeUsuarios />} />
-            <Route path="/infR" element={<InformeRepartidores />} />
-            <Route path="/inicioe" element={<InicioE />} />
-            <Route path="/registroPro" element={<RegstroEe />} />
-          </Routes>
-        </BrowserRouter>
-        </Provider>
-        
-      
+    <Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/ru" element={<RegistroUsuario />} />
+          <Route path="/re" element={<RegistroEmpleado />} />
+          <Route path="/rempresa" element={<RegistroEmpresa />} />
+          <Route path="/isesion" element={<InitSesion />} />
+          <Route path="/emp/Miperfil" element={<Perfil />} />
+          <Route path="/emp" element={<InicioEmp />} />
+          <Route path="/infoP" element={<MPiePagina />} />
+          <Route path="/adm" exact element={<InicioAdm />} />
+          <Route path="/adm/users" exact element={<AdministracionDeUsuarios />} />
+          <Route path="/infV" element={<InformeVentas />} />
+          <Route path="/infU" element={<InformeUsuarios />} />
+          <Route path="/infR" element={<InformeRepartidores />} />
+          <Route path="/inicioe" element={<InicioE />} />
+          <Route path="/registroPro" element={<RegstroEe />} />
+          <Route path="/infEmpresa" element={<InformeEmpresa />} />
+          <Route path="/inicioU" element={<Iniciouser />} />
+          <Route path="/panelE/:title" element={<PanelE />} />
+          <Route path="/panelC/:title" element={<PanelCa />} />
+          <Route path="/pedidoCliente" element={<Pedido />} />
+          <Route path="/historialPedidos" element={<HistorialPedido />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+
+
 
   );
 }

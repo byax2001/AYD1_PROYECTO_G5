@@ -5,8 +5,17 @@ import logo from '../../../images/logo.png';
 import { Link } from 'react-router-dom';
 import cv from '../../../images/cv.png';
 import Modal from 'react-modal';
-Modal.setAppElement('#root'); 
+Modal.setAppElement('#root');
 
+const customStylesModal = {
+  content: {
+    width: '500px', // Ancho personalizado del modal
+    height: '230px', // Alto personalizado del modal
+    top: '50%', // Centrar verticalmente
+    left: '50%', // Centrar horizontalmente
+    transform: 'translate(-50%, -50%)', // Ajustar la posición al centro
+  },
+};
 const customStyles = {
   noData: {
     style: {
@@ -171,16 +180,30 @@ const columnas = [
         aceptarsol ={aceptarSol}
         rechazarSol={rechazarSol}
         contentLabel="Aceptar o Rechazar"
+        style={customStylesModal}
       >
         <div className='container'>
-          <h2>Aceptar o Rechazar</h2>
-          <p>Contenido de la fila:</p>
-          <pre>{JSON.stringify(selectedRow, null, 2)}</pre>
+          <div className="row justify-content-end mb-3">
+            <div className="col-2">
+              <button className="btn btnEffect btn-danger" onClick={()=>{closeModal()}}>X</button>
+            </div>
+          </div>
+          <div className="row mb-3">
+            <div className="col-12 text-center">
+            <h2>Aceptar o Rechazar</h2>
+            </div>
+          </div>
+          
           <div className="row">
             <div className="col-2"></div>
-            <button className='btn btn-primary col-2 btnEffect' onClick={handleAceptarSol}>Aceptar</button>
-            <div className="col-4"></div>
-            <button className='btn btn-primary col-2 btnEffect' onClick={handleRechazarSol}>Rechazar</button>
+            <div className="col-3">
+            <button className='btn btn-primary btnEffect' onClick={handleAceptarSol}>Aceptar</button>
+            </div>
+            
+            <div className="col-2"></div>
+            <div className="col-3">
+            <button className='btn btn-primary btnEffect' onClick={handleRechazarSol}>Rechazar</button>
+            </div>
             <div className="col-2"></div>
           </div>
         </div>
@@ -196,6 +219,7 @@ const columnas = [
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -225,7 +249,8 @@ const columnas = [
       body: JSON.stringify(accion),
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json"
+        Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -252,6 +277,7 @@ const columnas = [
       headers: {
         "Content-Type": "application/json",
         Accept: "application/json",
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       },
     };
     try {
@@ -289,6 +315,7 @@ const columnas = [
         <div className="my-4">
           <ReactTable
             title={"Solicitud de Empresas"}
+            noDataComponent={"Sin solicitudes pendientes"}
             columns={columnas}
             data={filteredData}
             customStyles={customStyles}

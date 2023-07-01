@@ -1,0 +1,24 @@
+#suggest_r{
+    position: inherit;
+    right: 190px;
+    top: 12px;
+    list-style-type: none;
+    background-color: white;
+}
+
+.react-autosuggest__suggestions-list {
+    list-style-type: none;
+  }
+
+  .react-autosuggest__suggestion {
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .react-autosuggest__suggestion:hover {
+    background-color: lightgray; /* Cambia este color al que desees */
+  }
+
+#iHero{
+    height: 350px;
+}

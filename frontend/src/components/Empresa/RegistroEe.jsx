@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Form, Button } from 'react-bootstrap';
-import logo from '../../images/logo.png';
+import logo from '../../images/logo copy.png';
 import Formrp from './FormRP';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMyContext } from '../../context';
@@ -14,22 +14,23 @@ const FormRe = () => {
       navigate("/inicioe")
   } 
 
-  return (
+  useEffect(() => {
+    if(localStorage.getItem('rol')!=3){
+      navigate("/")
+      return
+    }
+  },[])
 
-    <React.Fragment>
+  return (
+    <div className="wall2">
       <nav className="navbar navbar-expand-lg navbar-light mb-3">
         <img id="logoLP" src={logo} alt="Logo" />
-        <button className="btn navbar-brand btnEffect" onClick={()=>{RInicio()}}>Regresar</button>
         <div className="h2 text-light">Registro de Producto</div>
+        <button className="btn navbar-brand btnEffect btnRT text-light" onClick={() => { RInicio() }}>Regresar</button>
       </nav>
 
-      <Formrp/>
-      
-
-     
-
-    </React.Fragment>
-    
+      <Formrp />
+    </div>
   );
 };
 
