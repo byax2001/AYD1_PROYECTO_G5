@@ -209,7 +209,7 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
 
             </div>
 
-            <div className="mb-3">
+            <div className="row mb-3">
               <select className="form-select" aria-label="Default select example" defaultValue="default" onChange={handleSelectChange}>
                 <option value="default">Seleccione el Tipo</option>
                 {filteredData.map((item) => (
@@ -219,14 +219,15 @@ const FormRP = () => {//aqui debo indicarle que espero el valor empresa
             </div>
 
 
-            <div className="mb-3">
-              <button className='btn btn-secondary btnEffect' onClick={() => handleClick()}>
-                Guardar
-              </button>
+            <div className="row p-0">
+              <div className="col-2 p-0 " >
+                <button className='btn btn-secondary btnEffect' onClick={() => handleClick()}>
+                  Guardar
+                </button>
+              </div>
             </div>
 
           </div>
-          <div className="col-2" />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-data-table-component';
 import logo from '../../images/logo copy.png';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import cv from '../../images/cv.png';
 import Modal from 'react-modal';
 import SolicitudEmpresa from './solicitudes/SolicitudEmpresas';
@@ -60,11 +60,20 @@ const customStyles = {
 
 
 const Inicio = () => {
+  const navigate = useNavigate()
   const [isReportesDropdownOpen, setIsReportesDropdownOpen] = useState(false);
 
   const toggleReportesDropdown = () => {
     setIsReportesDropdownOpen(!isReportesDropdownOpen);
   };
+
+  useEffect(()=>{
+    if(localStorage.getItem('rol')!=0){
+      navigate("/")
+    }
+
+  },[])
+
   return (
     <React.Fragment>
       <nav className="navbar navbar-expand-lg navbar-light position-relative">

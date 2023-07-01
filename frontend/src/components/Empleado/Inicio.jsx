@@ -22,12 +22,13 @@ const Inicio = () => {
   const navigate=useNavigate()
  
   useEffect(() => {
-    console.log(state)
-    if(state.rol!=2){
+
+    if(localStorage.getItem('rol')!=2){
       navigate("/")
+      return
     }
     if(pedidoAsignadoActivo){
-      alert("PEDIDO ASIGNADO")
+      alert("Pedido Asignado")
     }
     //EL CORCHETE HACE QUE ESTE COMANDO SE EJECUTE UNA SOLA VEZ AL INICIO DEL PROGRAMA
   },[]);

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import logo from '../../images/logo copy.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header'
 import Form from './Form'
 import Lista from './Lista'
@@ -8,7 +8,7 @@ import "./lista.css";
 import useLocalStorage from './useLocalStorage'
 
 function Pedido() {
-
+    const navigate=useNavigate()
     var carrito = [];
     var storedCarrito = window.localStorage.getItem('carrito');
     if (storedCarrito == null || storedCarrito =='undefined') {
@@ -20,6 +20,11 @@ function Pedido() {
     const [input, setInput] = useState("");
     useLocalStorage('carrito', carrito)
 
+    useEffect(()=>{
+        if(localStorage.getItem('rol')!=1){
+          navigate("/")
+        }
+    },[])
 
     return (
         <React.Fragment>

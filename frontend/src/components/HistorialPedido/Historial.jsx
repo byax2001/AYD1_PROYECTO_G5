@@ -1,9 +1,16 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import logo from '../../images/logo copy.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ListaHistorial from './ListaHistorial';
 
 function Historial() {
+    const navigate = useNavigate()
+    useEffect(()=>{
+        if(localStorage.getItem('rol')!=1){
+          navigate("/")
+        }
+     },[])
+
     return (
         <React.Fragment>
             <div className="wall2">
