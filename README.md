@@ -13,7 +13,7 @@
 </div>
 
 
-**<h3 align="center">AlChilazo es una plataforma en línea que permitirá a los usuarios realizar pedidos de comida a través de su sitio web. La empresa fue establecida en Guatemala a inicios de este año y desde entonces la empresa busca expandir sus operaciones a varias coberturas del País, mediante una solución tecnológica</h3>**
+**<h3 align="center">AlChilazo es una plataforma en línea que permitirá a los usuarios realizar pedidos de comida a través de su sitio web. La empresa fue establecida en Guatemala a inicios de este año y desde entonces la empresa busca expandir sus operaciones a varias coberturas del País, mediante una solución tecnológica y eficaz</h3>**
 
 <div align="center">
 
